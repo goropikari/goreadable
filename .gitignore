@@ -3,3 +3,9 @@
 docs/reviews
 docs/prd.md
 .dev-workflow*
+
+# Keep the committed graphify knowledge graph and human-readable report.
+graphify-out/*
+!graphify-out/graph.json
+!graphify-out/GRAPH_REPORT.md
+!graphify-out/manifest.json
