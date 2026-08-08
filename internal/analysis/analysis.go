@@ -94,9 +94,13 @@ func Analyze(files []string, thresholds config.Thresholds, changed map[string][]
 			codeKind = "test"
 		}
 
+		ignoredTypes := ignoredTypeNames(file)
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch declaration := node.(type) {
 			case *ast.FuncDecl:
+				if hasIgnoreDirective(declaration.Doc) {
+					return true
+				}
 				start, end := fset.Position(declaration.Pos()).Line, fset.Position(declaration.End()).Line
 				if !overlaps(changed, path, start, end) {
 					return true
@@ -110,6 +114,9 @@ func Analyze(files []string, thresholds config.Thresholds, changed map[string][]
 					result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons, lines))
 				}
 			case *ast.TypeSpec:
+				if ignoredTypes[declaration.Name.Name] || hasIgnoreDirective(declaration.Doc) {
+					return true
+				}
 				structure, ok := declaration.Type.(*ast.StructType)
 				if !ok {
 					return true
@@ -134,6 +141,40 @@ func Analyze(files []string, thresholds config.Thresholds, changed map[string][]
 	}
 
 	return result, nil
+}
+
+func ignoredTypeNames(file *ast.File) map[string]bool {
+	ignored := map[string]bool{}
+
+	for _, declaration := range file.Decls {
+		group, ok := declaration.(*ast.GenDecl)
+		if !ok || !hasIgnoreDirective(group.Doc) {
+			continue
+		}
+
+		for _, specification := range group.Specs {
+			typeSpec, ok := specification.(*ast.TypeSpec)
+			if ok {
+				ignored[typeSpec.Name.Name] = true
+			}
+		}
+	}
+
+	return ignored
+}
+
+func hasIgnoreDirective(group *ast.CommentGroup) bool {
+	if group == nil {
+		return false
+	}
+
+	for _, comment := range group.List {
+		if strings.Contains(comment.Text, "goreadable:ignore") {
+			return true
+		}
+	}
+
+	return false
 }
 
 func candidate(kind, name, path string, start, end int, codeKind string, metrics, thresholds map[string]int, reasons []string, lines []string) report.Candidate {

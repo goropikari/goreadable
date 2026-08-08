@@ -34,6 +34,8 @@ go run ./cmd/goreadable --diff HEAD --max-function-lines 40 ./...
 
 `*_test.go` も解析対象で、結果には本番コード（`production`）またはテストコード（`test`）の区分が含まれます。生成コードと `vendor/` は既定で除外します。
 
+宣言の直前に `// goreadable:ignore` または `/* goreadable:ignore */` を置くと、その関数・型を候補から除外できます。除外コメントは、意図的に複雑なコードなど、静的な閾値ではレビュー対象にしたくない宣言に使用してください。
+
 ## 設定
 
 解析対象のルートに `goreadable.json` を置くと、閾値を設定できます。CLI フラグ、設定ファイル、既定値の順に優先されます。
