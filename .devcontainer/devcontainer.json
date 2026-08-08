@@ -8,7 +8,7 @@
   },
   "mounts": [
     {
-      "source": "go-project-codex-home",
+      "source": "goreadable-codex-home",
       "target": "/home/vscode/.codex",
       "type": "volume"
     }
