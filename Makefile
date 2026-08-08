@@ -19,7 +19,7 @@ gitleaks:
 	gitleaks detect --no-banner --redact --source .
 
 install:
-	go install ./cmd/sample
+	go install ./cmd/goreadable
 
 install-codex:
 	@set -eu; \

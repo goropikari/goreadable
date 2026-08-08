@@ -1,8 +1,8 @@
 package main
 
 import (
-	"flag"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -11,64 +11,118 @@ import (
 	"github.com/goropikari/goreadable/internal/config"
 	"github.com/goropikari/goreadable/internal/diff"
 	"github.com/goropikari/goreadable/internal/report"
+	"github.com/spf13/cobra"
 )
 
 func main() {
-	if err := run(os.Args[1:], os.Stdout, os.Stderr); err != nil {
+	if err := execute(os.Args[1:], os.Stdout, os.Stderr); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 }
 
-//nolint:cyclop // The CLI boundary intentionally coordinates all user-facing options.
-func run(arguments []string, stdout, stderr *os.File) error {
-	flags := flag.NewFlagSet("goreadable", flag.ContinueOnError)
-	flags.SetOutput(stderr)
-	format := flags.String("format", "text", "output format: text or json")
-	diffRef := flags.String("diff", "", "analyze declarations changed since this Git ref")
+func execute(arguments []string, stdout, stderr io.Writer) error {
+	command := newCommand(stdout, stderr)
+	command.SetArgs(arguments)
 
-	flagValues := map[string]*int{"function_lines": flags.Int("max-function-lines", 0, "maximum function lines"), "nesting_depth": flags.Int("max-nesting-depth", 0, "maximum nesting depth"), "cyclomatic_complexity": flags.Int("max-cyclomatic-complexity", 0, "maximum cyclomatic complexity"), "function_arguments": flags.Int("max-function-args", 0, "maximum function arguments"), "struct_fields": flags.Int("max-struct-fields", 0, "maximum struct fields"), "type_methods": flags.Int("max-type-methods", 0, "maximum methods on a type")}
-	if err := flags.Parse(arguments); err != nil {
-		return err
-	}
+	return command.Execute()
+}
 
-	if *format != "text" && *format != "json" {
-		return fmt.Errorf("invalid format %q: use text or json", *format)
-	}
-
-	paths := flags.Args()
-	if len(paths) == 0 {
-		paths = []string{"."}
-	}
+func newCommand(stdout, stderr io.Writer) *cobra.Command {
+	var format, diffRef string
 
 	thresholds := config.Defaults()
-	if fileThresholds, err := config.LoadFile(filepath.Join(pathsRoot(paths), "goreadable.json"), thresholds); err != nil {
-		return err
-	} else {
-		thresholds = fileThresholds
-	}
 
+	command := &cobra.Command{
+		Use:           "goreadable [paths...]",
+		Short:         "find Go declarations that deserve a readability review",
+		SilenceErrors: true,
+		SilenceUsage:  true,
+		Args:          cobra.ArbitraryArgs,
+		RunE: func(command *cobra.Command, paths []string) error {
+			if format != "text" && format != "json" {
+				return fmt.Errorf("invalid format %q: use text or json", format)
+			}
+
+			if len(paths) == 0 {
+				paths = []string{"."}
+			}
+
+			resolved := thresholds
+
+			fileThresholds, err := config.LoadFile(filepath.Join(pathsRoot(paths), "goreadable.json"), resolved)
+			if err != nil {
+				return err
+			}
+
+			resolved = fileThresholds
+			resolved.ApplyFlags(flagOverrides(command))
+
+			changed := map[string][][2]int(nil)
+			if diffRef != "" {
+				changed, err = diff.ChangedFiles(pathsRoot(paths), diffRef)
+				if err != nil {
+					return fmt.Errorf("git diff: %w", err)
+				}
+			}
+
+			files, err := inputFiles(paths)
+			if err != nil {
+				return err
+			}
+
+			result, err := analysis.Analyze(files, resolved, changed)
+			if err != nil {
+				return err
+			}
+
+			if format == "json" {
+				return report.WriteJSON(stdout, result)
+			}
+
+			return report.WriteText(stdout, result)
+		},
+	}
+	command.SetOut(stdout)
+	command.SetErr(stderr)
+	command.Flags().StringVar(&format, "format", "text", "output format: text or json")
+	command.Flags().StringVar(&diffRef, "diff", "", "analyze declarations changed since this Git ref")
+	command.Flags().Int("max-function-lines", thresholds.FunctionLines, "maximum function lines")
+	command.Flags().Int("max-nesting-depth", thresholds.NestingDepth, "maximum nesting depth")
+	command.Flags().Int("max-cyclomatic-complexity", thresholds.CyclomaticComplexity, "maximum cyclomatic complexity")
+	command.Flags().Int("max-function-args", thresholds.FunctionArguments, "maximum function arguments")
+	command.Flags().Int("max-struct-fields", thresholds.StructFields, "maximum struct fields")
+	command.Flags().Int("max-type-methods", thresholds.TypeMethods, "maximum methods on a type")
+
+	return command
+}
+
+func flagOverrides(command *cobra.Command) map[string]int {
 	overrides := map[string]int{}
 
-	for key, value := range flagValues {
-		if *value != 0 {
-			overrides[key] = *value
+	flags := map[string]string{
+		"max-function-lines":        "function_lines",
+		"max-nesting-depth":         "nesting_depth",
+		"max-cyclomatic-complexity": "cyclomatic_complexity",
+		"max-function-args":         "function_arguments",
+		"max-struct-fields":         "struct_fields",
+		"max-type-methods":          "type_methods",
+	}
+	for flagName, thresholdName := range flags {
+		if !command.Flags().Changed(flagName) {
+			continue
+		}
+
+		value, err := command.Flags().GetInt(flagName)
+		if err == nil {
+			overrides[thresholdName] = value
 		}
 	}
 
-	thresholds.ApplyFlags(overrides)
+	return overrides
+}
 
-	changed := map[string][][2]int(nil)
-
-	if *diffRef != "" {
-		var err error
-
-		changed, err = diff.ChangedFiles(pathsRoot(paths), *diffRef)
-		if err != nil {
-			return fmt.Errorf("git diff: %w", err)
-		}
-	}
-
+func inputFiles(paths []string) ([]string, error) {
 	var files []string
 
 	for _, path := range paths {
@@ -81,22 +135,13 @@ func run(arguments []string, stdout, stderr *os.File) error {
 
 		found, err := analysis.Files(root, recursive)
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		files = append(files, found...)
 	}
 
-	result, err := analysis.Analyze(files, thresholds, changed)
-	if err != nil {
-		return err
-	}
-
-	if *format == "json" {
-		return report.WriteJSON(stdout, result)
-	}
-
-	return report.WriteText(stdout, result)
+	return files, nil
 }
 
 func pathsRoot(paths []string) string {
@@ -104,9 +149,7 @@ func pathsRoot(paths []string) string {
 		return "."
 	}
 
-	root := paths[0]
-	root = strings.TrimSuffix(root, "/...")
-
+	root := strings.TrimSuffix(paths[0], "/...")
 	if root == "" {
 		return "."
 	}

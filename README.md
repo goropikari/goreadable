@@ -16,6 +16,40 @@ go run ./cmd/goreadable --format json ./...
 go run ./cmd/goreadable --diff HEAD --max-function-lines 40 ./...
 ```
 
+### 出力例
+
+次のようなコードを `sample.go` に置きます。
+
+```go
+package sample
+
+func BuildReport(a, b, c, d, e, f int) int {
+	if a > 0 {
+		if b > 0 {
+			return a + b + c + d + e + f
+		}
+	}
+	return 0
+}
+```
+
+既定値では候補にならないため、閾値を下げて実行します。
+
+```sh
+$ goreadable --max-function-lines 5 --max-function-args 4 .
+function BuildReport (sample.go:3-10, production)
+  - function_arguments=6 exceeds threshold 4
+  - function_lines=8 exceeds threshold 5
+```
+
+AI レビューへ渡す場合は JSON を指定します。
+
+```sh
+$ goreadable --format json --max-function-lines 5 . > readability-candidates.json
+```
+
+出力された `readability-candidates.json` には、候補のソース断片・計測値・閾値・理由が含まれます。
+
 検出候補があっても終了コードは `0` です。候補はレビューの優先順位付けに使う情報であり、自動的な不合格判定ではありません。オプション不正、設定ファイル不正、解析エラーは非 `0` で終了します。
 
 ## 検出ルール
