@@ -42,6 +42,11 @@ linters:
       - builtin$
       - examples$
       - "^sample/"
+    rules:
+      - path: tests/acceptance/
+        linters:
+          - testpackage
+          - testifylint
 
 formatters:
   enable:

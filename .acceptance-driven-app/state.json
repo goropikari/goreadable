@@ -1,0 +1,8 @@
+{
+  "status": "ACTIVE",
+  "phase_index": 5,
+  "phase": "pr-ready",
+  "phase_description": "最終差分とPR提出用エビデンスを整える",
+  "gate": "WORK",
+  "mode": "manual"
+}
