@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "artifact": {
+    "kind": "cli",
+    "build_command": "go build -o /tmp/goreadable-acceptance ./cmd/goreadable",
+    "consumer_command": "/tmp/goreadable-acceptance --format json ./..."
+  },
+  "risks": ["external-artifact", "module-identity", "cli-contract", "json-contract", "git-integration"],
+  "immutable_paths": [
+    ".acceptance-harness/manifest.json",
+    "tests/acceptance/goreadable_test.go"
+  ],
+  "criteria": [
+    {
+      "id": "AC-001",
+      "required": true,
+      "scenario": "A consumer builds and invokes the goreadable command against a Go package.",
+      "test_path": "tests/acceptance/goreadable_test.go",
+      "command": "go test ./tests/acceptance -run 'TestGoreadableCLI/when_a_package_has_over-threshold_function_and_type:_reports_review_candidates'",
+      "oracle": "The command exits zero and reports the over-threshold function and struct as review candidates.",
+      "tags": ["consumer-entry", "cli-contract"]
+    },
+    {
+      "id": "AC-002",
+      "required": true,
+      "scenario": "A consumer uses the published Go module identity.",
+      "test_path": "tests/acceptance/goreadable_test.go",
+      "command": "go test ./tests/acceptance -run 'TestGoreadableModuleIdentity'",
+      "oracle": "The module identity is github.com/goropikari/goreadable and the CLI build target is ./cmd/goreadable.",
+      "tags": ["module-identity"]
+    },
+    {
+      "id": "AC-003",
+      "required": true,
+      "scenario": "A consumer requests JSON for AI review.",
+      "test_path": "tests/acceptance/goreadable_test.go",
+      "command": "go test ./tests/acceptance -run 'TestGoreadableCLI/when_JSON_is_requested:_includes_version_metrics_reasons_and_source_context'",
+      "oracle": "JSON has schema version 1 and each candidate includes kind, name, path, line range, code classification, metrics, thresholds, reasons, and source context.",
+      "tags": ["json-contract"]
+    },
+    {
+      "id": "AC-004",
+      "required": true,
+      "scenario": "A consumer uses the default text report.",
+      "test_path": "tests/acceptance/goreadable_test.go",
+      "command": "go test ./tests/acceptance -run 'TestGoreadableCLI/when_text_output_is_requested:_identifies_each_candidate_and_reason'",
+      "oracle": "Text output identifies the candidate, its source location, and the threshold rule that selected it.",
+      "tags": ["cli-contract"]
+    },
+    {
+      "id": "AC-005",
+      "required": true,
+      "scenario": "A consumer configures thresholds in a repository file and overrides them for one invocation.",
+      "test_path": "tests/acceptance/goreadable_test.go",
+      "command": "go test ./tests/acceptance -run 'TestGoreadableCLI/when_configuration_and_a_flag_set_the_same_threshold:_the_flag_wins'",
+      "oracle": "goreadable.json changes the threshold, and a corresponding CLI flag takes precedence over that file.",
+      "tags": ["cli-contract"]
+    },
+    {
+      "id": "AC-006",
+      "required": true,
+      "scenario": "A consumer reviews only changes since a Git ref.",
+      "test_path": "tests/acceptance/goreadable_test.go",
+      "command": "go test ./tests/acceptance -run 'TestGoreadableCLI/when_diff_mode_is_given_a_Git_ref:_reports_candidates_in_changed_code_only'",
+      "oracle": "--diff HEAD reports a candidate introduced after HEAD and does not report unchanged over-threshold code.",
+      "tags": ["git-integration"]
+    },
+    {
+      "id": "AC-007",
+      "required": true,
+      "scenario": "A consumer receives candidates or provides invalid CLI input.",
+      "test_path": "tests/acceptance/goreadable_test.go",
+      "command": "go test ./tests/acceptance -run 'TestGoreadableCLI/when_candidates_exist:_exits_zero|TestGoreadableCLI/when_an_option_is_invalid:_exits_non-zero_with_a_recoverable_error'",
+      "oracle": "Candidates do not fail the command; invalid options fail it and describe the problem on standard error.",
+      "tags": ["cli-contract", "error-handling"]
+    }
+  ]
+}
