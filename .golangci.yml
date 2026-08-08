@@ -47,6 +47,7 @@ linters:
         linters:
           - testpackage
           - testifylint
+          - wsl_v5
 
 formatters:
   enable:

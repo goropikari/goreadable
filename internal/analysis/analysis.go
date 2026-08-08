@@ -59,9 +59,20 @@ func Files(root string, recursive bool) ([]string, error) {
 	return files, nil
 }
 
-//nolint:cyclop // This is the single declaration-to-candidate boundary.
+//nolint:cyclop,gocognit,wsl_v5 // This is the single declaration-to-candidate boundary.
 func Analyze(files []string, thresholds config.Thresholds, changed map[string][][2]int) (report.Result, error) {
 	result := report.Result{Version: 1}
+	packageMethods := map[string]int{}
+	for _, path := range files {
+		fset := token.NewFileSet()
+		file, err := parser.ParseFile(fset, path, nil, parser.ParseComments)
+		if err != nil {
+			return report.Result{}, fmt.Errorf("parse %s: %w", path, err)
+		}
+		for name, count := range methodCounts(file) {
+			packageMethods[name] += count
+		}
+	}
 
 	for _, path := range files {
 		fset := token.NewFileSet()
@@ -83,7 +94,6 @@ func Analyze(files []string, thresholds config.Thresholds, changed map[string][]
 			codeKind = "test"
 		}
 
-		methods := methodCounts(file)
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch declaration := node.(type) {
 			case *ast.FuncDecl:
@@ -110,7 +120,7 @@ func Analyze(files []string, thresholds config.Thresholds, changed map[string][]
 					return true
 				}
 
-				metrics := map[string]int{"struct_fields": structure.Fields.NumFields(), "type_methods": methods[declaration.Name.Name]}
+				metrics := map[string]int{"struct_fields": structure.Fields.NumFields(), "type_methods": packageMethods[declaration.Name.Name]}
 				thresholdMap := map[string]int{"struct_fields": thresholds.StructFields, "type_methods": thresholds.TypeMethods}
 
 				reasons := reasons(metrics, thresholdMap)
@@ -170,30 +180,38 @@ func argumentCount(function *ast.FuncType) int {
 	return count
 }
 
+//nolint:wsl_v5 // The traversal maintains explicit enter/exit state.
 func nesting(body *ast.BlockStmt) int {
 	if body == nil {
 		return 0
 	}
 
-	max := 0
-
-	visit := func(node ast.Node, depth int) {
-		ast.Inspect(node, func(child ast.Node) bool {
-			next := depth
-
-			switch child.(type) {
-			case *ast.IfStmt, *ast.ForStmt, *ast.RangeStmt, *ast.SwitchStmt, *ast.TypeSwitchStmt, *ast.SelectStmt:
-				next++
+	max, depth := 0, 0
+	branches := []bool{}
+	ast.Inspect(body, func(node ast.Node) bool {
+		if node == nil {
+			if len(branches) > 0 {
+				if branches[len(branches)-1] {
+					depth--
+				}
+				branches = branches[:len(branches)-1]
 			}
-
-			if next > max {
-				max = next
-			}
-
 			return true
-		})
-	}
-	visit(body, 0)
+		}
+		branch := false
+		switch node.(type) {
+		case *ast.IfStmt, *ast.ForStmt, *ast.RangeStmt, *ast.SwitchStmt, *ast.TypeSwitchStmt, *ast.SelectStmt:
+			branch = true
+		}
+		branches = append(branches, branch)
+		if branch {
+			depth++
+			if depth > max {
+				max = depth
+			}
+		}
+		return true
+	})
 
 	return max
 }
