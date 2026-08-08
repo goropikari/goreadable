@@ -2,12 +2,9 @@
 
 LOCAL_BIN ?= $(HOME)/.local/bin
 
-fmt: fix
+fmt:
 	golangci-lint fmt
 	dprint fmt
-
-fix:
-	golangci-lint run --fix ./...
 
 lint: gitleaks typos fmt
 	golangci-lint run ./...
