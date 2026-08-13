@@ -127,13 +127,6 @@ func AnalyzeWithOptions(files []string, thresholds config.Thresholds, changed ma
 			return report.Result{}, fmt.Errorf("parse %s: %w", path, err)
 		}
 
-		sourceBytes, err := os.ReadFile(path)
-		if err != nil {
-			return report.Result{}, err
-		}
-
-		lines := strings.Split(string(sourceBytes), "\n")
-
 		codeKind := "production"
 		if strings.HasSuffix(path, "_test.go") {
 			codeKind = "test"
@@ -156,7 +149,7 @@ func AnalyzeWithOptions(files []string, thresholds config.Thresholds, changed ma
 
 				if options.MetricsOnly() {
 					if options.IncludesFunction(file.Name.Name, declaration) {
-						result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, nil, lines))
+						result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, nil))
 					}
 
 					return true
@@ -164,7 +157,7 @@ func AnalyzeWithOptions(files []string, thresholds config.Thresholds, changed ma
 
 				reasons := reasons(metrics, thresholdMap)
 				if len(reasons) > 0 {
-					result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons, lines))
+					result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons))
 				}
 			case *ast.TypeSpec:
 				if options.MetricsOnly() {
@@ -189,7 +182,7 @@ func AnalyzeWithOptions(files []string, thresholds config.Thresholds, changed ma
 
 				reasons := reasons(metrics, thresholdMap)
 				if len(reasons) > 0 {
-					result.Candidates = append(result.Candidates, candidate("type", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons, lines))
+					result.Candidates = append(result.Candidates, candidate("type", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons))
 				}
 			}
 
@@ -257,15 +250,7 @@ func hasIgnoreDirective(group *ast.CommentGroup) bool {
 	return false
 }
 
-func candidate(kind, name, path string, start, end int, codeKind string, metrics, thresholds map[string]int, reasons []string, lines []string) report.Candidate {
-	if start < 1 {
-		start = 1
-	}
-
-	if end > len(lines) {
-		end = len(lines)
-	}
-
+func candidate(kind, name, path string, start, end int, codeKind string, metrics, thresholds map[string]int, reasons []string) report.Candidate {
 	return report.Candidate{
 		Kind:       kind,
 		Name:       name,
@@ -276,7 +261,6 @@ func candidate(kind, name, path string, start, end int, codeKind string, metrics
 		Metrics:    metrics,
 		Thresholds: thresholds,
 		Reasons:    reasons,
-		Source:     strings.Join(lines[start-1:end], "\n"),
 	}
 }
 

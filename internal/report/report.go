@@ -17,7 +17,6 @@ type Candidate struct {
 	Metrics    map[string]int `json:"metrics"`
 	Thresholds map[string]int `json:"thresholds"`
 	Reasons    []string       `json:"reasons"`
-	Source     string         `json:"source"`
 }
 
 type Result struct {

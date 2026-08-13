@@ -34,8 +34,8 @@
       "required": true,
       "scenario": "A consumer requests JSON for AI review.",
       "test_path": "tests/acceptance/goreadable_test.go",
-      "command": "go test ./tests/acceptance -run 'TestGoreadableCLI/when_JSON_is_requested:_includes_version_metrics_reasons_and_source_context'",
-      "oracle": "JSON has schema version 1 and each candidate includes kind, name, path, line range, code classification, metrics, thresholds, reasons, and source context.",
+      "command": "go test ./tests/acceptance -run 'TestGoreadableCLI/when_JSON_is_requested:_includes_version_metrics_and_reasons_without_source'",
+      "oracle": "JSON has schema version 1 and each candidate includes kind, name, path, line range, code classification, metrics, thresholds, and reasons, but not source context.",
       "tags": ["json-contract"]
     },
     {

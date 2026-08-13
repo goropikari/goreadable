@@ -1,8 +1,8 @@
 {
   ".acceptance-harness/manifest.json": {
-    "mtime": 1786201600.1162698,
-    "ast_hash": "30f52b21f083e7c16af53d66cde30e9d",
-    "semantic_hash": "30f52b21f083e7c16af53d66cde30e9d"
+    "mtime": 1786640447.7722814,
+    "ast_hash": "1ee40bf3d13867e963b8a88ba1afb46b",
+    "semantic_hash": ""
   },
   ".claude/settings.local.json": {
     "mtime": 1786200788.1282156,
@@ -20,7 +20,7 @@
     "semantic_hash": "7d857f3dda7c1348355cf133c45d958c"
   },
   "cmd/goreadable/main.go": {
-    "mtime": 1786639183.2481992,
+    "mtime": 1786640036.0082548,
     "ast_hash": "e893e908f82c00db9ccfdd23f3e33b4c",
     "semantic_hash": ""
   },
@@ -35,34 +35,34 @@
     "semantic_hash": "d1182ac305da0834d87fec38e45dff6f"
   },
   "internal/analysis/analysis.go": {
-    "mtime": 1786639179.520199,
-    "ast_hash": "a5973803906f504ffbadc89f52e01e75",
+    "mtime": 1786640447.5562813,
+    "ast_hash": "721301d8aad1b5df304875bfaf8cebb1",
     "semantic_hash": ""
   },
   "internal/analysis/analysis_test.go": {
-    "mtime": 1786205188.6285036,
+    "mtime": 1786640036.0242548,
     "ast_hash": "dccc8beb684a8951175f5a6d5ac5a0ef",
     "semantic_hash": "dccc8beb684a8951175f5a6d5ac5a0ef"
   },
   "internal/config/config.go": {
-    "mtime": 1786202155.948306,
-    "ast_hash": "31e0b290fa243cd30fe8d6a79f87bc6b",
-    "semantic_hash": "31e0b290fa243cd30fe8d6a79f87bc6b"
+    "mtime": 1786640036.0282547,
+    "ast_hash": "622dbf3ff84cd49a3be5231181e0d6ac",
+    "semantic_hash": ""
   },
   "internal/diff/diff.go": {
-    "mtime": 1786202190.2363086,
+    "mtime": 1786640036.0322547,
     "ast_hash": "26bd6b43dc23e99a6d297288b256053a",
     "semantic_hash": "26bd6b43dc23e99a6d297288b256053a"
   },
   "internal/report/report.go": {
-    "mtime": 1786639179.632199,
-    "ast_hash": "24c2b416e5e809208d2dd34b116d8bb5",
+    "mtime": 1786640447.4442813,
+    "ast_hash": "951ed87045bd64e8f78b35f3014b1fe8",
     "semantic_hash": ""
   },
   "tests/acceptance/goreadable_test.go": {
-    "mtime": 1786202315.7563171,
-    "ast_hash": "1b07fdcc202eb0170063a7d6890e9565",
-    "semantic_hash": "1b07fdcc202eb0170063a7d6890e9565"
+    "mtime": 1786640447.6642814,
+    "ast_hash": "bfa4d72eac2d0309ad1979226c94cd87",
+    "semantic_hash": ""
   },
   ".codex/skills/graphify/SKILL.md": {
     "mtime": 1786208798.0367384,
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1786639143.3481967,
-    "ast_hash": "4c2e6fed6aa6dd0451d201329a6b004c",
+    "mtime": 1786640447.8802814,
+    "ast_hash": "40987e9838d558ae7da49d2d6a73eb3e",
     "semantic_hash": ""
   },
   "TESTING.md": {
@@ -144,24 +144,9 @@
     "ast_hash": "85c2fb67a35f4ce37eb25a06818c0241",
     "semantic_hash": "85c2fb67a35f4ce37eb25a06818c0241"
   },
-  ".implementation-orchestrator/evidence.json": {
-    "mtime": 1786639149.9601972,
-    "ast_hash": "351d307033cd829911a6a42a03332f10",
-    "semantic_hash": ""
-  },
   "cmd/goreadable/main_test.go": {
-    "mtime": 1786639289.7962062,
+    "mtime": 1786640036.0162547,
     "ast_hash": "f7e6f10f5ff0e3ea5dbea93887bca101",
-    "semantic_hash": ""
-  },
-  ".implementation-orchestrator/blackbox-risk-based-test.md": {
-    "mtime": 1786639063.740191,
-    "ast_hash": "a10b4dc9acb27c8420ebf3707b3386da",
-    "semantic_hash": ""
-  },
-  ".implementation-orchestrator/implementation-plan.md": {
-    "mtime": 1786639149.9601972,
-    "ast_hash": "3ec1d24aba11dcc318c65fe309fda9a4",
     "semantic_hash": ""
   }
 }

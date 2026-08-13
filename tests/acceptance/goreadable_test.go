@@ -45,7 +45,7 @@ func TestGoreadableCLI(t *testing.T) {
 		assert.Contains(t, candidateNames(candidates), "TooWide")
 	})
 
-	t.Run("when JSON is requested: includes version metrics reasons and source context", func(t *testing.T) {
+	t.Run("when JSON is requested: includes version metrics and reasons without source", func(t *testing.T) {
 		// Arrange
 		binary := buildGoreadable(t)
 		fixture := writeFixture(t)
@@ -60,10 +60,10 @@ func TestGoreadableCLI(t *testing.T) {
 		assert.Equal(t, float64(1), report["version"])
 
 		candidate := candidateByName(t, candidates(t, output), "TooLong")
-		for _, field := range []string{"kind", "name", "path", "start_line", "end_line", "code_kind", "metrics", "thresholds", "reasons", "source"} {
+		for _, field := range []string{"kind", "name", "path", "start_line", "end_line", "code_kind", "metrics", "thresholds", "reasons"} {
 			assert.NotEmpty(t, candidate[field], field)
 		}
-		assert.Contains(t, candidate["source"], "func TooLong")
+		assert.NotContains(t, candidate, "source")
 	})
 
 	t.Run("when text output is requested: identifies each candidate and reason", func(t *testing.T) {
