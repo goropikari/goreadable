@@ -55,11 +55,27 @@ go run ./cmd/goreadable --format json --max-function-lines 5 --max-function-args
 - ネスト深度（`--max-nesting-depth`、既定値 4）
 - 循環的複雑度（`--max-cyclomatic-complexity`、既定値 10）
 - 引数数（`--max-function-args`、既定値 5）
+- ローカル変数数（`--max-local-variables`、既定値 15）
+- 制御ブロック数（`--max-control-blocks`、既定値 8）
+- return 文の数（`--max-return-points`、既定値 5）
+- 論理演算子数（`--max-boolean-operators`、既定値 8）
+- 1 条件式の最大項数（`--max-condition-terms`、既定値 4）
+- 関数・メソッド呼び出し数（`--max-function-calls`、既定値 15）
+- 意味のあるリテラル数（`--max-literal-values`、既定値 10）
+- 関数リテラル数（`--max-closures`、既定値 2）
+- コメント行数（`--max-comment-lines`、既定値 10）
+- 文の数（`--max-statements`、既定値 40）
+- シグネチャの型依存数（`--max-type-dependencies`、既定値 5）
+
+ローカル変数数は、関数内の `var`、`:=`、`range` と型 switch の短縮宣言で導入される名前を数えます。引数と結果値は含めません。制御ブロック数は `if`、`for`、`range`、`switch`、型 switch、`select` の数です。条件項数は `&&` と `||` で分けられた項の最大数です。リテラル数は `0`、`1`、空文字列を除外し、型依存数はレシーバー・引数・戻り値に現れる異なる型式の数です。関数本文内のクロージャの内部は、本文の各メトリクスから除外します。
 
 構造体・型について、次の値を計測します。
 
 - 構造体フィールド数（`--max-struct-fields`、既定値 8）
 - 型に関連するメソッド数（`--max-type-methods`、既定値 10）
+- 公開メンバー数（`--max-exported-members`、既定値 10）
+
+公開メンバー数は、構造体の公開フィールドと型の公開メソッドの合計です。
 
 `*_test.go` も解析対象で、結果には本番コード（`production`）またはテストコード（`test`）の区分が含まれます。生成コードと `vendor/` は既定で除外します。
 
@@ -76,8 +92,20 @@ go run ./cmd/goreadable --format json --max-function-lines 5 --max-function-args
     "nesting_depth": 3,
     "cyclomatic_complexity": 8,
     "function_arguments": 4,
+    "local_variables": 12,
+    "control_blocks": 6,
+    "return_points": 4,
+    "boolean_operators": 6,
+    "max_condition_terms": 3,
+    "function_calls": 12,
+    "literal_values": 8,
+    "closure_count": 2,
+    "comment_lines": 8,
+    "statement_count": 30,
+    "type_dependencies": 4,
     "struct_fields": 6,
-    "type_methods": 8
+    "type_methods": 8,
+    "exported_members": 8
   }
 }
 ```

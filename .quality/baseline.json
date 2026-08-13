@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "baseline_version": "1.1.0",
+  "repository": {
+    "root": ".",
+    "product_boundary": "The goreadable Go CLI, its local goreadable.json configuration, and text/JSON reports consumed by developers and review automation."
+  },
+  "quality_model": {
+    "source": "quality-modeling",
+    "version": "1.1.0",
+    "scope": "Estimate source-code readability risk while preserving a reliable, compatible local CLI analysis contract. This model does not treat static source metrics as proof of runtime reliability or user experience.",
+    "characteristics": [
+      "maintainability",
+      "reliability",
+      "compatibility",
+      "security"
+    ],
+    "factors": [
+      {
+        "id": "maintainability.readability_risk_signal",
+        "characteristic": "maintainability",
+        "intent": "Surface declarations whose structural properties warrant human or AI readability review without declaring them automatically unacceptable.",
+        "applicable": true,
+        "required": false,
+        "severity": "non_blocking",
+        "gqm": {
+          "goal": "For developers reviewing Go source, estimate where readability risk is concentrated before review.",
+          "questions": [
+            "Which functions and types exceed the consumer's resolved readability thresholds?",
+            "Which metric and threshold caused each candidate to be selected?"
+          ],
+          "metrics": [
+            "per-declaration metric values",
+            "resolved thresholds",
+            "selection reasons"
+          ]
+        },
+        "measures": [
+          {
+            "id": "readability_candidate_traceability",
+            "question": "Can a reviewer trace every candidate to its metrics, resolved thresholds, and reasons?",
+            "instrument": {
+              "kind": "test",
+              "name": "unit, CLI, and frozen acceptance tests"
+            },
+            "evidence": "Candidate reports expose metrics, thresholds, code kind, location, and reasons.",
+            "limitations": "Structural metrics are screening signals; they cannot determine semantic clarity, domain appropriateness, or defect probability."
+          },
+          {
+            "id": "readability_candidate_distribution",
+            "question": "Where are the highest-risk declarations concentrated?",
+            "instrument": {
+              "kind": "tool",
+              "name": "goreadable --all-functions"
+            },
+            "evidence": "Per-declaration metric distribution with the highest candidate entities retained.",
+            "limitations": "Results depend on the selected paths and consumer-configured thresholds."
+          }
+        ],
+        "rating": {
+          "method": "candidate_prioritization",
+          "interpretation": "A threshold exceedance prioritizes review; it is not a release failure."
+        },
+        "aggregation": {
+          "entity_hierarchy": [
+            "declaration",
+            "file",
+            "package",
+            "repository"
+          ],
+          "method": "retain_leaf_values_and_worst_candidates",
+          "retain_worst_entities": 10
+        },
+        "default_confidence": "medium"
+      },
+      {
+        "id": "reliability.ast_analysis_correctness",
+        "characteristic": "reliability",
+        "intent": "Produce deterministic, correct analysis results for supported Go declarations and explicit exclusions.",
+        "applicable": true,
+        "required": true,
+        "severity": "critical",
+        "gqm": {
+          "goal": "For CLI consumers, ensure supported source and configuration inputs produce the documented analysis result or a recoverable error.",
+          "questions": [
+            "Do supported declarations yield the expected metrics and selection reasons?",
+            "Do generated files and explicit ignore directives remain excluded?",
+            "Do invalid options fail without presenting a candidate result as valid?"
+          ],
+          "metrics": [
+            "unit test results",
+            "acceptance scenario results",
+            "recoverable error behavior"
+          ]
+        },
+        "measures": [
+          {
+            "id": "analysis_behavioral_regression",
+            "question": "Do supported AST-analysis and exclusion paths retain their observable behavior?",
+            "instrument": {
+              "kind": "test",
+              "name": "go test ./..."
+            },
+            "evidence": "Focused analysis/config tests and end-to-end CLI acceptance results.",
+            "limitations": "Passing examples cannot exhaust the Go grammar or every filesystem and Git failure mode."
+          }
+        ],
+        "default_confidence": "high"
+      },
+      {
+        "id": "compatibility.consumer_contract_stability",
+        "characteristic": "compatibility",
+        "intent": "Keep the published command, configuration precedence, exit behavior, and report schema stable unless a deliberate compatibility decision is recorded.",
+        "applicable": true,
+        "required": true,
+        "severity": "critical",
+        "gqm": {
+          "goal": "For existing CLI and JSON consumers, detect incompatible changes before release.",
+          "questions": [
+            "Can a consumer still build the documented module and command?",
+            "Do text and JSON outputs retain their documented shape and exit semantics?",
+            "Does a CLI threshold override the repository configuration for the invocation?"
+          ],
+          "metrics": [
+            "frozen acceptance scenario results",
+            "CLI/configuration compatibility review"
+          ]
+        },
+        "measures": [
+          {
+            "id": "cli_json_configuration_contract",
+            "question": "Do the documented consumer scenarios still pass?",
+            "instrument": {
+              "kind": "test",
+              "name": "go test ./tests/acceptance"
+            },
+            "evidence": "Immutable acceptance scenarios for build identity, CLI behavior, JSON schema, config precedence, Git diff mode, and recoverable errors.",
+            "limitations": "The harness covers supported scenarios only; undocumented downstream consumers remain unknown."
+          },
+          {
+            "id": "compatibility_intent_review",
+            "question": "Is a CLI, configuration, or schema change compatible for real consumers?",
+            "instrument": {
+              "kind": "review_skill",
+              "name": "api-compatibility-review"
+            },
+            "evidence": "Review finding or an explicit no-breaking-change decision with consumer scope.",
+            "limitations": "Requires a stated intended contract and cannot discover unreported consumers."
+          }
+        ],
+        "default_confidence": "high"
+      },
+      {
+        "id": "security.local_input_and_secret_hygiene",
+        "characteristic": "security",
+        "intent": "Avoid exposing secrets or turning local source, path, and Git-reference inputs into an unsafe execution path.",
+        "applicable": true,
+        "required": true,
+        "severity": "critical",
+        "gqm": {
+          "goal": "For maintainers and local CLI users, prevent newly introduced secret exposure or unsafe handling of local inputs.",
+          "questions": [
+            "Does the change introduce a concrete unsafe path, command, or Git input flow?",
+            "Does the repository contain a detected secret?"
+          ],
+          "metrics": [
+            "security review findings",
+            "gitleaks result"
+          ]
+        },
+        "measures": [
+          {
+            "id": "local_input_security_review",
+            "question": "Can a local path or Git reference reach an unsafe execution or disclosure sink?",
+            "instrument": {
+              "kind": "review_skill",
+              "name": "security-review"
+            },
+            "evidence": "Input-to-sink analysis and recorded applicability decision.",
+            "limitations": "A semantic review cannot prove absence of every platform-specific command or filesystem behavior."
+          },
+          {
+            "id": "secret_scan",
+            "question": "Does the repository contain a secret detectable by the configured scanner?",
+            "instrument": {
+              "kind": "tool",
+              "name": "gitleaks"
+            },
+            "evidence": "make lint output for gitleaks.",
+            "limitations": "Secret scanners have false positives and cannot prove that no secret exists."
+          }
+        ],
+        "default_confidence": "medium"
+      }
+    ],
+    "blind_spots": [
+      "Metric values must not be aggregated into a universal readability score or release decision.",
+      "Runtime performance, user experience, and downstream consumer behavior are outside source-metric evidence unless separately measured.",
+      "Unmeasured evidence is unknown, not passing."
+    ]
+  },
+  "repository_tools": [],
+  "analysis_skills": [
+    {
+      "name": "requirements-review",
+      "applied": true,
+      "evidence": "The quality contract covers the stated CLI purpose: explainable review prioritization rather than an automatic readability verdict."
+    },
+    {
+      "name": "architecture-review",
+      "applied": true,
+      "evidence": "The selected factors follow the existing command → config/diff → analysis → report boundaries and add no production dependency."
+    },
+    {
+      "name": "change-impact-review",
+      "applied": true,
+      "evidence": "Relevant consumers are README examples, goreadable.json, text/JSON reports, frozen acceptance tests, and quality-gate consumers of this baseline."
+    },
+    {
+      "name": "api-compatibility-review",
+      "applied": true,
+      "evidence": "The baseline treats CLI flags, config precedence, exit behavior, module identity, and JSON schema as consumer contracts protected by immutable acceptance scenarios."
+    },
+    {
+      "name": "security-review",
+      "applied": true,
+      "evidence": "The CLI reads local Go sources and may use a Git reference; secret scanning is deterministic evidence and input-to-sink safety remains semantic review."
+    },
+    {
+      "name": "test-quality-review",
+      "applied": true,
+      "evidence": "Tests use isolated fixtures and behavior-oriented acceptance scenarios; the model preserves their role without equating test count with quality."
+    },
+    {
+      "name": "whitebox-risk-based-test",
+      "applied": true,
+      "evidence": "Risk focus is AST traversal/exclusions, threshold resolution, report serialization, diff filtering, and error propagation through the CLI boundary."
+    }
+  ],
+  "mechanical_checks": [
+    {
+      "id": "format",
+      "command": "make fmt",
+      "required": true,
+      "when": "always"
+    },
+    {
+      "id": "lint",
+      "command": "make lint",
+      "required": true,
+      "when": "always"
+    },
+    {
+      "id": "go-test",
+      "command": "go test ./...",
+      "required": true,
+      "when": "Go module"
+    },
+    {
+      "id": "go-race-test",
+      "command": "go test -race ./...",
+      "required": true,
+      "when": "Go module"
+    },
+    {
+      "id": "frozen-acceptance",
+      "command": "go test ./tests/acceptance",
+      "required": true,
+      "when": "Go module"
+    },
+    {
+      "id": "new-metrics-acceptance",
+      "command": "go test ./.implementation-orchestrator/acceptance-harness",
+      "required": true,
+      "when": "Task-specific CLI harness is present"
+    }
+  ],
+  "must_quality": [
+    {
+      "id": "requirements",
+      "rule": "Requested behavior is satisfied and demonstrated by tests or bounded evidence.",
+      "evaluation_mode": "BOTH",
+      "severity": "critical"
+    },
+    {
+      "id": "analysis-regression",
+      "rule": "Supported analysis, exclusions, configuration precedence, and recoverable errors do not regress unintentionally.",
+      "evaluation_mode": "BOTH",
+      "severity": "critical"
+    },
+    {
+      "id": "consumer-contract",
+      "rule": "CLI, configuration, module, text-output, and JSON-report contracts remain compatible unless an explicit decision approves a change.",
+      "evaluation_mode": "BOTH",
+      "severity": "critical"
+    },
+    {
+      "id": "repository-conventions",
+      "rule": "Repository-local guidance, formatting, linting, and test conventions are respected.",
+      "evaluation_mode": "BOTH",
+      "severity": "major"
+    },
+    {
+      "id": "security",
+      "rule": "No critical secret exposure or concrete unsafe local-input handling defect is introduced.",
+      "evaluation_mode": "BOTH",
+      "severity": "critical"
+    }
+  ],
+  "performance_quality": [
+    {
+      "id": "readability-review-value",
+      "rule": "Keep review candidates explainable and avoid treating source metrics as an automatic quality verdict.",
+      "severity": "non_blocking"
+    },
+    {
+      "id": "maintainability",
+      "rule": "Keep command, configuration, analysis, and reporting responsibilities easy to evolve.",
+      "severity": "non_blocking"
+    }
+  ],
+  "critical_defects": [
+    "Secret exposure or a concrete unsafe local-input execution path",
+    "Required analysis behavior missing or silently incorrect",
+    "Breaking a published CLI, configuration, module, or JSON-report contract without an approved compatibility decision"
+  ],
+  "assumptions": [
+    "The existing immutable acceptance harness defines the currently supported consumer scenarios.",
+    "Default goreadable metric thresholds are configurable product heuristics, not empirically calibrated universal release thresholds.",
+    "state.json remains evidence for baseline 1.0.0 until a new assessment is run against this baseline."
+  ]
+}

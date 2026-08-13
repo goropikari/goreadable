@@ -87,4 +87,52 @@ type Reported struct {
 		require.Len(t, result.Candidates, 1)
 		assert.Equal(t, "Reported", result.Candidates[0].Name)
 	})
+
+	t.Run("when local variables and control blocks exceed their thresholds: reports both metrics and reasons", func(t *testing.T) {
+		// Arrange
+		root := t.TempDir()
+		source := `package sample
+
+func Measured(input int) {
+	var total int
+	limit := 2
+	limit, extra := limit, 3
+	for index, value := range []int{limit} {
+		if value > 0 {
+			total += index + extra
+		}
+	}
+	switch total {
+	case 1:
+	default:
+	}
+	select {
+	default:
+	}
+	_ = input
+}
+`
+		path := filepath.Join(root, "sample.go")
+		require.NoError(t, os.WriteFile(path, []byte(source), 0o600))
+
+		files, err := analysis.Files(root, false)
+		require.NoError(t, err)
+
+		thresholds := config.Defaults()
+		thresholds.LocalVariables = 3
+		thresholds.ControlBlocks = 3
+
+		// Act
+		result, err := analysis.Analyze(files, thresholds, nil)
+
+		// Assert
+		require.NoError(t, err)
+		require.Len(t, result.Candidates, 1)
+		assert.Equal(t, 5, result.Candidates[0].Metrics["local_variables"])
+		assert.Equal(t, 4, result.Candidates[0].Metrics["control_blocks"])
+		assert.Equal(t, 3, result.Candidates[0].Thresholds["local_variables"])
+		assert.Equal(t, 3, result.Candidates[0].Thresholds["control_blocks"])
+		assert.Contains(t, result.Candidates[0].Reasons, "local_variables=5 exceeds threshold 3")
+		assert.Contains(t, result.Candidates[0].Reasons, "control_blocks=4 exceeds threshold 3")
+	})
 }

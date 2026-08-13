@@ -11,8 +11,20 @@ type Thresholds struct {
 	NestingDepth         int `json:"nesting_depth"`
 	CyclomaticComplexity int `json:"cyclomatic_complexity"`
 	FunctionArguments    int `json:"function_arguments"`
+	LocalVariables       int `json:"local_variables"`
+	ControlBlocks        int `json:"control_blocks"`
+	ReturnPoints         int `json:"return_points"`
+	BooleanOperators     int `json:"boolean_operators"`
+	MaxConditionTerms    int `json:"max_condition_terms"`
+	FunctionCalls        int `json:"function_calls"`
+	LiteralValues        int `json:"literal_values"`
+	ClosureCount         int `json:"closure_count"`
+	CommentLines         int `json:"comment_lines"`
+	StatementCount       int `json:"statement_count"`
+	TypeDependencies     int `json:"type_dependencies"`
 	StructFields         int `json:"struct_fields"`
 	TypeMethods          int `json:"type_methods"`
+	ExportedMembers      int `json:"exported_members"`
 }
 
 func Defaults() Thresholds {
@@ -21,8 +33,20 @@ func Defaults() Thresholds {
 		NestingDepth:         4,
 		CyclomaticComplexity: 10,
 		FunctionArguments:    5,
+		LocalVariables:       15,
+		ControlBlocks:        8,
+		ReturnPoints:         5,
+		BooleanOperators:     8,
+		MaxConditionTerms:    4,
+		FunctionCalls:        15,
+		LiteralValues:        10,
+		ClosureCount:         2,
+		CommentLines:         10,
+		StatementCount:       40,
+		TypeDependencies:     5,
 		StructFields:         8,
 		TypeMethods:          10,
+		ExportedMembers:      10,
 	}
 }
 
@@ -50,6 +74,7 @@ func LoadFile(path string, defaults Thresholds) (Thresholds, error) {
 	return defaults, nil
 }
 
+//nolint:cyclop // Every supported threshold is mapped at this configuration boundary.
 func (t *Thresholds) ApplyFlags(values map[string]int) {
 	if value, ok := values["function_lines"]; ok {
 		t.FunctionLines = value
@@ -67,6 +92,50 @@ func (t *Thresholds) ApplyFlags(values map[string]int) {
 		t.FunctionArguments = value
 	}
 
+	if value, ok := values["local_variables"]; ok {
+		t.LocalVariables = value
+	}
+
+	if value, ok := values["control_blocks"]; ok {
+		t.ControlBlocks = value
+	}
+
+	if value, ok := values["return_points"]; ok {
+		t.ReturnPoints = value
+	}
+
+	if value, ok := values["boolean_operators"]; ok {
+		t.BooleanOperators = value
+	}
+
+	if value, ok := values["max_condition_terms"]; ok {
+		t.MaxConditionTerms = value
+	}
+
+	if value, ok := values["function_calls"]; ok {
+		t.FunctionCalls = value
+	}
+
+	if value, ok := values["literal_values"]; ok {
+		t.LiteralValues = value
+	}
+
+	if value, ok := values["closure_count"]; ok {
+		t.ClosureCount = value
+	}
+
+	if value, ok := values["comment_lines"]; ok {
+		t.CommentLines = value
+	}
+
+	if value, ok := values["statement_count"]; ok {
+		t.StatementCount = value
+	}
+
+	if value, ok := values["type_dependencies"]; ok {
+		t.TypeDependencies = value
+	}
+
 	if value, ok := values["struct_fields"]; ok {
 		t.StructFields = value
 	}
@@ -74,8 +143,13 @@ func (t *Thresholds) ApplyFlags(values map[string]int) {
 	if value, ok := values["type_methods"]; ok {
 		t.TypeMethods = value
 	}
+
+	if value, ok := values["exported_members"]; ok {
+		t.ExportedMembers = value
+	}
 }
 
+//nolint:cyclop // Every supported threshold is merged at this configuration boundary.
 func merge(base *Thresholds, override Thresholds) {
 	if override.FunctionLines != 0 {
 		base.FunctionLines = override.FunctionLines
@@ -93,11 +167,59 @@ func merge(base *Thresholds, override Thresholds) {
 		base.FunctionArguments = override.FunctionArguments
 	}
 
+	if override.LocalVariables != 0 {
+		base.LocalVariables = override.LocalVariables
+	}
+
+	if override.ControlBlocks != 0 {
+		base.ControlBlocks = override.ControlBlocks
+	}
+
+	if override.ReturnPoints != 0 {
+		base.ReturnPoints = override.ReturnPoints
+	}
+
+	if override.BooleanOperators != 0 {
+		base.BooleanOperators = override.BooleanOperators
+	}
+
+	if override.MaxConditionTerms != 0 {
+		base.MaxConditionTerms = override.MaxConditionTerms
+	}
+
+	if override.FunctionCalls != 0 {
+		base.FunctionCalls = override.FunctionCalls
+	}
+
+	if override.LiteralValues != 0 {
+		base.LiteralValues = override.LiteralValues
+	}
+
+	if override.ClosureCount != 0 {
+		base.ClosureCount = override.ClosureCount
+	}
+
+	if override.CommentLines != 0 {
+		base.CommentLines = override.CommentLines
+	}
+
+	if override.StatementCount != 0 {
+		base.StatementCount = override.StatementCount
+	}
+
+	if override.TypeDependencies != 0 {
+		base.TypeDependencies = override.TypeDependencies
+	}
+
 	if override.StructFields != 0 {
 		base.StructFields = override.StructFields
 	}
 
 	if override.TypeMethods != 0 {
 		base.TypeMethods = override.TypeMethods
+	}
+
+	if override.ExportedMembers != 0 {
+		base.ExportedMembers = override.ExportedMembers
 	}
 }

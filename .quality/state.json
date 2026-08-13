@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "baseline_version": "1.1.0",
+  "run_id": "7bce17e6-498c-41d8-9acf-7d052a708d2d",
+  "started_at": "2026-08-13T17:45:21Z",
+  "finished_at": "2026-08-13T17:51:46Z",
+  "result": "PASS",
+  "checks": [
+    {
+      "id": "format",
+      "status": "PASS",
+      "command": "make fmt",
+      "exit_code": 0,
+      "evidence": "golangci-lint fmt and dprint fmt completed without formatting findings."
+    },
+    {
+      "id": "lint",
+      "status": "PASS",
+      "command": "make lint",
+      "exit_code": 0,
+      "evidence": "gitleaks found no leaks; typos, formatters, and golangci-lint completed with 0 issues."
+    },
+    {
+      "id": "go-test",
+      "status": "PASS",
+      "command": "go test ./...",
+      "exit_code": 0,
+      "evidence": "Command, analysis, configuration, and acceptance packages passed."
+    },
+    {
+      "id": "go-race-test",
+      "status": "PASS",
+      "command": "go test -race ./...",
+      "exit_code": 0,
+      "evidence": "All tested packages passed with the race detector."
+    },
+    {
+      "id": "frozen-acceptance",
+      "status": "PASS",
+      "command": "go test ./tests/acceptance",
+      "exit_code": 0,
+      "evidence": "Published module, CLI, JSON, configuration-precedence, diff, and error scenarios passed."
+    },
+    {
+      "id": "new-metrics-acceptance",
+      "status": "PASS",
+      "command": "go test ./.implementation-orchestrator/acceptance-harness",
+      "exit_code": 0,
+      "evidence": "Task-specific CLI acceptance harness passed."
+    }
+  ],
+  "factors": [
+    {
+      "id": "maintainability.readability_risk_signal",
+      "status": "PASS",
+      "confidence": "medium",
+      "metrics": [
+        {
+          "id": "readability_candidate_distribution",
+          "entity": "repository",
+          "raw_value": 36,
+          "rating": "informative",
+          "threshold_source": "consumer-resolved CLI thresholds"
+        }
+      ],
+      "aggregate": {
+        "method": "retain_leaf_values_and_worst_candidates",
+        "value": "36 function candidates: 15 production and 21 test declarations",
+        "worst_entities": [
+          "cmd/goreadable/main_test.go:TestExecute (159 function lines)",
+          "internal/config/config.go:merge (cyclomatic complexity 19; 18 control blocks)",
+          "cmd/goreadable/main.go:newCommand (47 function calls)"
+        ]
+      },
+      "evidence": [
+        "goreadable --format json --all-functions ./...",
+        "frozen acceptance scenarios"
+      ],
+      "unknowns": [
+        "No claim is made that this distribution measures semantic readability or runtime quality."
+      ]
+    },
+    {
+      "id": "reliability.ast_analysis_correctness",
+      "status": "PASS",
+      "confidence": "high",
+      "metrics": [],
+      "evidence": [
+        "go test ./...",
+        "go test -race ./...",
+        "go test ./.implementation-orchestrator/acceptance-harness"
+      ],
+      "unknowns": [
+        "The supported tests do not exhaust the Go grammar or all filesystem and Git failures."
+      ]
+    },
+    {
+      "id": "compatibility.consumer_contract_stability",
+      "status": "PASS",
+      "confidence": "high",
+      "metrics": [],
+      "evidence": [
+        "go test ./tests/acceptance",
+        "api-compatibility review: no unapproved contract change identified in the assessed scope"
+      ],
+      "unknowns": [
+        "Undocumented downstream consumers are not observable from this repository."
+      ]
+    },
+    {
+      "id": "security.local_input_and_secret_hygiene",
+      "status": "PASS",
+      "confidence": "medium",
+      "metrics": [],
+      "evidence": [
+        "make lint: gitleaks found no leaks",
+        "security review: no concrete unsafe local-input execution or disclosure path identified in the assessed scope"
+      ],
+      "unknowns": [
+        "Static scanning and bounded review do not prove the absence of every platform-specific input-handling defect."
+      ]
+    }
+  ],
+  "findings": [],
+  "changed_scope": [
+    ".quality/README.md",
+    ".quality/baseline.json",
+    ".quality/state.json",
+    "README.md",
+    "cmd/goreadable/main.go",
+    "cmd/goreadable/main_test.go",
+    "internal/analysis/analysis.go",
+    "internal/analysis/analysis_test.go",
+    "internal/config/config.go",
+    "internal/config/config_test.go"
+  ],
+  "semantic_review": {
+    "requirements": {
+      "mode": "BOTH",
+      "result": "PASS",
+      "tool_evidence": "Unit, acceptance, and task-specific harness tests passed.",
+      "ai_judgment": "The assessment keeps metric results as explainable review signals rather than automatic quality judgments."
+    },
+    "analysis-regression": {
+      "mode": "BOTH",
+      "result": "PASS",
+      "tool_evidence": "Full and race test suites passed.",
+      "ai_judgment": "Analysis, configuration, report, and CLI boundaries are covered by the selected regression evidence."
+    },
+    "consumer-contract": {
+      "mode": "BOTH",
+      "result": "PASS",
+      "tool_evidence": "Frozen acceptance tests passed.",
+      "ai_judgment": "No unapproved breaking CLI, configuration, module, text-output, or JSON-contract change was identified."
+    },
+    "repository-conventions": {
+      "mode": "BOTH",
+      "result": "PASS",
+      "tool_evidence": "make fmt and make lint passed.",
+      "ai_judgment": "The updated quality contract distinguishes model, policy, and assessment evidence."
+    },
+    "security": {
+      "mode": "BOTH",
+      "result": "PASS",
+      "tool_evidence": "gitleaks completed without a finding.",
+      "ai_judgment": "No concrete secret or unsafe local-input defect was identified in the assessed scope."
+    }
+  },
+  "notes": [
+    "The prior baseline 1.0.0 assessment passed on 2026-08-13; this record supersedes it with baseline 1.1.0 evidence.",
+    "The first sandboxed format/lint attempts could not write ordinary tool caches; rerunning the same commands with their normal caches completed successfully.",
+    "Metric distributions are retained for review prioritization only and do not determine the PASS decision."
+  ]
+}

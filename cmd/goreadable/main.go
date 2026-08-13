@@ -103,8 +103,20 @@ func newCommand(stdout, stderr io.Writer) *cobra.Command {
 	command.Flags().Int("max-nesting-depth", thresholds.NestingDepth, "maximum nesting depth")
 	command.Flags().Int("max-cyclomatic-complexity", thresholds.CyclomaticComplexity, "maximum cyclomatic complexity")
 	command.Flags().Int("max-function-args", thresholds.FunctionArguments, "maximum function arguments")
+	command.Flags().Int("max-local-variables", thresholds.LocalVariables, "maximum local variables")
+	command.Flags().Int("max-control-blocks", thresholds.ControlBlocks, "maximum control blocks")
+	command.Flags().Int("max-return-points", thresholds.ReturnPoints, "maximum return points")
+	command.Flags().Int("max-boolean-operators", thresholds.BooleanOperators, "maximum boolean operators")
+	command.Flags().Int("max-condition-terms", thresholds.MaxConditionTerms, "maximum terms in one condition")
+	command.Flags().Int("max-function-calls", thresholds.FunctionCalls, "maximum function calls")
+	command.Flags().Int("max-literal-values", thresholds.LiteralValues, "maximum meaningful literal values")
+	command.Flags().Int("max-closures", thresholds.ClosureCount, "maximum function literals")
+	command.Flags().Int("max-comment-lines", thresholds.CommentLines, "maximum comment lines")
+	command.Flags().Int("max-statements", thresholds.StatementCount, "maximum statements")
+	command.Flags().Int("max-type-dependencies", thresholds.TypeDependencies, "maximum distinct signature type dependencies")
 	command.Flags().Int("max-struct-fields", thresholds.StructFields, "maximum struct fields")
 	command.Flags().Int("max-type-methods", thresholds.TypeMethods, "maximum methods on a type")
+	command.Flags().Int("max-exported-members", thresholds.ExportedMembers, "maximum exported fields and methods on a type")
 
 	return command
 }
@@ -117,8 +129,20 @@ func flagOverrides(command *cobra.Command) map[string]int {
 		"max-nesting-depth":         "nesting_depth",
 		"max-cyclomatic-complexity": "cyclomatic_complexity",
 		"max-function-args":         "function_arguments",
+		"max-local-variables":       "local_variables",
+		"max-control-blocks":        "control_blocks",
+		"max-return-points":         "return_points",
+		"max-boolean-operators":     "boolean_operators",
+		"max-condition-terms":       "max_condition_terms",
+		"max-function-calls":        "function_calls",
+		"max-literal-values":        "literal_values",
+		"max-closures":              "closure_count",
+		"max-comment-lines":         "comment_lines",
+		"max-statements":            "statement_count",
+		"max-type-dependencies":     "type_dependencies",
 		"max-struct-fields":         "struct_fields",
 		"max-type-methods":          "type_methods",
+		"max-exported-members":      "exported_members",
 	}
 	for flagName, thresholdName := range flags {
 		if !command.Flags().Changed(flagName) {
