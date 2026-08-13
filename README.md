@@ -14,6 +14,12 @@ go run ./cmd/goreadable --format json ./...
 
 # 閾値を指定して Git 差分を解析
 go run ./cmd/goreadable --diff HEAD --max-function-lines 40 ./...
+
+# パッケージ内の全関数のメトリックを表示
+go run ./cmd/goreadable --all-functions ./...
+
+# 指定したパッケージ関数（またはメソッド）のメトリックを表示
+go run ./cmd/goreadable --function analysis.Analyze --function analysis.Options.MetricsOnly ./...
 ```
 
 ### 出力例
@@ -98,6 +104,8 @@ $ goreadable --format json --max-function-lines 5 . > readability-candidates.jso
 - AI が追加の読込なしに一次評価できる対象ソース（`source`）
 
 JSON は後続の AI レビュー工程へ渡すための入力として利用できます。goreadable 自身は外部 AI API を呼び出しません。
+
+`--all-functions` を指定すると、閾値を超えているかどうかにかかわらず、対象パッケージ内の全関数を出力します。`--function` は繰り返し指定でき、`パッケージ名.関数名`（メソッドは `パッケージ名.型名.メソッド名`）で特定の関数だけを出力します。これらのモードでは、テキスト出力にも各関数のメトリックを表示します。
 
 ## 開発
 

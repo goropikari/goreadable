@@ -28,8 +28,13 @@ func execute(arguments []string, stdout, stderr io.Writer) error {
 	return command.Execute()
 }
 
+//nolint:cyclop // Command setup keeps all user-visible options at one boundary.
 func newCommand(stdout, stderr io.Writer) *cobra.Command {
-	var format, diffRef string
+	var (
+		format, diffRef   string
+		allFunctions      bool
+		functionSelectors []string
+	)
 
 	thresholds := config.Defaults()
 
@@ -46,6 +51,11 @@ func newCommand(stdout, stderr io.Writer) *cobra.Command {
 
 			if len(paths) == 0 {
 				paths = []string{"."}
+			}
+
+			options, err := analysis.NewOptions(allFunctions, functionSelectors)
+			if err != nil {
+				return err
 			}
 
 			resolved := thresholds
@@ -71,7 +81,7 @@ func newCommand(stdout, stderr io.Writer) *cobra.Command {
 				return err
 			}
 
-			result, err := analysis.Analyze(files, resolved, changed)
+			result, err := analysis.AnalyzeWithOptions(files, resolved, changed, options)
 			if err != nil {
 				return err
 			}
@@ -87,6 +97,8 @@ func newCommand(stdout, stderr io.Writer) *cobra.Command {
 	command.SetErr(stderr)
 	command.Flags().StringVar(&format, "format", "text", "output format: text or json")
 	command.Flags().StringVar(&diffRef, "diff", "", "analyze declarations changed since this Git ref")
+	command.Flags().BoolVar(&allFunctions, "all-functions", false, "report metrics for every function in the selected packages")
+	command.Flags().StringArrayVar(&functionSelectors, "function", nil, "report metrics for package.Function or package.Type.Method (repeatable)")
 	command.Flags().Int("max-function-lines", thresholds.FunctionLines, "maximum function lines")
 	command.Flags().Int("max-nesting-depth", thresholds.NestingDepth, "maximum nesting depth")
 	command.Flags().Int("max-cyclomatic-complexity", thresholds.CyclomaticComplexity, "maximum cyclomatic complexity")

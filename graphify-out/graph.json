@@ -41,7 +41,7 @@
       "_origin": "ast",
       "id": "acceptance_harness_manifest",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "manifest.json"
     },
     {
@@ -52,7 +52,7 @@
       "_origin": "ast",
       "id": "acceptance_harness_manifest_version",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "version"
     },
     {
@@ -63,7 +63,7 @@
       "_origin": "ast",
       "id": "acceptance_harness_manifest_artifact",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "artifact"
     },
     {
@@ -74,7 +74,7 @@
       "_origin": "ast",
       "id": "acceptance_harness_manifest_artifact_kind",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "kind"
     },
     {
@@ -85,7 +85,7 @@
       "_origin": "ast",
       "id": "acceptance_harness_manifest_artifact_build_command",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "build_command"
     },
     {
@@ -96,7 +96,7 @@
       "_origin": "ast",
       "id": "acceptance_harness_manifest_artifact_consumer_command",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "consumer_command"
     },
     {
@@ -107,7 +107,7 @@
       "_origin": "ast",
       "id": "acceptance_harness_manifest_risks",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "risks"
     },
     {
@@ -118,7 +118,7 @@
       "_origin": "ast",
       "id": "ref_external_artifact",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "external-artifact"
     },
     {
@@ -129,7 +129,7 @@
       "_origin": "ast",
       "id": "ref_module_identity",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "module-identity"
     },
     {
@@ -140,7 +140,7 @@
       "_origin": "ast",
       "id": "ref_cli_contract",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "cli-contract"
     },
     {
@@ -151,7 +151,7 @@
       "_origin": "ast",
       "id": "ref_json_contract",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "json-contract"
     },
     {
@@ -162,7 +162,7 @@
       "_origin": "ast",
       "id": "ref_git_integration",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "git-integration"
     },
     {
@@ -173,7 +173,7 @@
       "_origin": "ast",
       "id": "acceptance_harness_manifest_immutable_paths",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "immutable_paths"
     },
     {
@@ -184,7 +184,7 @@
       "_origin": "ast",
       "id": "ref_acceptance_harness_manifest_json",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": ".acceptance-harness/manifest.json"
     },
     {
@@ -195,7 +195,7 @@
       "_origin": "ast",
       "id": "ref_tests_acceptance_goreadable_test_go",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "tests/acceptance/goreadable_test.go"
     },
     {
@@ -206,7 +206,7 @@
       "_origin": "ast",
       "id": "acceptance_harness_manifest_criteria",
       "community": 1,
-      "community_name": "Acceptance Contract",
+      "community_name": "risks",
       "norm_label": "criteria"
     },
     {
@@ -217,7 +217,7 @@
       "_origin": "ast",
       "id": "cmd_goreadable_main",
       "community": 4,
-      "community_name": "CLI Command Flow",
+      "community_name": "newCommand",
       "norm_label": "main.go"
     },
     {
@@ -228,7 +228,7 @@
       "_origin": "ast",
       "id": "cmd_goreadable_main_main",
       "community": 4,
-      "community_name": "CLI Command Flow",
+      "community_name": "newCommand",
       "norm_label": "main()"
     },
     {
@@ -239,7 +239,7 @@
       "_origin": "ast",
       "id": "cmd_goreadable_main_execute",
       "community": 4,
-      "community_name": "CLI Command Flow",
+      "community_name": "newCommand",
       "norm_label": "execute()"
     },
     {
@@ -250,18 +250,18 @@
       "_origin": "ast",
       "id": "cmd_goreadable_main_go_writer",
       "community": 4,
-      "community_name": "CLI Command Flow",
+      "community_name": "newCommand",
       "norm_label": "writer"
     },
     {
       "label": "newCommand()",
       "file_type": "code",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "cmd_goreadable_main_newcommand",
       "community": 4,
-      "community_name": "CLI Command Flow",
+      "community_name": "newCommand",
       "norm_label": "newcommand()"
     },
     {
@@ -272,41 +272,74 @@
       "_origin": "ast",
       "id": "command",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "command"
     },
     {
       "label": "flagOverrides()",
       "file_type": "code",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L100",
+      "source_location": "L112",
       "_origin": "ast",
       "id": "cmd_goreadable_main_flagoverrides",
       "community": 4,
-      "community_name": "CLI Command Flow",
+      "community_name": "newCommand",
       "norm_label": "flagoverrides()"
     },
     {
       "label": "inputFiles()",
       "file_type": "code",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L125",
+      "source_location": "L137",
       "_origin": "ast",
       "id": "cmd_goreadable_main_inputfiles",
       "community": 4,
-      "community_name": "CLI Command Flow",
+      "community_name": "newCommand",
       "norm_label": "inputfiles()"
     },
     {
       "label": "pathsRoot()",
       "file_type": "code",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L147",
+      "source_location": "L159",
       "_origin": "ast",
       "id": "cmd_goreadable_main_pathsroot",
       "community": 4,
-      "community_name": "CLI Command Flow",
+      "community_name": "newCommand",
       "norm_label": "pathsroot()"
+    },
+    {
+      "label": "main_test.go",
+      "file_type": "code",
+      "source_file": "cmd/goreadable/main_test.go",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "cmd_goreadable_main_test",
+      "community": 4,
+      "community_name": "newCommand",
+      "norm_label": "main_test.go"
+    },
+    {
+      "label": "TestExecute()",
+      "file_type": "code",
+      "source_file": "cmd/goreadable/main_test.go",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "cmd_goreadable_main_test_testexecute",
+      "community": 4,
+      "community_name": "newCommand",
+      "norm_label": "testexecute()"
+    },
+    {
+      "label": "T",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "cmd_goreadable_main_test_go_t",
+      "community": 4,
+      "community_name": "newCommand",
+      "norm_label": "t"
     },
     {
       "label": "github.com/goropikari/goreadable",
@@ -318,7 +351,7 @@
       "_origin": "ast",
       "id": "pkg_github_com_goropikari_goreadable",
       "community": 8,
-      "community_name": "Module Identity",
+      "community_name": "github.com/goropikari/goreadable",
       "norm_label": "github.com/goropikari/goreadable"
     },
     {
@@ -329,40 +362,139 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "analysis.go"
+    },
+    {
+      "label": "Options",
+      "file_type": "code",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "analysis_options",
+      "community": 0,
+      "community_name": "analysis.go",
+      "norm_label": "options"
+    },
+    {
+      "label": "NewOptions()",
+      "file_type": "code",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "internal_analysis_analysis_newoptions",
+      "community": 0,
+      "community_name": "analysis.go",
+      "norm_label": "newoptions()"
+    },
+    {
+      "label": ".MetricsOnly()",
+      "file_type": "code",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "analysis_options_metricsonly",
+      "community": 0,
+      "community_name": "analysis.go",
+      "norm_label": ".metricsonly()"
+    },
+    {
+      "label": ".IncludesFunction()",
+      "file_type": "code",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "analysis_options_includesfunction",
+      "community": 0,
+      "community_name": "analysis.go",
+      "norm_label": ".includesfunction()"
+    },
+    {
+      "label": "FuncDecl",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "funcdecl",
+      "community": 0,
+      "community_name": "analysis.go",
+      "norm_label": "funcdecl"
     },
     {
       "label": "Files()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L18",
+      "source_location": "L55",
       "_origin": "ast",
       "id": "internal_analysis_analysis_files",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "files()"
     },
     {
       "label": "Analyze()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L63",
+      "source_location": "L100",
       "_origin": "ast",
       "id": "internal_analysis_analysis_analyze",
-      "community": 0,
-      "community_name": "Analysis Engine",
+      "community": 6,
+      "community_name": "Thresholds",
       "norm_label": "analyze()"
+    },
+    {
+      "label": "AnalyzeWithOptions()",
+      "file_type": "code",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L105",
+      "_origin": "ast",
+      "id": "internal_analysis_analysis_analyzewithoptions",
+      "community": 0,
+      "community_name": "analysis.go",
+      "norm_label": "analyzewithoptions()"
+    },
+    {
+      "label": "functionSelector()",
+      "file_type": "code",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L200",
+      "_origin": "ast",
+      "id": "internal_analysis_analysis_functionselector",
+      "community": 0,
+      "community_name": "analysis.go",
+      "norm_label": "functionselector()"
+    },
+    {
+      "label": "receiverName()",
+      "file_type": "code",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L208",
+      "_origin": "ast",
+      "id": "internal_analysis_analysis_receivername",
+      "community": 0,
+      "community_name": "analysis.go",
+      "norm_label": "receivername()"
+    },
+    {
+      "label": "Expr",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "expr",
+      "community": 0,
+      "community_name": "analysis.go",
+      "norm_label": "expr"
     },
     {
       "label": "ignoredTypeNames()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L146",
+      "source_location": "L223",
       "_origin": "ast",
       "id": "internal_analysis_analysis_ignoredtypenames",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "ignoredtypenames()"
     },
     {
@@ -373,18 +505,18 @@
       "_origin": "ast",
       "id": "file",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "file"
     },
     {
       "label": "hasIgnoreDirective()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L166",
+      "source_location": "L243",
       "_origin": "ast",
       "id": "internal_analysis_analysis_hasignoredirective",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "hasignoredirective()"
     },
     {
@@ -395,40 +527,40 @@
       "_origin": "ast",
       "id": "commentgroup",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "commentgroup"
     },
     {
       "label": "candidate()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L180",
+      "source_location": "L257",
       "_origin": "ast",
       "id": "internal_analysis_analysis_candidate",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "candidate()"
     },
     {
       "label": "reasons()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L192",
+      "source_location": "L269",
       "_origin": "ast",
       "id": "internal_analysis_analysis_reasons",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "reasons()"
     },
     {
       "label": "argumentCount()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L206",
+      "source_location": "L283",
       "_origin": "ast",
       "id": "internal_analysis_analysis_argumentcount",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "argumentcount()"
     },
     {
@@ -439,18 +571,18 @@
       "_origin": "ast",
       "id": "functype",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "functype"
     },
     {
       "label": "nesting()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L225",
+      "source_location": "L302",
       "_origin": "ast",
       "id": "internal_analysis_analysis_nesting",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "nesting()"
     },
     {
@@ -461,51 +593,51 @@
       "_origin": "ast",
       "id": "blockstmt",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "blockstmt"
     },
     {
       "label": "complexity()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L260",
+      "source_location": "L337",
       "_origin": "ast",
       "id": "internal_analysis_analysis_complexity",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "complexity()"
     },
     {
       "label": "methodCounts()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L278",
+      "source_location": "L355",
       "_origin": "ast",
       "id": "internal_analysis_analysis_methodcounts",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "methodcounts()"
     },
     {
       "label": "overlaps()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L300",
+      "source_location": "L377",
       "_origin": "ast",
       "id": "internal_analysis_analysis_overlaps",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "overlaps()"
     },
     {
       "label": "isGenerated()",
       "file_type": "code",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L315",
+      "source_location": "L392",
       "_origin": "ast",
       "id": "internal_analysis_analysis_isgenerated",
       "community": 0,
-      "community_name": "Analysis Engine",
+      "community_name": "analysis.go",
       "norm_label": "isgenerated()"
     },
     {
@@ -515,8 +647,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "internal_analysis_analysis_test",
-      "community": 0,
-      "community_name": "Analysis Engine",
+      "community": 6,
+      "community_name": "Thresholds",
       "norm_label": "analysis_test.go"
     },
     {
@@ -526,8 +658,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "internal_analysis_analysis_test_testanalyze",
-      "community": 0,
-      "community_name": "Analysis Engine",
+      "community": 6,
+      "community_name": "Thresholds",
       "norm_label": "testanalyze()"
     },
     {
@@ -537,8 +669,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "internal_analysis_analysis_test_go_t",
-      "community": 0,
-      "community_name": "Analysis Engine",
+      "community": 6,
+      "community_name": "Thresholds",
       "norm_label": "t"
     },
     {
@@ -549,7 +681,7 @@
       "_origin": "ast",
       "id": "internal_config_config",
       "community": 6,
-      "community_name": "Configuration",
+      "community_name": "Thresholds",
       "norm_label": "config.go"
     },
     {
@@ -560,7 +692,7 @@
       "_origin": "ast",
       "id": "config_thresholds",
       "community": 6,
-      "community_name": "Configuration",
+      "community_name": "Thresholds",
       "norm_label": "thresholds"
     },
     {
@@ -571,7 +703,7 @@
       "_origin": "ast",
       "id": "internal_config_config_defaults",
       "community": 6,
-      "community_name": "Configuration",
+      "community_name": "Thresholds",
       "norm_label": "defaults()"
     },
     {
@@ -582,7 +714,7 @@
       "_origin": "ast",
       "id": "config_fileconfig",
       "community": 6,
-      "community_name": "Configuration",
+      "community_name": "Thresholds",
       "norm_label": "fileconfig"
     },
     {
@@ -593,7 +725,7 @@
       "_origin": "ast",
       "id": "internal_config_config_loadfile",
       "community": 6,
-      "community_name": "Configuration",
+      "community_name": "Thresholds",
       "norm_label": "loadfile()"
     },
     {
@@ -604,7 +736,7 @@
       "_origin": "ast",
       "id": "config_thresholds_applyflags",
       "community": 6,
-      "community_name": "Configuration",
+      "community_name": "Thresholds",
       "norm_label": ".applyflags()"
     },
     {
@@ -615,7 +747,7 @@
       "_origin": "ast",
       "id": "internal_config_config_merge",
       "community": 6,
-      "community_name": "Configuration",
+      "community_name": "Thresholds",
       "norm_label": "merge()"
     },
     {
@@ -625,8 +757,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "internal_diff_diff",
-      "community": 4,
-      "community_name": "CLI Command Flow",
+      "community": 2,
+      "community_name": "goreadable_test.go",
       "norm_label": "diff.go"
     },
     {
@@ -636,8 +768,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "internal_diff_diff_changedfiles",
-      "community": 4,
-      "community_name": "CLI Command Flow",
+      "community": 2,
+      "community_name": "goreadable_test.go",
       "norm_label": "changedfiles()"
     },
     {
@@ -647,41 +779,41 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "internal_report_report",
-      "community": 7,
-      "community_name": "Report Output",
+      "community": 4,
+      "community_name": "newCommand",
       "norm_label": "report.go"
     },
     {
       "label": "Candidate",
       "file_type": "code",
       "source_file": "internal/report/report.go",
-      "source_location": "L9",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "report_candidate",
-      "community": 7,
-      "community_name": "Report Output",
+      "community": 4,
+      "community_name": "newCommand",
       "norm_label": "candidate"
     },
     {
       "label": "Result",
       "file_type": "code",
       "source_file": "internal/report/report.go",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "report_result",
-      "community": 7,
-      "community_name": "Report Output",
+      "community": 4,
+      "community_name": "newCommand",
       "norm_label": "result"
     },
     {
       "label": "WriteJSON()",
       "file_type": "code",
       "source_file": "internal/report/report.go",
-      "source_location": "L27",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "internal_report_report_writejson",
-      "community": 7,
-      "community_name": "Report Output",
+      "community": 4,
+      "community_name": "newCommand",
       "norm_label": "writejson()"
     },
     {
@@ -691,20 +823,31 @@
       "source_location": "",
       "_origin": "ast",
       "id": "internal_report_report_go_writer",
-      "community": 7,
-      "community_name": "Report Output",
+      "community": 4,
+      "community_name": "newCommand",
       "norm_label": "writer"
     },
     {
       "label": "WriteText()",
       "file_type": "code",
       "source_file": "internal/report/report.go",
-      "source_location": "L34",
+      "source_location": "L36",
       "_origin": "ast",
       "id": "internal_report_report_writetext",
-      "community": 7,
-      "community_name": "Report Output",
+      "community": 4,
+      "community_name": "newCommand",
       "norm_label": "writetext()"
+    },
+    {
+      "label": "metricNames()",
+      "file_type": "code",
+      "source_file": "internal/report/report.go",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "internal_report_report_metricnames",
+      "community": 4,
+      "community_name": "newCommand",
+      "norm_label": "metricnames()"
     },
     {
       "label": "goreadable_test.go",
@@ -714,7 +857,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "goreadable_test.go"
     },
     {
@@ -725,7 +868,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_testgoreadablemoduleidentity",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "testgoreadablemoduleidentity()"
     },
     {
@@ -736,7 +879,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_go_t",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "t"
     },
     {
@@ -747,7 +890,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_testgoreadablecli",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "testgoreadablecli()"
     },
     {
@@ -758,7 +901,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_buildgoreadable",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "buildgoreadable()"
     },
     {
@@ -769,7 +912,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_writefixture",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "writefixture()"
     },
     {
@@ -780,7 +923,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_rungoreadable",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "rungoreadable()"
     },
     {
@@ -791,7 +934,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_candidates",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "candidates()"
     },
     {
@@ -802,7 +945,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_candidatenames",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "candidatenames()"
     },
     {
@@ -813,7 +956,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_candidatebyname",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "candidatebyname()"
     },
     {
@@ -824,7 +967,7 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_repositoryroot",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "repositoryroot()"
     },
     {
@@ -835,8 +978,294 @@
       "_origin": "ast",
       "id": "tests_acceptance_goreadable_test_runcommand",
       "community": 2,
-      "community_name": "Acceptance Tests",
+      "community_name": "goreadable_test.go",
       "norm_label": "runcommand()"
+    },
+    {
+      "label": "blackbox-risk-based-test.md",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "blackbox-risk-based-test.md"
+    },
+    {
+      "label": "Scope and Test Basis",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_scope_and_test_basis",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "scope and test basis"
+    },
+    {
+      "label": "Risk Summary",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_risk_summary",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "risk summary"
+    },
+    {
+      "label": "RISK-001: A selector still filters out under-threshold functions",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_risk_001_a_selector_still_filters_out_under_threshold_functions",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "risk-001: a selector still filters out under-threshold functions"
+    },
+    {
+      "label": "RISK-002: Text output omits the requested metric values",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_risk_002_text_output_omits_the_requested_metric_values",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "risk-002: text output omits the requested metric values"
+    },
+    {
+      "label": "RISK-003: New flags alter the default review-candidate workflow",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_risk_003_new_flags_alter_the_default_review_candidate_workflow",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "risk-003: new flags alter the default review-candidate workflow"
+    },
+    {
+      "label": "Prioritized Test Conditions",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_prioritized_test_conditions",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "prioritized test conditions"
+    },
+    {
+      "label": "TC-001: All functions in a file are requested",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_tc_001_all_functions_in_a_file_are_requested",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "tc-001: all functions in a file are requested"
+    },
+    {
+      "label": "TC-002: One exact function name is requested",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L51",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_tc_002_one_exact_function_name_is_requested",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "tc-002: one exact function name is requested"
+    },
+    {
+      "label": "TC-003: Metrics are requested in default text format",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L60",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_tc_003_metrics_are_requested_in_default_text_format",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "tc-003: metrics are requested in default text format"
+    },
+    {
+      "label": "TC-004: No metric selector is requested",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L69",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_tc_004_no_metric_selector_is_requested",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "tc-004: no metric selector is requested"
+    },
+    {
+      "label": "TC-005: An empty function selector is passed",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L78",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_tc_005_an_empty_function_selector_is_passed",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "tc-005: an empty function selector is passed"
+    },
+    {
+      "label": "Regression and Exploratory Coverage",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_regression_and_exploratory_coverage",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "regression and exploratory coverage"
+    },
+    {
+      "label": "Not Run / Deferred Checks",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L91",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_not_run_deferred_checks",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "not run / deferred checks"
+    },
+    {
+      "label": "Residual Risks and Assumptions",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_residual_risks_and_assumptions",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "residual risks and assumptions"
+    },
+    {
+      "label": "Acceptance Criteria Improvements",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L99",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_blackbox_risk_based_test_acceptance_criteria_improvements",
+      "community": 7,
+      "community_name": "blackbox-risk-based-test.md",
+      "norm_label": "acceptance criteria improvements"
+    },
+    {
+      "label": "implementation-plan.md",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "implementation-plan.md"
+    },
+    {
+      "label": "Implementation Plan",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "implementation plan"
+    },
+    {
+      "label": "Change summary",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan_change_summary",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "change summary"
+    },
+    {
+      "label": "Risk and decision analysis",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan_risk_and_decision_analysis",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "risk and decision analysis"
+    },
+    {
+      "label": "Change size and staging",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan_change_size_and_staging",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "change size and staging"
+    },
+    {
+      "label": "Selected skills",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan_selected_skills",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "selected skills"
+    },
+    {
+      "label": "Acceptance and validation",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan_acceptance_and_validation",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "acceptance and validation"
+    },
+    {
+      "label": "Implementation steps",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan_implementation_steps",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "implementation steps"
+    },
+    {
+      "label": "Decision gates",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan_decision_gates",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "decision gates"
+    },
+    {
+      "label": "Completion evidence",
+      "file_type": "document",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "implementation_orchestrator_implementation_plan_completion_evidence",
+      "community": 9,
+      "community_name": "Implementation Plan",
+      "norm_label": "completion evidence"
     },
     {
       "label": "Graphify Workflow",
@@ -848,10 +1277,11 @@
       "author": null,
       "contributor": null,
       "rationale": "Defines graphify's extraction, traversal, update, and export workflow.",
-      "id": "_codex_skills_graphify_skill_graphify_workflow",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "graphify workflow"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "graphify workflow",
+      "_origin": "semantic",
+      "id": "_codex_skills_graphify_skill_graphify_workflow"
     },
     {
       "label": "Graphify Add and Watch",
@@ -862,10 +1292,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "_codex_skills_graphify_references_add_watch_graphify_add_watch",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "graphify add and watch"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "graphify add and watch",
+      "_origin": "semantic",
+      "id": "_codex_skills_graphify_references_add_watch_graphify_add_watch"
     },
     {
       "label": "Graphify Exports",
@@ -876,10 +1307,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "_codex_skills_graphify_references_exports_graphify_exports",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "graphify exports"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "graphify exports",
+      "_origin": "semantic",
+      "id": "_codex_skills_graphify_references_exports_graphify_exports"
     },
     {
       "label": "Graphify Extraction Specification",
@@ -891,10 +1323,11 @@
       "author": null,
       "contributor": null,
       "rationale": "Requires auditable EXTRACTED, INFERRED, and AMBIGUOUS relationships and deterministic node identifiers.",
-      "id": "_codex_skills_graphify_references_extraction_spec_graphify_extraction_spec",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "graphify extraction specification"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "graphify extraction specification",
+      "_origin": "semantic",
+      "id": "_codex_skills_graphify_references_extraction_spec_graphify_extraction_spec"
     },
     {
       "label": "Graphify GitHub and Merge",
@@ -905,10 +1338,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "_codex_skills_graphify_references_github_and_merge_github_merge",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "graphify github and merge"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "graphify github and merge",
+      "_origin": "semantic",
+      "id": "_codex_skills_graphify_references_github_and_merge_github_merge"
     },
     {
       "label": "Graphify Hooks",
@@ -919,10 +1353,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "_codex_skills_graphify_references_hooks_graphify_hooks",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "graphify hooks"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "graphify hooks",
+      "_origin": "semantic",
+      "id": "_codex_skills_graphify_references_hooks_graphify_hooks"
     },
     {
       "label": "Graphify Query",
@@ -933,10 +1368,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "_codex_skills_graphify_references_query_graphify_query",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "graphify query"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "graphify query",
+      "_origin": "semantic",
+      "id": "_codex_skills_graphify_references_query_graphify_query"
     },
     {
       "label": "Graphify Transcription",
@@ -947,10 +1383,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "_codex_skills_graphify_references_transcribe_graphify_transcribe",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "graphify transcription"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "graphify transcription",
+      "_origin": "semantic",
+      "id": "_codex_skills_graphify_references_transcribe_graphify_transcribe"
     },
     {
       "label": "Graphify Incremental Update",
@@ -962,10 +1399,11 @@
       "author": null,
       "contributor": null,
       "rationale": "Preserves unchanged graph state while replacing changed sources and pruning deleted sources.",
-      "id": "_codex_skills_graphify_references_update_graphify_update",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "graphify incremental update"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "graphify incremental update",
+      "_origin": "semantic",
+      "id": "_codex_skills_graphify_references_update_graphify_update"
     },
     {
       "label": "Pull Request Template",
@@ -976,10 +1414,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "_github_pull_request_template_pull_request_template",
       "community": 5,
-      "community_name": "Repository Standards",
-      "norm_label": "pull request template"
+      "community_name": "Testing Guidelines",
+      "norm_label": "pull request template",
+      "_origin": "semantic",
+      "id": "_github_pull_request_template_pull_request_template"
     },
     {
       "label": "Continuous Integration Pipeline",
@@ -990,10 +1429,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "_github_workflows_ci_ci_pipeline",
       "community": 5,
-      "community_name": "Repository Standards",
-      "norm_label": "continuous integration pipeline"
+      "community_name": "Testing Guidelines",
+      "norm_label": "continuous integration pipeline",
+      "_origin": "semantic",
+      "id": "_github_workflows_ci_ci_pipeline"
     },
     {
       "label": "Golangci Lint Configuration",
@@ -1004,10 +1444,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "_golangci_golangci_configuration",
       "community": 5,
-      "community_name": "Repository Standards",
-      "norm_label": "golangci lint configuration"
+      "community_name": "Testing Guidelines",
+      "norm_label": "golangci lint configuration",
+      "_origin": "semantic",
+      "id": "_golangci_golangci_configuration"
     },
     {
       "label": "Repository Agent Guidance",
@@ -1019,10 +1460,11 @@
       "author": null,
       "contributor": null,
       "rationale": "Sets repository-specific testing, development, change-size, pull-request, and graphify operating rules.",
-      "id": "agents_repository_guidance",
       "community": 5,
-      "community_name": "Repository Standards",
-      "norm_label": "repository agent guidance"
+      "community_name": "Testing Guidelines",
+      "norm_label": "repository agent guidance",
+      "_origin": "semantic",
+      "id": "agents_repository_guidance"
     },
     {
       "label": "Goreadable CLI",
@@ -1033,10 +1475,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_goreadable_cli",
       "community": 5,
-      "community_name": "Repository Standards",
-      "norm_label": "goreadable cli"
+      "community_name": "Testing Guidelines",
+      "norm_label": "goreadable cli",
+      "_origin": "semantic",
+      "id": "readme_goreadable_cli"
     },
     {
       "label": "Testing Guidelines",
@@ -1048,10 +1491,11 @@
       "author": null,
       "contributor": null,
       "rationale": "Prioritizes deterministic behavior-level tests, AAA structure, explicit scenarios, and risk-based failure coverage.",
-      "id": "testing_testing_guidelines",
       "community": 5,
-      "community_name": "Repository Standards",
-      "norm_label": "testing guidelines"
+      "community_name": "Testing Guidelines",
+      "norm_label": "testing guidelines",
+      "_origin": "semantic",
+      "id": "testing_testing_guidelines"
     },
     {
       "label": "Repository Testing Guidelines",
@@ -1063,10 +1507,11 @@
       "author": null,
       "contributor": null,
       "rationale": "Specifies testify assertions, scenario-oriented t.Run tests, public behavior focus, and restrained table tests.",
-      "id": "docs_testing_guidelines_testing_guidelines",
       "community": 5,
-      "community_name": "Repository Standards",
-      "norm_label": "repository testing guidelines"
+      "community_name": "Testing Guidelines",
+      "norm_label": "repository testing guidelines",
+      "_origin": "semantic",
+      "id": "docs_testing_guidelines_testing_guidelines"
     },
     {
       "label": "Knowledge Graph",
@@ -1077,10 +1522,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "concept_graphify_knowledge_graph",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "knowledge graph"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "knowledge graph",
+      "_origin": "semantic",
+      "id": "concept_graphify_knowledge_graph"
     },
     {
       "label": "Semantic Extraction",
@@ -1091,10 +1537,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "concept_semantic_extraction",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "semantic extraction"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "semantic extraction",
+      "_origin": "semantic",
+      "id": "concept_semantic_extraction"
     },
     {
       "label": "Incremental Re-extraction",
@@ -1105,10 +1552,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "concept_incremental_reextraction",
       "community": 3,
-      "community_name": "Graphify Documentation",
-      "norm_label": "incremental re-extraction"
+      "community_name": "Graphify Incremental Update",
+      "norm_label": "incremental re-extraction",
+      "_origin": "semantic",
+      "id": "concept_incremental_reextraction"
     },
     {
       "label": "Behavior-level Testing",
@@ -1119,10 +1567,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "concept_behavior_level_testing",
       "community": 5,
-      "community_name": "Repository Standards",
-      "norm_label": "behavior-level testing"
+      "community_name": "Testing Guidelines",
+      "norm_label": "behavior-level testing",
+      "_origin": "semantic",
+      "id": "concept_behavior_level_testing"
     },
     {
       "label": "Continuous Integration",
@@ -1133,10 +1582,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "concept_continuous_integration",
       "community": 5,
-      "community_name": "Repository Standards",
-      "norm_label": "continuous integration"
+      "community_name": "Testing Guidelines",
+      "norm_label": "continuous integration",
+      "_origin": "semantic",
+      "id": "concept_continuous_integration"
     }
   ],
   "links": [
@@ -1327,7 +1777,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L100",
+      "source_location": "L112",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main",
@@ -1338,7 +1788,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L125",
+      "source_location": "L137",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main",
@@ -1360,7 +1810,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main",
@@ -1371,7 +1821,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L147",
+      "source_location": "L159",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main",
@@ -1415,10 +1865,22 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/goreadable/main_test.go",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "cmd_goreadable_main_test_testexecute",
+      "target": "cmd_goreadable_main_execute"
+    },
+    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -1431,7 +1893,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L59",
+      "source_location": "L69",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -1443,7 +1905,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L69",
+      "source_location": "L79",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -1455,7 +1917,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L53",
+      "source_location": "L63",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -1466,7 +1928,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0,
       "context": "return_type",
       "_origin": "ast",
@@ -1480,11 +1942,11 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L74",
+      "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
-      "target": "internal_analysis_analysis_analyze"
+      "target": "internal_analysis_analysis_analyzewithoptions"
     },
     {
       "relation": "calls",
@@ -1492,7 +1954,19 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L34",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "cmd_goreadable_main_newcommand",
+      "target": "internal_analysis_analysis_newoptions"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/goreadable/main.go",
+      "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -1504,7 +1978,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L53",
+      "source_location": "L63",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -1516,7 +1990,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L63",
+      "source_location": "L73",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -1528,7 +2002,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L80",
+      "source_location": "L90",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -1540,7 +2014,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L83",
+      "source_location": "L93",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -1550,7 +2024,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L100",
+      "source_location": "L112",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -1624,7 +2098,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L136",
+      "source_location": "L148",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_inputfiles",
@@ -1633,8 +2107,42 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "cmd/goreadable/main_test.go",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "cmd_goreadable_main_test",
+      "target": "cmd_goreadable_main_test_testexecute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/goreadable/main_test.go",
+      "source_location": "L14",
+      "weight": 1.0,
+      "context": "parameter_type",
+      "_origin": "ast",
+      "source": "cmd_goreadable_main_test_testexecute",
+      "target": "cmd_goreadable_main_test_go_t",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L63",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis",
+      "target": "analysis_options",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L100",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1645,7 +2153,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L206",
+      "source_location": "L105",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis",
+      "target": "internal_analysis_analysis_analyzewithoptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L283",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1656,7 +2175,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L180",
+      "source_location": "L257",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1667,7 +2186,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L260",
+      "source_location": "L337",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1678,7 +2197,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L18",
+      "source_location": "L55",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1689,7 +2208,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L166",
+      "source_location": "L200",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis",
+      "target": "internal_analysis_analysis_functionselector",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L243",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1700,7 +2230,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L146",
+      "source_location": "L223",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1711,7 +2241,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L315",
+      "source_location": "L392",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1722,7 +2252,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L278",
+      "source_location": "L355",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1733,7 +2263,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L225",
+      "source_location": "L302",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1744,7 +2274,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L300",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis",
+      "target": "internal_analysis_analysis_newoptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L377",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1755,7 +2296,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L192",
+      "source_location": "L269",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis",
@@ -1763,11 +2304,128 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L208",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis",
+      "target": "internal_analysis_analysis_receivername",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "analysis_options",
+      "target": "analysis_options_includesfunction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "analysis_options",
+      "target": "analysis_options_metricsonly",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L105",
+      "weight": 1.0,
+      "context": "parameter_type",
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "analysis_options",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L22",
+      "weight": 1.0,
+      "context": "return_type",
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_newoptions",
+      "target": "analysis_options",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L35",
+      "source_location": "L106",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "analysis_options_metricsonly",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L44",
+      "weight": 1.0,
+      "context": "parameter_type",
+      "_origin": "ast",
+      "source": "analysis_options_includesfunction",
+      "target": "funcdecl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "analysis_options_includesfunction",
+      "target": "internal_analysis_analysis_functionselector",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L155",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "analysis_options_includesfunction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L200",
+      "weight": 1.0,
+      "context": "parameter_type",
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_functionselector",
+      "target": "funcdecl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis_files",
@@ -1790,7 +2448,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L63",
+      "source_location": "L100",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -1803,114 +2461,18 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L109",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "internal_analysis_analysis_analyze",
-      "target": "internal_analysis_analysis_argumentcount",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "internal/analysis/analysis.go",
-      "source_location": "L114",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "internal_analysis_analysis_analyze",
-      "target": "internal_analysis_analysis_candidate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "internal/analysis/analysis.go",
-      "source_location": "L109",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "internal_analysis_analysis_analyze",
-      "target": "internal_analysis_analysis_complexity",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "internal/analysis/analysis.go",
       "source_location": "L101",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis_analyze",
-      "target": "internal_analysis_analysis_hasignoredirective",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "internal/analysis/analysis.go",
-      "source_location": "L97",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "internal_analysis_analysis_analyze",
-      "target": "internal_analysis_analysis_ignoredtypenames",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "internal/analysis/analysis.go",
-      "source_location": "L72",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "internal_analysis_analysis_analyze",
-      "target": "internal_analysis_analysis_methodcounts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "internal/analysis/analysis.go",
-      "source_location": "L109",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "internal_analysis_analysis_analyze",
-      "target": "internal_analysis_analysis_nesting",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "internal/analysis/analysis.go",
-      "source_location": "L105",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "internal_analysis_analysis_analyze",
-      "target": "internal_analysis_analysis_overlaps",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "internal/analysis/analysis.go",
-      "source_location": "L112",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "internal_analysis_analysis_analyze",
-      "target": "internal_analysis_analysis_reasons",
+      "target": "internal_analysis_analysis_analyzewithoptions",
       "confidence_score": 1.0
     },
     {
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L63",
+      "source_location": "L100",
       "weight": 1.0,
       "context": "return_type",
       "_origin": "ast",
@@ -1934,7 +2496,163 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L146",
+      "source_location": "L105",
+      "weight": 1.0,
+      "context": "parameter_type",
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "config_thresholds",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L151",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "internal_analysis_analysis_argumentcount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L156",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "internal_analysis_analysis_candidate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L151",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "internal_analysis_analysis_complexity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L143",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "internal_analysis_analysis_hasignoredirective",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L139",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "internal_analysis_analysis_ignoredtypenames",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L114",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "internal_analysis_analysis_methodcounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L151",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "internal_analysis_analysis_nesting",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L147",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "internal_analysis_analysis_overlaps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L162",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "internal_analysis_analysis_reasons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L105",
+      "weight": 1.0,
+      "context": "return_type",
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_analyzewithoptions",
+      "target": "report_result",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L205",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_functionselector",
+      "target": "internal_analysis_analysis_receivername",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L208",
+      "weight": 1.0,
+      "context": "parameter_type",
+      "_origin": "ast",
+      "source": "internal_analysis_analysis_receivername",
+      "target": "expr",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/analysis/analysis.go",
+      "source_location": "L223",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -1947,7 +2665,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L151",
+      "source_location": "L228",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_analysis_analysis_ignoredtypenames",
@@ -1958,7 +2676,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L278",
+      "source_location": "L355",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -1970,7 +2688,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L166",
+      "source_location": "L243",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -1982,7 +2700,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L180",
+      "source_location": "L257",
       "weight": 1.0,
       "context": "return_type",
       "_origin": "ast",
@@ -1994,7 +2712,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L206",
+      "source_location": "L283",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -2006,7 +2724,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L225",
+      "source_location": "L302",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -2018,7 +2736,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/analysis/analysis.go",
-      "source_location": "L260",
+      "source_location": "L337",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -2202,7 +2920,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L27",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_report_report",
+      "target": "internal_report_report_metricnames",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/report/report.go",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_report_report",
@@ -2213,7 +2942,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L34",
+      "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_report_report",
@@ -2224,7 +2953,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_report_report",
@@ -2235,7 +2964,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_report_report",
@@ -2246,7 +2975,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0,
       "context": "field",
       "_origin": "ast",
@@ -2258,7 +2987,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L27",
+      "source_location": "L29",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -2270,7 +2999,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L34",
+      "source_location": "L36",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -2282,7 +3011,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L27",
+      "source_location": "L29",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -2294,12 +3023,24 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L34",
+      "source_location": "L36",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
       "source": "internal_report_report_writetext",
       "target": "internal_report_report_go_writer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/report/report.go",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_report_report_writetext",
+      "target": "internal_report_report_metricnames",
       "confidence_score": 1.0
     },
     {
@@ -2629,12 +3370,277 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L99",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_acceptance_criteria_improvements",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_not_run_deferred_checks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_prioritized_test_conditions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_regression_and_exploratory_coverage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L95",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_residual_risks_and_assumptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_risk_summary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_scope_and_test_basis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test_risk_summary",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_risk_001_a_selector_still_filters_out_under_threshold_functions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test_risk_summary",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_risk_002_text_output_omits_the_requested_metric_values",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test_risk_summary",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_risk_003_new_flags_alter_the_default_review_candidate_workflow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test_prioritized_test_conditions",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_tc_001_all_functions_in_a_file_are_requested",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test_prioritized_test_conditions",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_tc_002_one_exact_function_name_is_requested",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test_prioritized_test_conditions",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_tc_003_metrics_are_requested_in_default_text_format",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test_prioritized_test_conditions",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_tc_004_no_metric_selector_is_requested",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/blackbox-risk-based-test.md",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_blackbox_risk_based_test_prioritized_test_conditions",
+      "target": "implementation_orchestrator_blackbox_risk_based_test_tc_005_an_empty_function_selector_is_passed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_implementation_plan",
+      "target": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "target": "implementation_orchestrator_implementation_plan_acceptance_and_validation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "target": "implementation_orchestrator_implementation_plan_change_size_and_staging",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "target": "implementation_orchestrator_implementation_plan_change_summary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L63",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "target": "implementation_orchestrator_implementation_plan_completion_evidence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "target": "implementation_orchestrator_implementation_plan_decision_gates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "target": "implementation_orchestrator_implementation_plan_implementation_steps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "target": "implementation_orchestrator_implementation_plan_risk_and_decision_analysis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".implementation-orchestrator/implementation-plan.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "implementation_orchestrator_implementation_plan_implementation_plan",
+      "target": "implementation_orchestrator_implementation_plan_selected_skills",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".codex/skills/graphify/SKILL.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_skill_graphify_workflow",
       "target": "_codex_skills_graphify_references_extraction_spec_graphify_extraction_spec"
     },
@@ -2645,6 +3651,7 @@
       "source_file": ".codex/skills/graphify/SKILL.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_skill_graphify_workflow",
       "target": "_codex_skills_graphify_references_query_graphify_query"
     },
@@ -2655,6 +3662,7 @@
       "source_file": ".codex/skills/graphify/SKILL.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_skill_graphify_workflow",
       "target": "_codex_skills_graphify_references_update_graphify_update"
     },
@@ -2665,6 +3673,7 @@
       "source_file": ".codex/skills/graphify/SKILL.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_skill_graphify_workflow",
       "target": "concept_graphify_knowledge_graph"
     },
@@ -2675,6 +3684,7 @@
       "source_file": ".codex/skills/graphify/references/add-watch.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_references_add_watch_graphify_add_watch",
       "target": "_codex_skills_graphify_references_update_graphify_update"
     },
@@ -2685,6 +3695,7 @@
       "source_file": ".codex/skills/graphify/references/exports.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_references_exports_graphify_exports",
       "target": "concept_graphify_knowledge_graph"
     },
@@ -2695,6 +3706,7 @@
       "source_file": ".codex/skills/graphify/references/extraction-spec.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_references_extraction_spec_graphify_extraction_spec",
       "target": "concept_semantic_extraction"
     },
@@ -2705,6 +3717,7 @@
       "source_file": ".codex/skills/graphify/references/github-and-merge.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_references_github_and_merge_github_merge",
       "target": "concept_graphify_knowledge_graph"
     },
@@ -2715,6 +3728,7 @@
       "source_file": ".codex/skills/graphify/references/hooks.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_references_hooks_graphify_hooks",
       "target": "_codex_skills_graphify_references_update_graphify_update"
     },
@@ -2725,6 +3739,7 @@
       "source_file": ".codex/skills/graphify/references/transcribe.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_references_transcribe_graphify_transcribe",
       "target": "concept_semantic_extraction"
     },
@@ -2735,6 +3750,7 @@
       "source_file": ".codex/skills/graphify/references/update.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_codex_skills_graphify_references_update_graphify_update",
       "target": "concept_incremental_reextraction"
     },
@@ -2745,6 +3761,7 @@
       "source_file": ".github/pull_request_template.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_github_pull_request_template_pull_request_template",
       "target": "testing_testing_guidelines"
     },
@@ -2755,6 +3772,7 @@
       "source_file": "AGENTS.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "agents_repository_guidance",
       "target": "_github_pull_request_template_pull_request_template"
     },
@@ -2765,6 +3783,7 @@
       "source_file": ".github/workflows/ci.yml",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_github_workflows_ci_ci_pipeline",
       "target": "_golangci_golangci_configuration"
     },
@@ -2775,6 +3794,7 @@
       "source_file": ".github/workflows/ci.yml",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_github_workflows_ci_ci_pipeline",
       "target": "concept_continuous_integration"
     },
@@ -2785,6 +3805,7 @@
       "source_file": ".github/workflows/ci.yml",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "_github_workflows_ci_ci_pipeline",
       "target": "testing_testing_guidelines"
     },
@@ -2795,6 +3816,7 @@
       "source_file": "AGENTS.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "agents_repository_guidance",
       "target": "concept_graphify_knowledge_graph"
     },
@@ -2805,6 +3827,7 @@
       "source_file": "AGENTS.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "agents_repository_guidance",
       "target": "testing_testing_guidelines"
     },
@@ -2815,6 +3838,7 @@
       "source_file": "README.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "readme_goreadable_cli",
       "target": "testing_testing_guidelines"
     },
@@ -2825,6 +3849,7 @@
       "source_file": "TESTING.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "testing_testing_guidelines",
       "target": "concept_behavior_level_testing"
     },
@@ -2835,6 +3860,7 @@
       "source_file": "TESTING.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "testing_testing_guidelines",
       "target": "docs_testing_guidelines_testing_guidelines"
     },
@@ -2845,6 +3871,7 @@
       "source_file": "docs/testing-guidelines.md",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "docs_testing_guidelines_testing_guidelines",
       "target": "concept_behavior_level_testing"
     }
@@ -2878,5 +3905,5 @@
       "source_file": "AGENTS.md"
     }
   ],
-  "built_at_commit": "a43a3d428f5896cab435e640209f9532d8c09579"
+  "built_at_commit": "998919b4ea566086c77bded9268fd5faf4685686"
 }

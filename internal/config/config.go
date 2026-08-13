@@ -16,7 +16,14 @@ type Thresholds struct {
 }
 
 func Defaults() Thresholds {
-	return Thresholds{FunctionLines: 80, NestingDepth: 4, CyclomaticComplexity: 10, FunctionArguments: 5, StructFields: 8, TypeMethods: 10}
+	return Thresholds{
+		FunctionLines:        80,
+		NestingDepth:         4,
+		CyclomaticComplexity: 10,
+		FunctionArguments:    5,
+		StructFields:         8,
+		TypeMethods:          10,
+	}
 }
 
 type fileConfig struct {

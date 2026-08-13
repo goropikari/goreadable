@@ -14,6 +14,43 @@ import (
 	"github.com/goropikari/goreadable/internal/report"
 )
 
+type Options struct {
+	IncludeAllFunctions bool
+	FunctionSelectors   map[string]struct{}
+}
+
+func NewOptions(includeAllFunctions bool, functionSelectors []string) (Options, error) {
+	options := Options{
+		IncludeAllFunctions: includeAllFunctions,
+		FunctionSelectors:   make(map[string]struct{}, len(functionSelectors)),
+	}
+
+	for _, selector := range functionSelectors {
+		selector = strings.TrimSpace(selector)
+		if selector == "" {
+			return Options{}, fmt.Errorf("--function must be a package-qualified function name")
+		}
+
+		options.FunctionSelectors[selector] = struct{}{}
+	}
+
+	return options, nil
+}
+
+func (options Options) MetricsOnly() bool {
+	return options.IncludeAllFunctions || len(options.FunctionSelectors) > 0
+}
+
+func (options Options) IncludesFunction(packageName string, declaration *ast.FuncDecl) bool {
+	if options.IncludeAllFunctions {
+		return true
+	}
+
+	_, ok := options.FunctionSelectors[functionSelector(packageName, declaration)]
+
+	return ok
+}
+
 //nolint:cyclop // File discovery keeps exclusion rules in one observable boundary.
 func Files(root string, recursive bool) ([]string, error) {
 	var files []string
@@ -61,7 +98,15 @@ func Files(root string, recursive bool) ([]string, error) {
 
 //nolint:cyclop,gocognit,wsl_v5 // This is the single declaration-to-candidate boundary.
 func Analyze(files []string, thresholds config.Thresholds, changed map[string][][2]int) (report.Result, error) {
-	result := report.Result{Version: 1}
+	return AnalyzeWithOptions(files, thresholds, changed, Options{})
+}
+
+//nolint:cyclop,gocognit,wsl_v5 // This is the single declaration-to-candidate boundary.
+func AnalyzeWithOptions(files []string, thresholds config.Thresholds, changed map[string][][2]int, options Options) (report.Result, error) {
+	result := report.Result{
+		Version:     1,
+		MetricsOnly: options.MetricsOnly(),
+	}
 	packageMethods := map[string]int{}
 	for _, path := range files {
 		fset := token.NewFileSet()
@@ -109,11 +154,23 @@ func Analyze(files []string, thresholds config.Thresholds, changed map[string][]
 				metrics := map[string]int{"function_lines": end - start + 1, "nesting_depth": nesting(declaration.Body), "cyclomatic_complexity": complexity(declaration.Body), "function_arguments": argumentCount(declaration.Type)}
 				thresholdMap := map[string]int{"function_lines": thresholds.FunctionLines, "nesting_depth": thresholds.NestingDepth, "cyclomatic_complexity": thresholds.CyclomaticComplexity, "function_arguments": thresholds.FunctionArguments}
 
+				if options.MetricsOnly() {
+					if options.IncludesFunction(file.Name.Name, declaration) {
+						result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, nil, lines))
+					}
+
+					return true
+				}
+
 				reasons := reasons(metrics, thresholdMap)
 				if len(reasons) > 0 {
 					result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons, lines))
 				}
 			case *ast.TypeSpec:
+				if options.MetricsOnly() {
+					return true
+				}
+
 				if ignoredTypes[declaration.Name.Name] || hasIgnoreDirective(declaration.Doc) {
 					return true
 				}
@@ -141,6 +198,29 @@ func Analyze(files []string, thresholds config.Thresholds, changed map[string][]
 	}
 
 	return result, nil
+}
+
+func functionSelector(packageName string, declaration *ast.FuncDecl) string {
+	if declaration.Recv == nil || len(declaration.Recv.List) == 0 {
+		return packageName + "." + declaration.Name.Name
+	}
+
+	return packageName + "." + receiverName(declaration.Recv.List[0].Type) + "." + declaration.Name.Name
+}
+
+func receiverName(expression ast.Expr) string {
+	switch expression := expression.(type) {
+	case *ast.Ident:
+		return expression.Name
+	case *ast.StarExpr:
+		return receiverName(expression.X)
+	case *ast.IndexExpr:
+		return receiverName(expression.X)
+	case *ast.IndexListExpr:
+		return receiverName(expression.X)
+	default:
+		return ""
+	}
 }
 
 func ignoredTypeNames(file *ast.File) map[string]bool {
@@ -186,7 +266,18 @@ func candidate(kind, name, path string, start, end int, codeKind string, metrics
 		end = len(lines)
 	}
 
-	return report.Candidate{Kind: kind, Name: name, Path: path, StartLine: start, EndLine: end, CodeKind: codeKind, Metrics: metrics, Thresholds: thresholds, Reasons: reasons, Source: strings.Join(lines[start-1:end], "\n")}
+	return report.Candidate{
+		Kind:       kind,
+		Name:       name,
+		Path:       path,
+		StartLine:  start,
+		EndLine:    end,
+		CodeKind:   codeKind,
+		Metrics:    metrics,
+		Thresholds: thresholds,
+		Reasons:    reasons,
+		Source:     strings.Join(lines[start-1:end], "\n"),
+	}
 }
 
 func reasons(metrics, thresholds map[string]int) []string {

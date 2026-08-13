@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"sort"
 )
 
 type Candidate struct {
@@ -20,8 +21,9 @@ type Candidate struct {
 }
 
 type Result struct {
-	Version    int         `json:"version"`
-	Candidates []Candidate `json:"candidates"`
+	Version     int         `json:"version"`
+	Candidates  []Candidate `json:"candidates"`
+	MetricsOnly bool        `json:"-"`
 }
 
 func WriteJSON(w io.Writer, result Result) error {
@@ -42,6 +44,14 @@ func WriteText(w io.Writer, result Result) error {
 			return err
 		}
 
+		if result.MetricsOnly {
+			for _, name := range metricNames(candidate.Metrics) {
+				if _, err := fmt.Fprintf(w, "  - %s=%d\n", name, candidate.Metrics[name]); err != nil {
+					return err
+				}
+			}
+		}
+
 		for _, reason := range candidate.Reasons {
 			if _, err := fmt.Fprintf(w, "  - %s\n", reason); err != nil {
 				return err
@@ -50,4 +60,15 @@ func WriteText(w io.Writer, result Result) error {
 	}
 
 	return nil
+}
+
+func metricNames(metrics map[string]int) []string {
+	names := make([]string, 0, len(metrics))
+	for name := range metrics {
+		names = append(names, name)
+	}
+
+	sort.Strings(names)
+
+	return names
 }
