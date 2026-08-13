@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1786640447.8802814,
-    "ast_hash": "40987e9838d558ae7da49d2d6a73eb3e",
+    "mtime": 1786640922.796313,
+    "ast_hash": "4fc9a33173f76b46eca319f19c08bc06",
     "semantic_hash": ""
   },
   "TESTING.md": {
@@ -147,6 +147,11 @@
   "cmd/goreadable/main_test.go": {
     "mtime": 1786640036.0162547,
     "ast_hash": "f7e6f10f5ff0e3ea5dbea93887bca101",
+    "semantic_hash": ""
+  },
+  "samples/readme/main.go": {
+    "mtime": 1786640922.688313,
+    "ast_hash": "091fc5af7b635640b871ea837fad8d56",
     "semantic_hash": ""
   }
 }

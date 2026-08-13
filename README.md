@@ -5,6 +5,19 @@ Go コードから、AI または人間が可読性をレビューすべき候�
 
 ## 使い方
 
+リポジトリを clone したら、まず同梱サンプルをそのまま実行できます。
+
+```sh
+go run ./cmd/goreadable --max-function-lines 5 --max-function-args 4 ./samples/readme
+function BuildReport (samples/readme/main.go:3-11, production)
+  - function_arguments=6 exceeds threshold 4
+  - function_lines=9 exceeds threshold 5
+```
+
+この例は、引数が 6 個で 9 行の `BuildReport` を含む固定サンプルを解析します。実行環境やリポジトリ内の他のコードに依存せず、可読性レビュー候補とその理由を確認できます。
+
+ほかの対象を解析する場合は、パスを置き換えます。
+
 ```sh
 # カレントパッケージを解析（既定はテキスト出力）
 go run ./cmd/goreadable .
@@ -24,34 +37,10 @@ go run ./cmd/goreadable --function analysis.Analyze --function analysis.Options.
 
 ### 出力例
 
-次のようなコードを `sample.go` に置きます。
-
-```go
-package sample
-
-func BuildReport(a, b, c, d, e, f int) int {
-	if a > 0 {
-		if b > 0 {
-			return a + b + c + d + e + f
-		}
-	}
-	return 0
-}
-```
-
-既定値では候補にならないため、閾値を下げて実行します。
+AI レビューへ渡す場合は、同じ固定サンプルに JSON を指定します。
 
 ```sh
-$ goreadable --max-function-lines 5 --max-function-args 4 .
-function BuildReport (sample.go:3-10, production)
-  - function_arguments=6 exceeds threshold 4
-  - function_lines=8 exceeds threshold 5
-```
-
-AI レビューへ渡す場合は JSON を指定します。
-
-```sh
-$ goreadable --format json --max-function-lines 5 . > readability-candidates.json
+go run ./cmd/goreadable --format json --max-function-lines 5 --max-function-args 4 ./samples/readme > readability-candidates.json
 ```
 
 出力された `readability-candidates.json` には、候補のソース断片・計測値・閾値・理由が含まれます。

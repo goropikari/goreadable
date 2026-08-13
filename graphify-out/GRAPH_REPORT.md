@@ -1,16 +1,16 @@
 # Graph Report - goreadable  (2026-08-14)
 
 ## Corpus Check
-- 28 files · ~16,056 words
+- 29 files · ~16,067 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 107 nodes · 175 edges · 9 communities (8 shown, 1 thin omitted)
+- 109 nodes · 176 edges · 10 communities (9 shown, 1 thin omitted)
 - Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `72671f61`
+- Built from commit: `e7e12cc6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -56,7 +56,7 @@
 - **Graphify Documentation Workflow** — _codex_skills_graphify_skill_graphify_workflow, _codex_skills_graphify_references_extraction_spec_graphify_extraction_spec, _codex_skills_graphify_references_query_graphify_query, _codex_skills_graphify_references_update_graphify_update [EXTRACTED 1.00]
 - **Repository Testing Contract** — agents_repository_guidance, testing_testing_guidelines, docs_testing_guidelines_testing_guidelines [EXTRACTED 1.00]
 
-## Communities (9 total, 1 thin omitted)
+## Communities (10 total, 1 thin omitted)
 
 ### Community 0 - "analysis.go"
 Cohesion: 0.14
@@ -99,9 +99,9 @@ Nodes (6): Writer, metricNames(), WriteJSON(), WriteText(), Candidate, Result
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `newCommand()` connect `newCommand` to `analysis.go`, `goreadable_test.go`, `Thresholds`, `Result`?**
-  _High betweenness centrality (0.233) - this node is a cross-community bridge._
+  _High betweenness centrality (0.225) - this node is a cross-community bridge._
 - **Why does `AnalyzeWithOptions()` connect `analysis.go` to `newCommand`, `Thresholds`, `Result`?**
-  _High betweenness centrality (0.167) - this node is a cross-community bridge._
+  _High betweenness centrality (0.161) - this node is a cross-community bridge._
 - **Are the 7 inferred relationships involving `newCommand()` (e.g. with `AnalyzeWithOptions()` and `NewOptions()`) actually correct?**
   _`newCommand()` has 7 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `version`, `kind`, `build_command` to the rest of the system?**

@@ -210,7 +210,7 @@
       "norm_label": "criteria"
     },
     {
-      "label": "main.go",
+      "label": "goreadable/main.go",
       "file_type": "code",
       "source_file": "cmd/goreadable/main.go",
       "source_location": "L1",
@@ -218,7 +218,7 @@
       "id": "cmd_goreadable_main",
       "community": 4,
       "community_name": "newCommand",
-      "norm_label": "main.go"
+      "norm_label": "goreadable/main.go"
     },
     {
       "label": "main()",
@@ -848,6 +848,28 @@
       "community": 7,
       "community_name": "Result",
       "norm_label": "metricnames()"
+    },
+    {
+      "label": "readme/main.go",
+      "file_type": "code",
+      "source_file": "samples/readme/main.go",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "samples_readme_main",
+      "community": 9,
+      "community_name": "readme/main.go",
+      "norm_label": "readme/main.go"
+    },
+    {
+      "label": "BuildReport()",
+      "file_type": "code",
+      "source_file": "samples/readme/main.go",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "samples_readme_main_buildreport",
+      "community": 9,
+      "community_name": "readme/main.go",
+      "norm_label": "buildreport()"
     },
     {
       "label": "goreadable_test.go",
@@ -2760,6 +2782,17 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "samples/readme/main.go",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "samples_readme_main",
+      "target": "samples_readme_main_buildreport",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "tests/acceptance/goreadable_test.go",
       "source_location": "L145",
       "weight": 1.0,
@@ -3355,5 +3388,5 @@
       "source_file": "AGENTS.md"
     }
   ],
-  "built_at_commit": "72671f618d519212f762837aa4b16826d1e156a8"
+  "built_at_commit": "e7e12cc6d8596ca1c8f7031374703c2d7f120872"
 }
