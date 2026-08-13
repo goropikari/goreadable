@@ -5,6 +5,7 @@ docs/prd.md
 .dev-workflow*
 .implementation-orchestrator/
 .agent-workflow-evals/
+/goreadable
 
 # Keep the committed graphify knowledge graph and human-readable report.
 graphify-out/*
