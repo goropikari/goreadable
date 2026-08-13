@@ -39,8 +39,31 @@ func newCommand(stdout, stderr io.Writer) *cobra.Command {
 	thresholds := config.Defaults()
 
 	command := &cobra.Command{
-		Use:           "goreadable [paths...]",
-		Short:         "find Go declarations that deserve a readability review",
+		Use:   "goreadable [paths...]",
+		Short: "find Go declarations that deserve a readability review",
+		Long: `goreadable finds Go functions and types whose structural metrics exceed readability thresholds.
+
+With no path, it analyzes the current directory. Use a path ending in /... to analyze that directory recursively. Review candidates prioritize human or AI review; they do not make the command fail.
+
+Thresholds resolve in this order: CLI flags override goreadable.json, which overrides defaults. Use --format json when another tool or AI needs the metrics, thresholds, and selection reasons.`,
+		Example: `  # Review the current directory or a directory tree.
+  goreadable
+  goreadable ./...
+
+  # Send an explainable JSON report to an AI or another tool.
+  goreadable --format json ./...
+
+  # Report metrics for every function, including those below thresholds.
+  goreadable --all-functions ./...
+
+  # Report one function (or package.Type.Method).
+  goreadable --function package.Function ./...
+
+  # Review only declarations changed since a Git reference.
+  goreadable --diff HEAD ./...
+
+  # Configure thresholds in goreadable.json at the analysis root.
+  # CLI flags override goreadable.json, which overrides defaults.`,
 		SilenceErrors: true,
 		SilenceUsage:  true,
 		Args:          cobra.ArbitraryArgs,

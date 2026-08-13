@@ -12,6 +12,30 @@ import (
 )
 
 func TestExecute(t *testing.T) {
+	t.Run("when help is requested: explains the primary workflows", func(t *testing.T) {
+		// Arrange
+		var stdout, stderr bytes.Buffer
+
+		// Act
+		err := execute([]string{"--help"}, &stdout, &stderr)
+
+		// Assert
+		require.NoError(t, err, stderr.String())
+
+		for _, expected := range []string{
+			"With no path, it analyzes the current directory.",
+			"Use a path ending in /... to analyze that directory recursively.",
+			"Review candidates prioritize human or AI review; they do not make the command fail.",
+			"CLI flags override goreadable.json, which overrides defaults.",
+			"goreadable --format json ./...",
+			"goreadable --all-functions ./...",
+			"goreadable --function package.Function ./...",
+			"goreadable --diff HEAD ./...",
+		} {
+			assert.Contains(t, stdout.String(), expected)
+		}
+	})
+
 	t.Run("when all functions are requested: reports every package function regardless of thresholds", func(t *testing.T) {
 		// Arrange
 		root := t.TempDir()

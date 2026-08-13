@@ -2,18 +2,18 @@
 
 ## Corpus Check
 
-- 30 files · ~17,834 words
+- 33 files · ~20,108 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 
-- 139 nodes · 258 edges · 10 communities (9 shown, 1 thin omitted)
-- Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 22 edges (avg confidence: 0.8)
+- 141 nodes · 259 edges · 11 communities (9 shown, 2 thin omitted)
+- Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 22 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `204d95a8`
+- Built from commit: `5229c253`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,6 +24,7 @@
 - goreadable_test.go
 - Testing Guidelines
 - newCommand
+- README.md
 - Thresholds
 - Result
 - github.com/goropikari/goreadable
@@ -64,12 +65,12 @@
 - **Graphify Documentation Workflow** — _codex_skills_graphify_skill_graphify_workflow, _codex_skills_graphify_references_extraction_spec_graphify_extraction_spec, _codex_skills_graphify_references_query_graphify_query, _codex_skills_graphify_references_update_graphify_update [EXTRACTED 1.00]
 - **Repository Testing Contract** — agents_repository_guidance, testing_testing_guidelines, docs_testing_guidelines_testing_guidelines [EXTRACTED 1.00]
 
-## Communities (10 total, 1 thin omitted)
+## Communities (11 total, 2 thin omitted)
 
 ### Community 0 - "AnalyzeWithOptions"
 
-Cohesion: 0.16
-Nodes (16): Options, CommentGroup, File, FuncDecl, AnalyzeWithOptions(), exportedFields(), exportedMethodCounts(), functionSelector() (+8 more)
+Cohesion: 0.15
+Nodes (17): Options, CommentGroup, File, FuncDecl, AnalyzeWithOptions(), exportedFields(), exportedMethodCounts(), functionSelector() (+9 more)
 
 ### Community 1 - "risks"
 
@@ -88,13 +89,13 @@ Nodes (21): Graphify Add and Watch, Graphify Exports, Graphify Extraction Specif
 
 ### Community 4 - "newCommand"
 
-Cohesion: 0.19
-Nodes (12): execute(), flagOverrides(), Writer, inputFiles(), main(), newCommand(), pathsRoot(), T (+4 more)
+Cohesion: 0.23
+Nodes (10): execute(), flagOverrides(), Writer, inputFiles(), main(), newCommand(), pathsRoot(), T (+2 more)
 
 ### Community 6 - "Thresholds"
 
-Cohesion: 0.19
-Nodes (11): fileConfig, Thresholds, Analyze(), functionThresholds(), T, TestAnalyze(), Defaults(), LoadFile() (+3 more)
+Cohesion: 0.17
+Nodes (12): fileConfig, Thresholds, Analyze(), Files(), isGenerated(), T, TestAnalyze(), Defaults() (+4 more)
 
 ### Community 7 - "Result"
 
@@ -108,24 +109,24 @@ Nodes (29): AssignStmt, BlockStmt, Expr, FileSet, FuncType, Ident, argumentCount
 
 ## Knowledge Gaps
 
-- **22 isolated node(s):** `version`, `kind`, `build_command`, `consumer_command`, `external-artifact` (+17 more)
+- **23 isolated node(s):** `version`, `kind`, `build_command`, `consumer_command`, `external-artifact` (+18 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **1 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `newCommand()` connect `newCommand` to `AnalyzeWithOptions`, `goreadable_test.go`, `Thresholds`, `Result`?**
-  _High betweenness centrality (0.228) - this node is a cross-community bridge._
+  _High betweenness centrality (0.222) - this node is a cross-community bridge._
 - **Why does `AnalyzeWithOptions()` connect `AnalyzeWithOptions` to `analysis.go`, `newCommand`, `Thresholds`, `Result`?**
-  _High betweenness centrality (0.173) - this node is a cross-community bridge._
+  _High betweenness centrality (0.168) - this node is a cross-community bridge._
 - **Why does `functionMetrics()` connect `analysis.go` to `AnalyzeWithOptions`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._
 - **Are the 7 inferred relationships involving `newCommand()` (e.g. with `AnalyzeWithOptions()` and `NewOptions()`) actually correct?**
   _`newCommand()` has 7 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `version`, `kind`, `build_command` to the rest of the system?**
-  _22 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _23 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `risks` be split into smaller, more focused modules?**
   _Cohesion score 0.125 - nodes in this community are weakly interconnected._
 - **Should `Testing Guidelines` be split into smaller, more focused modules?**
