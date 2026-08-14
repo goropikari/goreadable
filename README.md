@@ -5,10 +5,10 @@ Go コードの全関数について可読性メトリクスを出力し、必�
 
 ## 使い方
 
-リポジトリを clone したら、まず同梱サンプルをそのまま実行できます。
+`goreadable` を利用可能な状態にしてリポジトリを clone したら、まず同梱サンプルをそのまま実行できます。
 
 ```sh
-go run ./cmd/goreadable --thresholds-only --max-function-lines 5 --max-function-args 4 ./samples/readme
+goreadable --thresholds-only --max-function-lines 5 --max-function-args 4 ./samples/readme
 function BuildReport (samples/readme/main.go:3-11, production)
   - function_arguments=6 exceeds threshold 4
   - function_lines=9 exceeds threshold 5
@@ -20,19 +20,19 @@ function BuildReport (samples/readme/main.go:3-11, production)
 
 ```sh
 # カレントパッケージを解析（既定はテキスト出力）
-go run ./cmd/goreadable .
+goreadable .
 
 # リポジトリ全体を JSON で解析
-go run ./cmd/goreadable --format json ./...
+goreadable --format json ./...
 
 # 閾値を超えた候補だけを Git 差分から解析
-go run ./cmd/goreadable --thresholds-only --diff HEAD --max-function-lines 40 ./...
+goreadable --thresholds-only --diff HEAD --max-function-lines 40 ./...
 
 # パッケージ内の全関数のメトリックを表示（既定）
-go run ./cmd/goreadable ./...
+goreadable ./...
 
 # 指定したパッケージ関数（またはメソッド）のメトリックを表示
-go run ./cmd/goreadable --function analysis.Analyze --function analysis.Options.MetricsOnly ./...
+goreadable --function analysis.Analyze --function analysis.Options.MetricsOnly ./...
 ```
 
 ### 出力例
@@ -40,7 +40,7 @@ go run ./cmd/goreadable --function analysis.Analyze --function analysis.Options.
 AI レビューへ渡す場合は、同じ固定サンプルに JSON を指定します。
 
 ```sh
-go run ./cmd/goreadable --format json --max-function-lines 5 --max-function-args 4 ./samples/readme > readability-candidates.json
+goreadable --format json --thresholds-only --max-function-lines 5 --max-function-args 4 ./samples/readme > readability-candidates.json
 ```
 
 出力された `readability-candidates.json` には、候補のソース断片・計測値・閾値・理由が含まれます。
