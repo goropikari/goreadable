@@ -11,8 +11,16 @@ import (
 
 var hunk = regexp.MustCompile(`@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@`)
 
-//nolint:cyclop // Git output parsing and untracked-file handling share one contract.
 func ChangedFiles(root, ref string) (map[string][][2]int, error) {
+	result, err := changedTrackedFiles(root, ref)
+	if err != nil {
+		return nil, err
+	}
+
+	return addUntrackedFiles(root, result)
+}
+
+func changedTrackedFiles(root, ref string) (map[string][][2]int, error) {
 	command := exec.Command("git", "diff", "--unified=0", ref, "--", "*.go")
 	command.Dir = root
 
@@ -48,6 +56,10 @@ func ChangedFiles(root, ref string) (map[string][][2]int, error) {
 		result[current] = append(result[current], [2]int{start, start + count - 1})
 	}
 
+	return result, nil
+}
+
+func addUntrackedFiles(root string, result map[string][][2]int) (map[string][][2]int, error) {
 	status := exec.Command("git", "status", "--porcelain", "--untracked-files=all")
 	status.Dir = root
 

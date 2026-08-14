@@ -74,8 +74,17 @@ func LoadFile(path string, defaults Thresholds) (Thresholds, error) {
 	return defaults, nil
 }
 
-//nolint:cyclop // Every supported threshold is mapped at this configuration boundary.
 func (t *Thresholds) ApplyFlags(values map[string]int) {
+	applyFunctionFlags(t, values)
+	applyTypeFlags(t, values)
+}
+
+func applyFunctionFlags(t *Thresholds, values map[string]int) {
+	applyBasicFunctionFlags(t, values)
+	applyDetailedFunctionFlags(t, values)
+}
+
+func applyBasicFunctionFlags(t *Thresholds, values map[string]int) {
 	if value, ok := values["function_lines"]; ok {
 		t.FunctionLines = value
 	}
@@ -107,7 +116,9 @@ func (t *Thresholds) ApplyFlags(values map[string]int) {
 	if value, ok := values["boolean_operators"]; ok {
 		t.BooleanOperators = value
 	}
+}
 
+func applyDetailedFunctionFlags(t *Thresholds, values map[string]int) {
 	if value, ok := values["max_condition_terms"]; ok {
 		t.MaxConditionTerms = value
 	}
@@ -131,7 +142,9 @@ func (t *Thresholds) ApplyFlags(values map[string]int) {
 	if value, ok := values["statement_count"]; ok {
 		t.StatementCount = value
 	}
+}
 
+func applyTypeFlags(t *Thresholds, values map[string]int) {
 	if value, ok := values["type_dependencies"]; ok {
 		t.TypeDependencies = value
 	}
@@ -149,8 +162,17 @@ func (t *Thresholds) ApplyFlags(values map[string]int) {
 	}
 }
 
-//nolint:cyclop // Every supported threshold is merged at this configuration boundary.
 func merge(base *Thresholds, override Thresholds) {
+	mergeFunctionThresholds(base, override)
+	mergeTypeThresholds(base, override)
+}
+
+func mergeFunctionThresholds(base *Thresholds, override Thresholds) {
+	mergeBasicFunctionThresholds(base, override)
+	mergeDetailedFunctionThresholds(base, override)
+}
+
+func mergeBasicFunctionThresholds(base *Thresholds, override Thresholds) {
 	if override.FunctionLines != 0 {
 		base.FunctionLines = override.FunctionLines
 	}
@@ -182,7 +204,9 @@ func merge(base *Thresholds, override Thresholds) {
 	if override.BooleanOperators != 0 {
 		base.BooleanOperators = override.BooleanOperators
 	}
+}
 
+func mergeDetailedFunctionThresholds(base *Thresholds, override Thresholds) {
 	if override.MaxConditionTerms != 0 {
 		base.MaxConditionTerms = override.MaxConditionTerms
 	}
@@ -206,7 +230,9 @@ func merge(base *Thresholds, override Thresholds) {
 	if override.StatementCount != 0 {
 		base.StatementCount = override.StatementCount
 	}
+}
 
+func mergeTypeThresholds(base *Thresholds, override Thresholds) {
 	if override.TypeDependencies != 0 {
 		base.TypeDependencies = override.TypeDependencies
 	}

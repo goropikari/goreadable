@@ -2,64 +2,59 @@
 
 ## Corpus Check
 
-- 33 files · ~20,316 words
+- 33 files · ~20,553 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 
-- 142 nodes · 262 edges · 16 communities (12 shown, 4 thin omitted)
-- Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 22 edges (avg confidence: 0.8)
+- 169 nodes · 355 edges · 11 communities (9 shown, 2 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 23 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `ddf9478a`
+- Built from commit: `641c64c9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 
-- analysis.go
+- collectFunctionCandidate
 - risks
-- goreadable_test.go
+- Command
 - Testing Guidelines
-- newCommand
+- goreadable/main.go
 - README.md
 - Thresholds
-- report.go
+- Files
 - github.com/goropikari/goreadable
-- functionMetrics
-- inspectBody
-- Options
-- localVariables
-- commentLines
-- argumentCount
+- analysis.go
 
 ## God Nodes (most connected - your core abstractions)
 
-1. `functionMetrics()` - 19 edges
-2. `AnalyzeWithOptions()` - 18 edges
-3. `newCommand()` - 14 edges
-4. `countNodes()` - 9 edges
-5. `Thresholds` - 9 edges
-6. `TestGoreadableCLI()` - 9 edges
-7. `risks` - 6 edges
-8. `localVariables()` - 6 edges
-9. `Result` - 6 edges
-10. `WriteText()` - 6 edges
+1. `Thresholds` - 23 edges
+2. `functionMetrics()` - 19 edges
+3. `collectFunctionCandidate()` - 16 edges
+4. `collectTypeCandidate()` - 13 edges
+5. `runCommand()` - 10 edges
+6. `Options` - 10 edges
+7. `AnalyzeWithOptions()` - 9 edges
+8. `countNodes()` - 9 edges
+9. `Result` - 9 edges
+10. `TestGoreadableCLI()` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 
 - `Testing Guidelines` --semantically_similar_to--> `Repository Testing Guidelines` [INFERRED] [semantically similar]
   TESTING.md → docs/testing-guidelines.md
-- `newCommand()` --calls--> `AnalyzeWithOptions()` [INFERRED]
-  cmd/goreadable/main.go → internal/analysis/analysis.go
-- `newCommand()` --calls--> `NewOptions()` [INFERRED]
-  cmd/goreadable/main.go → internal/analysis/analysis.go
 - `newCommand()` --calls--> `Defaults()` [INFERRED]
   cmd/goreadable/main.go → internal/config/config.go
-- `newCommand()` --calls--> `LoadFile()` [INFERRED]
+- `commandOptions()` --calls--> `NewOptions()` [INFERRED]
+  cmd/goreadable/main.go → internal/analysis/analysis.go
+- `configuredThresholds()` --calls--> `LoadFile()` [INFERRED]
   cmd/goreadable/main.go → internal/config/config.go
+- `writeResult()` --calls--> `AnalyzeWithOptions()` [INFERRED]
+  cmd/goreadable/main.go → internal/analysis/analysis.go
 
 ## Import Cycles
 
@@ -70,83 +65,68 @@
 - **Graphify Documentation Workflow** — _codex_skills_graphify_skill_graphify_workflow, _codex_skills_graphify_references_extraction_spec_graphify_extraction_spec, _codex_skills_graphify_references_query_graphify_query, _codex_skills_graphify_references_update_graphify_update [EXTRACTED 1.00]
 - **Repository Testing Contract** — agents_repository_guidance, testing_testing_guidelines, docs_testing_guidelines_testing_guidelines [EXTRACTED 1.00]
 
-## Communities (16 total, 4 thin omitted)
+## Communities (11 total, 2 thin omitted)
 
-### Community 0 - "analysis.go"
+### Community 0 - "collectFunctionCandidate"
 
-Cohesion: 0.27
-Nodes (14): CommentGroup, File, AnalyzeWithOptions(), candidate(), exportedFields(), exportedMethodCounts(), functionThresholds(), hasIgnoreDirective() (+6 more)
+Cohesion: 0.15
+Nodes (24): Options, CommentGroup, FuncDecl, Analyze(), AnalyzeWithOptions(), candidate(), collectCandidates(), collectFunctionCandidate() (+16 more)
 
 ### Community 1 - "risks"
 
 Cohesion: 0.12
 Nodes (14): artifact, build_command, consumer_command, kind, criteria, immutable_paths, risks, version (+6 more)
 
-### Community 2 - "goreadable_test.go"
+### Community 2 - "Command"
 
-Cohesion: 0.41
-Nodes (12): Command, buildGoreadable(), candidateByName(), candidateNames(), candidates(), T, repositoryRoot(), runCommand() (+4 more)
+Cohesion: 0.29
+Nodes (15): Command, addUntrackedFiles(), ChangedFiles(), changedTrackedFiles(), buildGoreadable(), candidateByName(), candidateNames(), candidates() (+7 more)
 
 ### Community 3 - "Testing Guidelines"
 
 Cohesion: 0.10
 Nodes (21): Graphify Add and Watch, Graphify Exports, Graphify Extraction Specification, Graphify GitHub and Merge, Graphify Hooks, Graphify Query, Graphify Transcription, Graphify Incremental Update (+13 more)
 
-### Community 4 - "newCommand"
+### Community 4 - "goreadable/main.go"
 
-Cohesion: 0.23
-Nodes (10): execute(), flagOverrides(), Writer, inputFiles(), main(), newCommand(), pathsRoot(), T (+2 more)
+Cohesion: 0.24
+Nodes (14): changedFiles(), commandOptions(), configuredThresholds(), execute(), flagOverrides(), Writer, inputFiles(), main() (+6 more)
 
 ### Community 6 - "Thresholds"
 
-Cohesion: 0.17
-Nodes (12): fileConfig, Thresholds, Analyze(), Files(), isGenerated(), T, TestAnalyze(), Defaults() (+4 more)
+Cohesion: 0.25
+Nodes (15): fileConfig, Thresholds, applyBasicFunctionFlags(), applyDetailedFunctionFlags(), applyFunctionFlags(), applyTypeFlags(), Defaults(), LoadFile() (+7 more)
 
-### Community 7 - "report.go"
+### Community 7 - "Files"
 
-Cohesion: 0.50
-Nodes (7): Writer, metricNames(), writeEmptyTextResult(), WriteJSON(), WriteText(), Candidate, Result
+Cohesion: 0.29
+Nodes (7): directoryFiles(), Files(), isGenerated(), isSourceFile(), recursiveFiles(), T, TestAnalyze()
 
-### Community 10 - "functionMetrics"
+### Community 10 - "analysis.go"
 
-Cohesion: 0.36
-Nodes (12): BlockStmt, booleanOperators(), closureCount(), complexity(), controlBlocks(), countNodes(), functionCalls(), functionMetrics() (+4 more)
-
-### Community 11 - "inspectBody"
-
-Cohesion: 0.33
-Nodes (7): Expr, conditionTerms(), inspectBody(), maxConditionTerms(), typeDependencies(), typeExpression(), Node
-
-### Community 12 - "Options"
-
-Cohesion: 0.40
-Nodes (4): Options, FuncDecl, functionSelector(), NewOptions()
-
-### Community 13 - "localVariables"
-
-Cohesion: 0.33
-Nodes (6): AssignStmt, Ident, localVariables(), namedExpressions(), namedIdentifiers(), newLocalVariables()
+Cohesion: 0.12
+Nodes (40): AssignStmt, BlockStmt, DeclStmt, Expr, File, FileSet, FuncType, Ident (+32 more)
 
 ## Knowledge Gaps
 
 - **23 isolated node(s):** `version`, `kind`, `build_command`, `consumer_command`, `external-artifact` (+18 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `newCommand()` connect `newCommand` to `analysis.go`, `goreadable_test.go`, `Thresholds`, `report.go`, `Options`?**
-  _High betweenness centrality (0.224) - this node is a cross-community bridge._
-- **Why does `AnalyzeWithOptions()` connect `analysis.go` to `newCommand`, `Thresholds`, `report.go`, `functionMetrics`, `Options`?**
-  _High betweenness centrality (0.169) - this node is a cross-community bridge._
-- **Why does `functionMetrics()` connect `functionMetrics` to `analysis.go`, `inspectBody`, `Options`, `localVariables`, `commentLines`, `argumentCount`?**
-  _High betweenness centrality (0.044) - this node is a cross-community bridge._
-- **Are the 7 inferred relationships involving `newCommand()` (e.g. with `AnalyzeWithOptions()` and `NewOptions()`) actually correct?**
-  _`newCommand()` has 7 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `Thresholds` connect `Thresholds` to `collectFunctionCandidate`, `goreadable/main.go`?**
+  _High betweenness centrality (0.203) - this node is a cross-community bridge._
+- **Why does `runCommand()` connect `goreadable/main.go` to `Command`, `Thresholds`?**
+  _High betweenness centrality (0.090) - this node is a cross-community bridge._
+- **Why does `collectFunctionCandidate()` connect `collectFunctionCandidate` to `analysis.go`, `Thresholds`?**
+  _High betweenness centrality (0.062) - this node is a cross-community bridge._
 - **What connects `version`, `kind`, `build_command` to the rest of the system?**
   _23 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `collectFunctionCandidate` be split into smaller, more focused modules?**
+  _Cohesion score 0.14814814814814814 - nodes in this community are weakly interconnected._
 - **Should `risks` be split into smaller, more focused modules?**
   _Cohesion score 0.125 - nodes in this community are weakly interconnected._
 - **Should `Testing Guidelines` be split into smaller, more focused modules?**

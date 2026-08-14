@@ -17,6 +17,7 @@
 - 全体テスト: `go test ./...`
 - format: `make fmt`
 - lint: `make lint`
+- `//nolint` を使わない。lint の指摘は、コードまたは設定を適切に修正して解消する
 - コードを編集したら `make fmt` と `make lint` でエラーが出ないことも確認する
 - 凍結済み受入ハーネス（`.acceptance-harness/manifest.json` の `immutable_paths`）を含む変更では、`make fmt` / `make lint` の後に frozen validator を実行し、ハーネスが変更されていないことを確認する
 - 新しい Go 依存を追加した場合は、import・`go.mod`・`go.sum` を同じ変更単位で更新し、`go mod tidy` 後に `go test ./...` を実行する

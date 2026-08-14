@@ -53,43 +53,56 @@ func (options Options) IncludesFunction(packageName string, declaration *ast.Fun
 	return ok
 }
 
-//nolint:cyclop // File discovery keeps exclusion rules in one observable boundary.
 func Files(root string, recursive bool) ([]string, error) {
+	if recursive {
+		return recursiveFiles(root)
+	}
+
+	return directoryFiles(root)
+}
+
+func recursiveFiles(root string) ([]string, error) {
 	var files []string
 
-	if recursive {
-		err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-			if err != nil {
-				return err
-			}
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 
-			if info.IsDir() {
-				if info.Name() == "vendor" {
-					return filepath.SkipDir
-				}
-
-				return nil
-			}
-
-			if filepath.Ext(path) == ".go" && !isGenerated(path) {
-				files = append(files, path)
+		if info.IsDir() {
+			if info.Name() == "vendor" {
+				return filepath.SkipDir
 			}
 
 			return nil
-		})
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		entries, err := os.ReadDir(root)
-		if err != nil {
-			return nil, err
 		}
 
-		for _, entry := range entries {
-			if !entry.IsDir() && filepath.Ext(entry.Name()) == ".go" && !isGenerated(filepath.Join(root, entry.Name())) {
-				files = append(files, filepath.Join(root, entry.Name()))
-			}
+		if isSourceFile(path) {
+			files = append(files, path)
+		}
+
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	sort.Strings(files)
+
+	return files, nil
+}
+
+func directoryFiles(root string) ([]string, error) {
+	entries, err := os.ReadDir(root)
+	if err != nil {
+		return nil, err
+	}
+
+	files := make([]string, 0, len(entries))
+	for _, entry := range entries {
+		path := filepath.Join(root, entry.Name())
+		if !entry.IsDir() && isSourceFile(path) {
+			files = append(files, path)
 		}
 	}
 
@@ -98,107 +111,150 @@ func Files(root string, recursive bool) ([]string, error) {
 	return files, nil
 }
 
-//nolint:cyclop,gocognit,wsl_v5 // This is the single declaration-to-candidate boundary.
+func isSourceFile(path string) bool {
+	return filepath.Ext(path) == ".go" && !isGenerated(path)
+}
+
 func Analyze(files []string, thresholds config.Thresholds, changed map[string][][2]int) (report.Result, error) {
 	return AnalyzeWithOptions(files, thresholds, changed, Options{
 		FilterByThresholds: true,
 	})
 }
 
-//nolint:cyclop,gocognit,wsl_v5 // This is the single declaration-to-candidate boundary.
 func AnalyzeWithOptions(files []string, thresholds config.Thresholds, changed map[string][][2]int, options Options) (report.Result, error) {
 	result := report.Result{
 		Version:     1,
 		MetricsOnly: options.MetricsOnly(),
 	}
-	packageMethods := map[string]int{}
-	packageExportedMethods := map[string]int{}
-	for _, path := range files {
-		fset := token.NewFileSet()
-		file, err := parser.ParseFile(fset, path, nil, parser.ParseComments)
-		if err != nil {
-			return report.Result{}, fmt.Errorf("parse %s: %w", path, err)
-		}
-		for name, count := range methodCounts(file) {
-			packageMethods[name] += count
-		}
-		for name, count := range exportedMethodCounts(file) {
-			packageExportedMethods[name] += count
-		}
+
+	packageMethods, packageExportedMethods, err := packageMethodTotals(files)
+	if err != nil {
+		return report.Result{}, err
 	}
 
 	for _, path := range files {
-		fset := token.NewFileSet()
-
-		file, err := parser.ParseFile(fset, path, nil, parser.ParseComments)
-		if err != nil {
-			return report.Result{}, fmt.Errorf("parse %s: %w", path, err)
+		if err := collectCandidates(&result, path, thresholds, changed, options, packageMethods, packageExportedMethods); err != nil {
+			return report.Result{}, err
 		}
-
-		codeKind := "production"
-		if strings.HasSuffix(path, "_test.go") {
-			codeKind = "test"
-		}
-
-		ignoredTypes := ignoredTypeNames(file)
-		ast.Inspect(file, func(node ast.Node) bool {
-			switch declaration := node.(type) {
-			case *ast.FuncDecl:
-				if hasIgnoreDirective(declaration.Doc) {
-					return true
-				}
-				start, end := fset.Position(declaration.Pos()).Line, fset.Position(declaration.End()).Line
-				if !overlaps(changed, path, start, end) {
-					return true
-				}
-
-				metrics := functionMetrics(declaration, file, fset, start, end)
-				thresholdMap := functionThresholds(thresholds)
-
-				if options.MetricsOnly() {
-					if options.IncludesFunction(file.Name.Name, declaration) {
-						result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, nil))
-					}
-
-					return true
-				}
-
-				reasons := reasons(metrics, thresholdMap)
-				if len(reasons) > 0 {
-					result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons))
-				}
-			case *ast.TypeSpec:
-				if options.MetricsOnly() {
-					return true
-				}
-
-				if ignoredTypes[declaration.Name.Name] || hasIgnoreDirective(declaration.Doc) {
-					return true
-				}
-				structure, ok := declaration.Type.(*ast.StructType)
-				if !ok {
-					return true
-				}
-
-				start, end := fset.Position(declaration.Pos()).Line, fset.Position(declaration.End()).Line
-				if !overlaps(changed, path, start, end) {
-					return true
-				}
-
-				metrics := map[string]int{"struct_fields": structure.Fields.NumFields(), "type_methods": packageMethods[declaration.Name.Name], "exported_members": exportedFields(structure) + packageExportedMethods[declaration.Name.Name]}
-				thresholdMap := map[string]int{"struct_fields": thresholds.StructFields, "type_methods": thresholds.TypeMethods, "exported_members": thresholds.ExportedMembers}
-
-				reasons := reasons(metrics, thresholdMap)
-				if len(reasons) > 0 {
-					result.Candidates = append(result.Candidates, candidate("type", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons))
-				}
-			}
-
-			return true
-		})
 	}
 
 	return result, nil
+}
+
+func packageMethodTotals(files []string) (map[string]int, map[string]int, error) {
+	methods, exportedMethods := map[string]int{}, map[string]int{}
+
+	for _, path := range files {
+		file, err := parseFile(path)
+		if err != nil {
+			return nil, nil, err
+		}
+
+		for name, count := range methodCounts(file) {
+			methods[name] += count
+		}
+
+		for name, count := range exportedMethodCounts(file) {
+			exportedMethods[name] += count
+		}
+	}
+
+	return methods, exportedMethods, nil
+}
+
+func collectCandidates(result *report.Result, path string, thresholds config.Thresholds, changed map[string][][2]int, options Options, packageMethods, packageExportedMethods map[string]int) error {
+	fset := token.NewFileSet()
+
+	file, err := parser.ParseFile(fset, path, nil, parser.ParseComments)
+	if err != nil {
+		return fmt.Errorf("parse %s: %w", path, err)
+	}
+
+	codeKind := "production"
+	if strings.HasSuffix(path, "_test.go") {
+		codeKind = "test"
+	}
+
+	ignoredTypes := ignoredTypeNames(file)
+	ast.Inspect(file, func(node ast.Node) bool {
+		switch declaration := node.(type) {
+		case *ast.FuncDecl:
+			collectFunctionCandidate(result, declaration, file, fset, path, codeKind, thresholds, changed, options)
+		case *ast.TypeSpec:
+			collectTypeCandidate(result, declaration, fset, path, codeKind, thresholds, changed, options, ignoredTypes, packageMethods, packageExportedMethods)
+		}
+
+		return true
+	})
+
+	return nil
+}
+
+func parseFile(path string) (*ast.File, error) {
+	file, err := parser.ParseFile(token.NewFileSet(), path, nil, parser.ParseComments)
+	if err != nil {
+		return nil, fmt.Errorf("parse %s: %w", path, err)
+	}
+
+	return file, nil
+}
+
+func collectFunctionCandidate(result *report.Result, declaration *ast.FuncDecl, file *ast.File, fset *token.FileSet, path, codeKind string, thresholds config.Thresholds, changed map[string][][2]int, options Options) {
+	if hasIgnoreDirective(declaration.Doc) {
+		return
+	}
+
+	start, end := fset.Position(declaration.Pos()).Line, fset.Position(declaration.End()).Line
+	if !overlaps(changed, path, start, end) {
+		return
+	}
+
+	metrics := functionMetrics(declaration, file, fset, start, end)
+
+	thresholdMap := functionThresholds(thresholds)
+	if options.MetricsOnly() && options.IncludesFunction(file.Name.Name, declaration) {
+		result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, nil))
+		return
+	}
+
+	if options.MetricsOnly() {
+		return
+	}
+
+	if reasons := reasons(metrics, thresholdMap); len(reasons) > 0 {
+		result.Candidates = append(result.Candidates, candidate("function", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons))
+	}
+}
+
+func collectTypeCandidate(result *report.Result, declaration *ast.TypeSpec, fset *token.FileSet, path, codeKind string, thresholds config.Thresholds, changed map[string][][2]int, options Options, ignoredTypes map[string]bool, packageMethods, packageExportedMethods map[string]int) {
+	if options.MetricsOnly() || ignoredTypes[declaration.Name.Name] || hasIgnoreDirective(declaration.Doc) {
+		return
+	}
+
+	structure, ok := declaration.Type.(*ast.StructType)
+	if !ok {
+		return
+	}
+
+	start, end := fset.Position(declaration.Pos()).Line, fset.Position(declaration.End()).Line
+	if !overlaps(changed, path, start, end) {
+		return
+	}
+
+	metrics := map[string]int{
+		"struct_fields":    structure.Fields.NumFields(),
+		"type_methods":     packageMethods[declaration.Name.Name],
+		"exported_members": exportedFields(structure) + packageExportedMethods[declaration.Name.Name],
+	}
+
+	thresholdMap := map[string]int{
+		"struct_fields":    thresholds.StructFields,
+		"type_methods":     thresholds.TypeMethods,
+		"exported_members": thresholds.ExportedMembers,
+	}
+	if reasons := reasons(metrics, thresholdMap); len(reasons) > 0 {
+		result.Candidates = append(result.Candidates, candidate("type", declaration.Name.Name, path, start, end, codeKind, metrics, thresholdMap, reasons))
+	}
 }
 
 func functionSelector(packageName string, declaration *ast.FuncDecl) string {
@@ -348,7 +404,6 @@ func argumentCount(function *ast.FuncType) int {
 	return count
 }
 
-//nolint:cyclop // The AST cases enumerate supported local binding forms.
 func localVariables(body *ast.BlockStmt) int {
 	if body == nil {
 		return 0
@@ -357,35 +412,49 @@ func localVariables(body *ast.BlockStmt) int {
 	count := 0
 
 	ast.Inspect(body, func(node ast.Node) bool {
-		switch declaration := node.(type) {
-		case *ast.FuncLit:
+		if _, ok := node.(*ast.FuncLit); ok {
 			return false
-		case *ast.DeclStmt:
-			genDecl, ok := declaration.Decl.(*ast.GenDecl)
-			if !ok || genDecl.Tok != token.VAR {
-				return true
-			}
-
-			for _, specification := range genDecl.Specs {
-				value, ok := specification.(*ast.ValueSpec)
-				if !ok {
-					continue
-				}
-
-				count += namedIdentifiers(value.Names)
-			}
-		case *ast.AssignStmt:
-			if declaration.Tok == token.DEFINE {
-				count += newLocalVariables(declaration)
-			}
-		case *ast.RangeStmt:
-			if declaration.Tok == token.DEFINE {
-				count += namedExpressions([]ast.Expr{declaration.Key, declaration.Value})
-			}
 		}
+
+		count += localVariableCount(node)
 
 		return true
 	})
+
+	return count
+}
+
+func localVariableCount(node ast.Node) int {
+	switch declaration := node.(type) {
+	case *ast.DeclStmt:
+		return declaredVariables(declaration)
+	case *ast.AssignStmt:
+		if declaration.Tok == token.DEFINE {
+			return newLocalVariables(declaration)
+		}
+	case *ast.RangeStmt:
+		if declaration.Tok == token.DEFINE {
+			return namedExpressions([]ast.Expr{declaration.Key, declaration.Value})
+		}
+	}
+
+	return 0
+}
+
+func declaredVariables(declaration *ast.DeclStmt) int {
+	genDecl, ok := declaration.Decl.(*ast.GenDecl)
+	if !ok || genDecl.Tok != token.VAR {
+		return 0
+	}
+
+	count := 0
+
+	for _, specification := range genDecl.Specs {
+		value, ok := specification.(*ast.ValueSpec)
+		if ok {
+			count += namedIdentifiers(value.Names)
+		}
+	}
 
 	return count
 }
@@ -626,7 +695,6 @@ func inspectBody(body *ast.BlockStmt, visit func(ast.Node) bool) {
 	})
 }
 
-//nolint:wsl_v5 // The traversal maintains explicit enter/exit state.
 func nesting(body *ast.BlockStmt) int {
 	if body == nil {
 		return 0
@@ -634,21 +702,27 @@ func nesting(body *ast.BlockStmt) int {
 
 	max, depth := 0, 0
 	branches := []bool{}
+
 	ast.Inspect(body, func(node ast.Node) bool {
 		if node == nil {
 			if len(branches) > 0 {
 				if branches[len(branches)-1] {
 					depth--
 				}
+
 				branches = branches[:len(branches)-1]
 			}
+
 			return true
 		}
+
 		branch := false
+
 		switch node.(type) {
 		case *ast.IfStmt, *ast.ForStmt, *ast.RangeStmt, *ast.SwitchStmt, *ast.TypeSwitchStmt, *ast.SelectStmt:
 			branch = true
 		}
+
 		branches = append(branches, branch)
 		if branch {
 			depth++
@@ -656,6 +730,7 @@ func nesting(body *ast.BlockStmt) int {
 				max = depth
 			}
 		}
+
 		return true
 	})
 

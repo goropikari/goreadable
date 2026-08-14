@@ -28,7 +28,6 @@ func execute(arguments []string, stdout, stderr io.Writer) error {
 	return command.Execute()
 }
 
-//nolint:cyclop // Command setup keeps all user-visible options at one boundary.
 func newCommand(stdout, stderr io.Writer) *cobra.Command {
 	var (
 		format, diffRef   string
@@ -68,56 +67,7 @@ Thresholds resolve in this order: CLI flags override goreadable.json, which over
 		SilenceUsage:  true,
 		Args:          cobra.ArbitraryArgs,
 		RunE: func(command *cobra.Command, paths []string) error {
-			if format != "text" && format != "json" {
-				return fmt.Errorf("invalid format %q: use text or json", format)
-			}
-
-			if len(paths) == 0 {
-				paths = []string{"."}
-			}
-
-			if len(functionSelectors) > 0 && thresholdsOnly {
-				return fmt.Errorf("--function cannot be used with --thresholds-only")
-			}
-
-			options, err := analysis.NewOptions(thresholdsOnly, functionSelectors)
-			if err != nil {
-				return err
-			}
-
-			resolved := thresholds
-
-			fileThresholds, err := config.LoadFile(filepath.Join(pathsRoot(paths), "goreadable.json"), resolved)
-			if err != nil {
-				return err
-			}
-
-			resolved = fileThresholds
-			resolved.ApplyFlags(flagOverrides(command))
-
-			changed := map[string][][2]int(nil)
-			if diffRef != "" {
-				changed, err = diff.ChangedFiles(pathsRoot(paths), diffRef)
-				if err != nil {
-					return fmt.Errorf("git diff: %w", err)
-				}
-			}
-
-			files, err := inputFiles(paths)
-			if err != nil {
-				return err
-			}
-
-			result, err := analysis.AnalyzeWithOptions(files, resolved, changed, options)
-			if err != nil {
-				return err
-			}
-
-			if format == "json" {
-				return report.WriteJSON(stdout, result)
-			}
-
-			return report.WriteText(stdout, result)
+			return runCommand(command, paths, format, diffRef, thresholdsOnly, functionSelectors, thresholds, stdout)
 		},
 	}
 	command.SetOut(stdout)
@@ -146,6 +96,88 @@ Thresholds resolve in this order: CLI flags override goreadable.json, which over
 	command.Flags().Int("max-exported-members", thresholds.ExportedMembers, "maximum exported fields and methods on a type")
 
 	return command
+}
+
+func runCommand(command *cobra.Command, paths []string, format, diffRef string, thresholdsOnly bool, functionSelectors []string, thresholds config.Thresholds, stdout io.Writer) error {
+	paths, options, err := commandOptions(paths, format, thresholdsOnly, functionSelectors)
+	if err != nil {
+		return err
+	}
+
+	resolved, err := configuredThresholds(command, paths, thresholds)
+	if err != nil {
+		return err
+	}
+
+	changed, err := changedFiles(paths, diffRef)
+	if err != nil {
+		return err
+	}
+
+	files, err := inputFiles(paths)
+	if err != nil {
+		return err
+	}
+
+	return writeResult(stdout, format, files, resolved, changed, options)
+}
+
+func commandOptions(paths []string, format string, thresholdsOnly bool, functionSelectors []string) ([]string, analysis.Options, error) {
+	if format != "text" && format != "json" {
+		return nil, analysis.Options{}, fmt.Errorf("invalid format %q: use text or json", format)
+	}
+
+	if len(paths) == 0 {
+		paths = []string{"."}
+	}
+
+	if len(functionSelectors) > 0 && thresholdsOnly {
+		return nil, analysis.Options{}, fmt.Errorf("--function cannot be used with --thresholds-only")
+	}
+
+	options, err := analysis.NewOptions(thresholdsOnly, functionSelectors)
+	if err != nil {
+		return nil, analysis.Options{}, err
+	}
+
+	return paths, options, nil
+}
+
+func configuredThresholds(command *cobra.Command, paths []string, thresholds config.Thresholds) (config.Thresholds, error) {
+	resolved, err := config.LoadFile(filepath.Join(pathsRoot(paths), "goreadable.json"), thresholds)
+	if err != nil {
+		return config.Thresholds{}, err
+	}
+
+	resolved.ApplyFlags(flagOverrides(command))
+
+	return resolved, nil
+}
+
+func writeResult(stdout io.Writer, format string, files []string, thresholds config.Thresholds, changed map[string][][2]int, options analysis.Options) error {
+	result, err := analysis.AnalyzeWithOptions(files, thresholds, changed, options)
+	if err != nil {
+		return err
+	}
+
+	if format == "json" {
+		return report.WriteJSON(stdout, result)
+	}
+
+	return report.WriteText(stdout, result)
+}
+
+func changedFiles(paths []string, diffRef string) (map[string][][2]int, error) {
+	if diffRef == "" {
+		return nil, nil
+	}
+
+	changed, err := diff.ChangedFiles(pathsRoot(paths), diffRef)
+	if err != nil {
+		return nil, fmt.Errorf("git diff: %w", err)
+	}
+
+	return changed, nil
 }
 
 func flagOverrides(command *cobra.Command) map[string]int {
