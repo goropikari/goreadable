@@ -1,6 +1,6 @@
 # goreadable
 
-Go コードから、AI または人間が可読性をレビューすべき候補を抽出する CLI です。
+Go コードの全関数について可読性メトリクスを出力し、必要に応じて AI または人間がレビューすべき候補へ絞り込める CLI です。
 可読性を単一スコアで合否判定するのではなく、計測値・閾値・理由・ソース断片を提示します。
 
 ## 使い方
@@ -8,7 +8,7 @@ Go コードから、AI または人間が可読性をレビューすべき候�
 リポジトリを clone したら、まず同梱サンプルをそのまま実行できます。
 
 ```sh
-go run ./cmd/goreadable --max-function-lines 5 --max-function-args 4 ./samples/readme
+go run ./cmd/goreadable --thresholds-only --max-function-lines 5 --max-function-args 4 ./samples/readme
 function BuildReport (samples/readme/main.go:3-11, production)
   - function_arguments=6 exceeds threshold 4
   - function_lines=9 exceeds threshold 5
@@ -25,11 +25,11 @@ go run ./cmd/goreadable .
 # リポジトリ全体を JSON で解析
 go run ./cmd/goreadable --format json ./...
 
-# 閾値を指定して Git 差分を解析
-go run ./cmd/goreadable --diff HEAD --max-function-lines 40 ./...
+# 閾値を超えた候補だけを Git 差分から解析
+go run ./cmd/goreadable --thresholds-only --diff HEAD --max-function-lines 40 ./...
 
-# パッケージ内の全関数のメトリックを表示
-go run ./cmd/goreadable --all-functions ./...
+# パッケージ内の全関数のメトリックを表示（既定）
+go run ./cmd/goreadable ./...
 
 # 指定したパッケージ関数（またはメソッド）のメトリックを表示
 go run ./cmd/goreadable --function analysis.Analyze --function analysis.Options.MetricsOnly ./...
@@ -112,7 +112,7 @@ go run ./cmd/goreadable --format json --max-function-lines 5 --max-function-args
 
 ## 出力
 
-`--format text`（既定）は、候補名・ファイル位置・コード区分・検出理由を人間向けに表示します。`--format json` は次の情報を含むバージョン付きレポートを出力します。
+`--format text`（既定）は、関数名・ファイル位置・コード区分・全メトリックを人間向けに表示します。`--format json` は次の情報を含むバージョン付きレポートを出力します。
 
 - `kind`、`name`、`path`、`start_line`、`end_line`
 - `code_kind`（`production` または `test`）
@@ -121,7 +121,7 @@ go run ./cmd/goreadable --format json --max-function-lines 5 --max-function-args
 
 JSON は後続の AI レビュー工程へ渡すための軽量な入力として利用できます。goreadable 自身は外部 AI API を呼び出しません。
 
-`--all-functions` を指定すると、閾値を超えているかどうかにかかわらず、対象パッケージ内の全関数を出力します。`--function` は繰り返し指定でき、`パッケージ名.関数名`（メソッドは `パッケージ名.型名.メソッド名`）で特定の関数だけを出力します。これらのモードでは、テキスト出力にも各関数のメトリックを表示します。
+既定では、閾値を超えているかどうかにかかわらず、対象パッケージ内の全関数を出力します。`--thresholds-only` を指定すると、従来どおり閾値を超えた関数・型だけをレビュー候補として出力します。`--function` は繰り返し指定でき、`パッケージ名.関数名`（メソッドは `パッケージ名.型名.メソッド名`）で特定の関数だけを出力します。全関数出力では、テキスト出力にも各関数のメトリックを表示します。
 
 ## 開発
 

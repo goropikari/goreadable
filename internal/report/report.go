@@ -34,8 +34,7 @@ func WriteJSON(w io.Writer, result Result) error {
 
 func WriteText(w io.Writer, result Result) error {
 	if len(result.Candidates) == 0 {
-		_, err := fmt.Fprintln(w, "No readability review candidates found.")
-		return err
+		return writeEmptyTextResult(w, result.MetricsOnly)
 	}
 
 	for _, candidate := range result.Candidates {
@@ -59,6 +58,17 @@ func WriteText(w io.Writer, result Result) error {
 	}
 
 	return nil
+}
+
+func writeEmptyTextResult(w io.Writer, metricsOnly bool) error {
+	message := "No readability review candidates found."
+	if metricsOnly {
+		message = "No functions found."
+	}
+
+	_, err := fmt.Fprintln(w, message)
+
+	return err
 }
 
 func metricNames(metrics map[string]int) []string {

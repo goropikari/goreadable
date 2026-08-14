@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "baseline_version": "1.1.0",
-  "run_id": "7bce17e6-498c-41d8-9acf-7d052a708d2d",
-  "started_at": "2026-08-13T17:45:21Z",
-  "finished_at": "2026-08-13T17:51:46Z",
+  "run_id": "d7d49bc7-dfd0-4666-9a25-85f22e97b3ed",
+  "started_at": "2026-08-14T00:05:49.419266+00:00",
+  "finished_at": "2026-08-14T00:05:57.012155+00:00",
   "result": "PASS",
   "checks": [
     {
@@ -11,164 +11,117 @@
       "status": "PASS",
       "command": "make fmt",
       "exit_code": 0,
-      "evidence": "golangci-lint fmt and dprint fmt completed without formatting findings."
+      "evidence": "golangci-lint fmt\ndprint fmt"
     },
     {
       "id": "lint",
       "status": "PASS",
       "command": "make lint",
       "exit_code": 0,
-      "evidence": "gitleaks found no leaks; typos, formatters, and golangci-lint completed with 0 issues."
+      "evidence": "gitleaks detect --no-banner --redact --source .\ntypos\ngolangci-lint fmt\ndprint fmt\ngolangci-lint run ./...\n0 issues.\n\n9:05AM INF 25 commits scanned.\n9:05AM INF scanned ~429943 bytes (429.94 KB) in 127ms\n9:05AM INF no leaks found"
     },
     {
       "id": "go-test",
       "status": "PASS",
       "command": "go test ./...",
       "exit_code": 0,
-      "evidence": "Command, analysis, configuration, and acceptance packages passed."
+      "evidence": "ok  \tgithub.com/goropikari/goreadable/cmd/goreadable\t(cached)\nok  \tgithub.com/goropikari/goreadable/internal/analysis\t(cached)\nok  \tgithub.com/goropikari/goreadable/internal/config\t(cached)\n?   \tgithub.com/goropikari/goreadable/internal/diff\t[no test files]\n?   \tgithub.com/goropikari/goreadable/internal/report\t[no test files]\n?   \tgithub.com/goropikari/goreadable/samples/readme\t[no test files]\nok  \tgithub.com/goropikari/goreadable/tests/acceptance\t1.586s"
     },
     {
       "id": "go-race-test",
       "status": "PASS",
       "command": "go test -race ./...",
       "exit_code": 0,
-      "evidence": "All tested packages passed with the race detector."
+      "evidence": "ok  \tgithub.com/goropikari/goreadable/cmd/goreadable\t(cached)\nok  \tgithub.com/goropikari/goreadable/internal/analysis\t(cached)\nok  \tgithub.com/goropikari/goreadable/internal/config\t(cached)\n?   \tgithub.com/goropikari/goreadable/internal/diff\t[no test files]\n?   \tgithub.com/goropikari/goreadable/internal/report\t[no test files]\n?   \tgithub.com/goropikari/goreadable/samples/readme\t[no test files]\nok  \tgithub.com/goropikari/goreadable/tests/acceptance\t2.610s"
     },
     {
       "id": "frozen-acceptance",
       "status": "PASS",
       "command": "go test ./tests/acceptance",
       "exit_code": 0,
-      "evidence": "Published module, CLI, JSON, configuration-precedence, diff, and error scenarios passed."
+      "evidence": "ok  \tgithub.com/goropikari/goreadable/tests/acceptance\t(cached)"
     },
     {
       "id": "new-metrics-acceptance",
       "status": "PASS",
       "command": "go test ./.implementation-orchestrator/acceptance-harness",
       "exit_code": 0,
-      "evidence": "Task-specific CLI acceptance harness passed."
+      "evidence": "ok  \tgithub.com/goropikari/goreadable/.implementation-orchestrator/acceptance-harness\t0.842s"
     }
   ],
   "factors": [
     {
-      "id": "maintainability.readability_risk_signal",
-      "status": "PASS",
-      "confidence": "medium",
-      "metrics": [
-        {
-          "id": "readability_candidate_distribution",
-          "entity": "repository",
-          "raw_value": 36,
-          "rating": "informative",
-          "threshold_source": "consumer-resolved CLI thresholds"
-        }
-      ],
-      "aggregate": {
-        "method": "retain_leaf_values_and_worst_candidates",
-        "value": "36 function candidates: 15 production and 21 test declarations",
-        "worst_entities": [
-          "cmd/goreadable/main_test.go:TestExecute (159 function lines)",
-          "internal/config/config.go:merge (cyclomatic complexity 19; 18 control blocks)",
-          "cmd/goreadable/main.go:newCommand (47 function calls)"
-        ]
-      },
-      "evidence": [
-        "goreadable --format json --all-functions ./...",
-        "frozen acceptance scenarios"
-      ],
-      "unknowns": [
-        "No claim is made that this distribution measures semantic readability or runtime quality."
-      ]
-    },
-    {
-      "id": "reliability.ast_analysis_correctness",
+      "id": "requirements",
       "status": "PASS",
       "confidence": "high",
-      "metrics": [],
+      "evaluation_mode": "BOTH",
       "evidence": [
-        "go test ./...",
-        "go test -race ./...",
-        "go test ./.implementation-orchestrator/acceptance-harness"
+        "TOOL: cmd/goreadable TestExecute and task acceptance harness pass for default all-function output and --thresholds-only filtering.",
+        "AI: The default now returns all functions with metrics; --thresholds-only preserves the review-candidate workflow, and --all-functions is intentionally removed."
       ],
-      "unknowns": [
-        "The supported tests do not exhaust the Go grammar or all filesystem and Git failures."
-      ]
+      "unknowns": []
     },
     {
-      "id": "compatibility.consumer_contract_stability",
+      "id": "analysis-regression",
       "status": "PASS",
       "confidence": "high",
-      "metrics": [],
+      "evaluation_mode": "BOTH",
       "evidence": [
-        "go test ./tests/acceptance",
-        "api-compatibility review: no unapproved contract change identified in the assessed scope"
+        "TOOL: go test ./..., go test -race ./..., and go test ./tests/acceptance pass.",
+        "AI: The direct analysis API retains threshold filtering by default; only the CLI option mapping changes selection mode."
+      ],
+      "unknowns": ["Unsupported Go syntax and filesystem failures remain outside the fixture coverage."]
+    },
+    {
+      "id": "consumer-contract",
+      "status": "PASS",
+      "confidence": "high",
+      "evaluation_mode": "BOTH",
+      "evidence": [
+        "TOOL: consumer acceptance and task acceptance harnesses pass after their deliberate contract updates.",
+        "AI: Removing --all-functions is a deliberate breaking CLI decision explicitly approved by the user; JSON schema, module identity, threshold precedence, and exit behavior remain unchanged."
       ],
       "unknowns": [
-        "Undocumented downstream consumers are not observable from this repository."
+        "Undocumented downstream scripts using --all-functions will require migration to the default invocation."
       ]
     },
     {
-      "id": "security.local_input_and_secret_hygiene",
+      "id": "repository-conventions",
+      "status": "PASS",
+      "confidence": "high",
+      "evaluation_mode": "BOTH",
+      "evidence": [
+        "TOOL: make fmt and make lint pass with 0 lint issues.",
+        "AI: Added tests follow testify, AAA, and t.Run conventions; documentation reflects the executable CLI behavior."
+      ],
+      "unknowns": []
+    },
+    {
+      "id": "security",
       "status": "PASS",
       "confidence": "medium",
-      "metrics": [],
+      "evaluation_mode": "BOTH",
       "evidence": [
-        "make lint: gitleaks found no leaks",
-        "security review: no concrete unsafe local-input execution or disclosure path identified in the assessed scope"
+        "TOOL: gitleaks, run by make lint, reported no leaks.",
+        "AI: The change only alters local CLI flag selection and does not introduce an input-to-command or data-disclosure path."
       ],
-      "unknowns": [
-        "Static scanning and bounded review do not prove the absence of every platform-specific input-handling defect."
-      ]
+      "unknowns": ["No semantic review can prove absence of all platform-specific filesystem risks."]
     }
   ],
   "findings": [],
   "changed_scope": [
-    ".quality/README.md",
-    ".quality/baseline.json",
     ".quality/state.json",
     "README.md",
     "cmd/goreadable/main.go",
     "cmd/goreadable/main_test.go",
+    "graphify-out/GRAPH_REPORT.md",
+    "graphify-out/graph.json",
+    "graphify-out/manifest.json",
     "internal/analysis/analysis.go",
-    "internal/analysis/analysis_test.go",
-    "internal/config/config.go",
-    "internal/config/config_test.go"
+    "internal/report/report.go",
+    "tests/acceptance/goreadable_test.go"
   ],
-  "semantic_review": {
-    "requirements": {
-      "mode": "BOTH",
-      "result": "PASS",
-      "tool_evidence": "Unit, acceptance, and task-specific harness tests passed.",
-      "ai_judgment": "The assessment keeps metric results as explainable review signals rather than automatic quality judgments."
-    },
-    "analysis-regression": {
-      "mode": "BOTH",
-      "result": "PASS",
-      "tool_evidence": "Full and race test suites passed.",
-      "ai_judgment": "Analysis, configuration, report, and CLI boundaries are covered by the selected regression evidence."
-    },
-    "consumer-contract": {
-      "mode": "BOTH",
-      "result": "PASS",
-      "tool_evidence": "Frozen acceptance tests passed.",
-      "ai_judgment": "No unapproved breaking CLI, configuration, module, text-output, or JSON-contract change was identified."
-    },
-    "repository-conventions": {
-      "mode": "BOTH",
-      "result": "PASS",
-      "tool_evidence": "make fmt and make lint passed.",
-      "ai_judgment": "The updated quality contract distinguishes model, policy, and assessment evidence."
-    },
-    "security": {
-      "mode": "BOTH",
-      "result": "PASS",
-      "tool_evidence": "gitleaks completed without a finding.",
-      "ai_judgment": "No concrete secret or unsafe local-input defect was identified in the assessed scope."
-    }
-  },
   "notes": [
-    "The prior baseline 1.0.0 assessment passed on 2026-08-13; this record supersedes it with baseline 1.1.0 evidence.",
-    "The first sandboxed format/lint attempts could not write ordinary tool caches; rerunning the same commands with their normal caches completed successfully.",
-    "Metric distributions are retained for review prioritization only and do not determine the PASS decision."
+    "Performance quality: no measurable performance impact is expected; the default output can be larger by design."
   ]
 }

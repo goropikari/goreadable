@@ -279,7 +279,7 @@
       "label": "flagOverrides()",
       "file_type": "code",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L147",
+      "source_location": "L151",
       "_origin": "ast",
       "id": "cmd_goreadable_main_flagoverrides",
       "community": 4,
@@ -290,7 +290,7 @@
       "label": "inputFiles()",
       "file_type": "code",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L184",
+      "source_location": "L188",
       "_origin": "ast",
       "id": "cmd_goreadable_main_inputfiles",
       "community": 4,
@@ -301,7 +301,7 @@
       "label": "pathsRoot()",
       "file_type": "code",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L206",
+      "source_location": "L210",
       "_origin": "ast",
       "id": "cmd_goreadable_main_pathsroot",
       "community": 4,
@@ -361,7 +361,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "internal_analysis_analysis",
-      "community": 10,
+      "community": 0,
       "community_name": "analysis.go",
       "norm_label": "analysis.go"
     },
@@ -372,8 +372,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "analysis_options",
-      "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community": 12,
+      "community_name": "Options",
       "norm_label": "options"
     },
     {
@@ -383,8 +383,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "internal_analysis_analysis_newoptions",
-      "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community": 12,
+      "community_name": "Options",
       "norm_label": "newoptions()"
     },
     {
@@ -394,8 +394,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "analysis_options_metricsonly",
-      "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community": 12,
+      "community_name": "Options",
       "norm_label": ".metricsonly()"
     },
     {
@@ -405,8 +405,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "analysis_options_includesfunction",
-      "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community": 12,
+      "community_name": "Options",
       "norm_label": ".includesfunction()"
     },
     {
@@ -416,8 +416,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "funcdecl",
-      "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community": 12,
+      "community_name": "Options",
       "norm_label": "funcdecl"
     },
     {
@@ -450,7 +450,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_analyzewithoptions",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "analyzewithoptions()"
     },
     {
@@ -460,8 +460,8 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "internal_analysis_analysis_functionselector",
-      "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community": 12,
+      "community_name": "Options",
       "norm_label": "functionselector()"
     },
     {
@@ -472,7 +472,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_receivername",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "receivername()"
     },
     {
@@ -482,8 +482,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "expr",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 11,
+      "community_name": "inspectBody",
       "norm_label": "expr"
     },
     {
@@ -494,7 +494,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_ignoredtypenames",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "ignoredtypenames()"
     },
     {
@@ -505,7 +505,7 @@
       "_origin": "ast",
       "id": "file",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "file"
     },
     {
@@ -516,7 +516,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_hasignoredirective",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "hasignoredirective()"
     },
     {
@@ -527,7 +527,7 @@
       "_origin": "ast",
       "id": "commentgroup",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "commentgroup"
     },
     {
@@ -538,7 +538,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_functionmetrics",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "functionmetrics()"
     },
     {
@@ -548,8 +548,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "fileset",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 14,
+      "community_name": "commentLines",
       "norm_label": "fileset"
     },
     {
@@ -560,7 +560,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_functionthresholds",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "functionthresholds()"
     },
     {
@@ -570,8 +570,8 @@
       "source_location": "L303",
       "_origin": "ast",
       "id": "internal_analysis_analysis_candidate",
-      "community": 7,
-      "community_name": "Result",
+      "community": 0,
+      "community_name": "analysis.go",
       "norm_label": "candidate()"
     },
     {
@@ -582,7 +582,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_reasons",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "reasons()"
     },
     {
@@ -592,8 +592,8 @@
       "source_location": "L331",
       "_origin": "ast",
       "id": "internal_analysis_analysis_argumentcount",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 15,
+      "community_name": "argumentCount",
       "norm_label": "argumentcount()"
     },
     {
@@ -603,8 +603,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "functype",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 15,
+      "community_name": "argumentCount",
       "norm_label": "functype"
     },
     {
@@ -614,8 +614,8 @@
       "source_location": "L350",
       "_origin": "ast",
       "id": "internal_analysis_analysis_localvariables",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 13,
+      "community_name": "localVariables",
       "norm_label": "localvariables()"
     },
     {
@@ -626,7 +626,7 @@
       "_origin": "ast",
       "id": "blockstmt",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "blockstmt"
     },
     {
@@ -636,8 +636,8 @@
       "source_location": "L391",
       "_origin": "ast",
       "id": "internal_analysis_analysis_namedidentifiers",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 13,
+      "community_name": "localVariables",
       "norm_label": "namedidentifiers()"
     },
     {
@@ -647,8 +647,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ident",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 13,
+      "community_name": "localVariables",
       "norm_label": "ident"
     },
     {
@@ -658,8 +658,8 @@
       "source_location": "L403",
       "_origin": "ast",
       "id": "internal_analysis_analysis_newlocalvariables",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 13,
+      "community_name": "localVariables",
       "norm_label": "newlocalvariables()"
     },
     {
@@ -669,8 +669,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "assignstmt",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 13,
+      "community_name": "localVariables",
       "norm_label": "assignstmt"
     },
     {
@@ -680,8 +680,8 @@
       "source_location": "L416",
       "_origin": "ast",
       "id": "internal_analysis_analysis_namedexpressions",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 13,
+      "community_name": "localVariables",
       "norm_label": "namedexpressions()"
     },
     {
@@ -692,7 +692,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_controlblocks",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "controlblocks()"
     },
     {
@@ -703,7 +703,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_returnpoints",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "returnpoints()"
     },
     {
@@ -714,7 +714,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_booleanoperators",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "booleanoperators()"
     },
     {
@@ -724,8 +724,8 @@
       "source_location": "L468",
       "_origin": "ast",
       "id": "internal_analysis_analysis_maxconditionterms",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 11,
+      "community_name": "inspectBody",
       "norm_label": "maxconditionterms()"
     },
     {
@@ -735,8 +735,8 @@
       "source_location": "L491",
       "_origin": "ast",
       "id": "internal_analysis_analysis_conditionterms",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 11,
+      "community_name": "inspectBody",
       "norm_label": "conditionterms()"
     },
     {
@@ -747,7 +747,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_functioncalls",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "functioncalls()"
     },
     {
@@ -758,7 +758,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_literalvalues",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "literalvalues()"
     },
     {
@@ -769,7 +769,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_closurecount",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "closurecount()"
     },
     {
@@ -779,8 +779,8 @@
       "source_location": "L539",
       "_origin": "ast",
       "id": "internal_analysis_analysis_commentlines",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 14,
+      "community_name": "commentLines",
       "norm_label": "commentlines()"
     },
     {
@@ -791,7 +791,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_statementcount",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "statementcount()"
     },
     {
@@ -801,8 +801,8 @@
       "source_location": "L572",
       "_origin": "ast",
       "id": "internal_analysis_analysis_typedependencies",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 11,
+      "community_name": "inspectBody",
       "norm_label": "typedependencies()"
     },
     {
@@ -812,8 +812,8 @@
       "source_location": "L590",
       "_origin": "ast",
       "id": "internal_analysis_analysis_typeexpression",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 11,
+      "community_name": "inspectBody",
       "norm_label": "typeexpression()"
     },
     {
@@ -824,7 +824,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_countnodes",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "countnodes()"
     },
     {
@@ -834,8 +834,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "node",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 11,
+      "community_name": "inspectBody",
       "norm_label": "node"
     },
     {
@@ -845,8 +845,8 @@
       "source_location": "L613",
       "_origin": "ast",
       "id": "internal_analysis_analysis_inspectbody",
-      "community": 10,
-      "community_name": "analysis.go",
+      "community": 11,
+      "community_name": "inspectBody",
       "norm_label": "inspectbody()"
     },
     {
@@ -857,7 +857,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_nesting",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "nesting()"
     },
     {
@@ -868,7 +868,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_complexity",
       "community": 10,
-      "community_name": "analysis.go",
+      "community_name": "functionMetrics",
       "norm_label": "complexity()"
     },
     {
@@ -879,7 +879,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_methodcounts",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "methodcounts()"
     },
     {
@@ -890,7 +890,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_exportedmethodcounts",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "exportedmethodcounts()"
     },
     {
@@ -901,7 +901,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_exportedfields",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "exportedfields()"
     },
     {
@@ -912,7 +912,7 @@
       "_origin": "ast",
       "id": "structtype",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "structtype"
     },
     {
@@ -923,7 +923,7 @@
       "_origin": "ast",
       "id": "internal_analysis_analysis_overlaps",
       "community": 0,
-      "community_name": "AnalyzeWithOptions",
+      "community_name": "analysis.go",
       "norm_label": "overlaps()"
     },
     {
@@ -1110,7 +1110,7 @@
       "_origin": "ast",
       "id": "internal_report_report",
       "community": 7,
-      "community_name": "Result",
+      "community_name": "report.go",
       "norm_label": "report.go"
     },
     {
@@ -1121,7 +1121,7 @@
       "_origin": "ast",
       "id": "report_candidate",
       "community": 7,
-      "community_name": "Result",
+      "community_name": "report.go",
       "norm_label": "candidate"
     },
     {
@@ -1132,7 +1132,7 @@
       "_origin": "ast",
       "id": "report_result",
       "community": 7,
-      "community_name": "Result",
+      "community_name": "report.go",
       "norm_label": "result"
     },
     {
@@ -1143,7 +1143,7 @@
       "_origin": "ast",
       "id": "internal_report_report_writejson",
       "community": 7,
-      "community_name": "Result",
+      "community_name": "report.go",
       "norm_label": "writejson()"
     },
     {
@@ -1154,7 +1154,7 @@
       "_origin": "ast",
       "id": "internal_report_report_go_writer",
       "community": 7,
-      "community_name": "Result",
+      "community_name": "report.go",
       "norm_label": "writer"
     },
     {
@@ -1165,18 +1165,29 @@
       "_origin": "ast",
       "id": "internal_report_report_writetext",
       "community": 7,
-      "community_name": "Result",
+      "community_name": "report.go",
       "norm_label": "writetext()"
+    },
+    {
+      "label": "writeEmptyTextResult()",
+      "file_type": "code",
+      "source_file": "internal/report/report.go",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "internal_report_report_writeemptytextresult",
+      "community": 7,
+      "community_name": "report.go",
+      "norm_label": "writeemptytextresult()"
     },
     {
       "label": "metricNames()",
       "file_type": "code",
       "source_file": "internal/report/report.go",
-      "source_location": "L64",
+      "source_location": "L74",
       "_origin": "ast",
       "id": "internal_report_report_metricnames",
       "community": 7,
-      "community_name": "Result",
+      "community_name": "report.go",
       "norm_label": "metricnames()"
     },
     {
@@ -1865,7 +1876,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L147",
+      "source_location": "L151",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main",
@@ -1876,7 +1887,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L184",
+      "source_location": "L188",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main",
@@ -1909,7 +1920,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L206",
+      "source_location": "L210",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main",
@@ -1981,7 +1992,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L92",
+      "source_location": "L96",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -1993,7 +2004,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L102",
+      "source_location": "L106",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -2005,7 +2016,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L86",
+      "source_location": "L90",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -2030,7 +2041,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L107",
+      "source_location": "L111",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -2042,7 +2053,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L79",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -2066,7 +2077,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L86",
+      "source_location": "L90",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -2078,7 +2089,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L96",
+      "source_location": "L100",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -2090,7 +2101,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L113",
+      "source_location": "L117",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -2102,7 +2113,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L116",
+      "source_location": "L120",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_newcommand",
@@ -2112,7 +2123,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L147",
+      "source_location": "L151",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -2186,7 +2197,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "cmd/goreadable/main.go",
-      "source_location": "L195",
+      "source_location": "L199",
       "weight": 1.0,
       "_origin": "ast",
       "source": "cmd_goreadable_main_inputfiles",
@@ -3969,11 +3980,22 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L64",
+      "source_location": "L74",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_report_report",
       "target": "internal_report_report_metricnames",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/report/report.go",
+      "source_location": "L63",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_report_report",
+      "target": "internal_report_report_writeemptytextresult",
       "confidence_score": 1.0
     },
     {
@@ -4072,6 +4094,18 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
+      "source_location": "L63",
+      "weight": 1.0,
+      "context": "parameter_type",
+      "_origin": "ast",
+      "source": "internal_report_report_writeemptytextresult",
+      "target": "internal_report_report_go_writer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/report/report.go",
       "source_location": "L35",
       "weight": 1.0,
       "context": "parameter_type",
@@ -4085,11 +4119,23 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "internal/report/report.go",
-      "source_location": "L47",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
       "source": "internal_report_report_writetext",
       "target": "internal_report_report_metricnames",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/report/report.go",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "internal_report_report_writetext",
+      "target": "internal_report_report_writeemptytextresult",
       "confidence_score": 1.0
     },
     {
@@ -4712,5 +4758,5 @@
       "source_file": "AGENTS.md"
     }
   ],
-  "built_at_commit": "5229c2539e607cd6baf4b0cad2d33d807d75d604"
+  "built_at_commit": "ddf9478a370b87819a7cb8658c3200f297a6f283"
 }

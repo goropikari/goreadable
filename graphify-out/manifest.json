@@ -1,6 +1,6 @@
 {
   ".acceptance-harness/manifest.json": {
-    "mtime": 1786640447.7722814,
+    "mtime": 1786665745.5456278,
     "ast_hash": "1ee40bf3d13867e963b8a88ba1afb46b",
     "semantic_hash": ""
   },
@@ -20,8 +20,8 @@
     "semantic_hash": "7d857f3dda7c1348355cf133c45d958c"
   },
   "cmd/goreadable/main.go": {
-    "mtime": 1786644467.4125447,
-    "ast_hash": "c9f399b19106d24f251e13dbd90a7c43",
+    "mtime": 1786665808.425604,
+    "ast_hash": "ff5b48230bd124d26dd0efef2976361e",
     "semantic_hash": ""
   },
   "dprint.json": {
@@ -35,8 +35,8 @@
     "semantic_hash": "d1182ac305da0834d87fec38e45dff6f"
   },
   "internal/analysis/analysis.go": {
-    "mtime": 1786642838.100439,
-    "ast_hash": "45039c415bc4e3ec2aa687ab77eaf1fe",
+    "mtime": 1786665494.2737234,
+    "ast_hash": "1677a1159f9f21d6fbf09493f987da02",
     "semantic_hash": ""
   },
   "internal/analysis/analysis_test.go": {
@@ -55,13 +55,13 @@
     "semantic_hash": "26bd6b43dc23e99a6d297288b256053a"
   },
   "internal/report/report.go": {
-    "mtime": 1786640447.4442813,
-    "ast_hash": "951ed87045bd64e8f78b35f3014b1fe8",
+    "mtime": 1786665616.0616758,
+    "ast_hash": "32ef8c133d57787b112e59b7f78ede87",
     "semantic_hash": ""
   },
   "tests/acceptance/goreadable_test.go": {
-    "mtime": 1786640447.6642814,
-    "ast_hash": "bfa4d72eac2d0309ad1979226c94cd87",
+    "mtime": 1786665537.2177074,
+    "ast_hash": "65fd8443e35ee02f1879539f199eaeca",
     "semantic_hash": ""
   },
   ".codex/skills/graphify/SKILL.md": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1786642728.3684323,
-    "ast_hash": "e75711d99817c2cd19a0a6f58c1d6e90",
+    "mtime": 1786665808.6456041,
+    "ast_hash": "bba061e28e17035c86ce181215a29bc1",
     "semantic_hash": ""
   },
   "TESTING.md": {
@@ -145,8 +145,8 @@
     "semantic_hash": "85c2fb67a35f4ce37eb25a06818c0241"
   },
   "cmd/goreadable/main_test.go": {
-    "mtime": 1786644452.6765444,
-    "ast_hash": "252bb221091914e2977ad9f815f68993",
+    "mtime": 1786665808.537604,
+    "ast_hash": "5dd18aa80864c4a691df42d0a4084a91",
     "semantic_hash": ""
   },
   "samples/readme/main.go": {

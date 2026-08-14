@@ -28,7 +28,7 @@ func TestExecute(t *testing.T) {
 			"Review candidates prioritize human or AI review; they do not make the command fail.",
 			"CLI flags override goreadable.json, which overrides defaults.",
 			"goreadable --format json ./...",
-			"goreadable --all-functions ./...",
+			"goreadable --thresholds-only ./...",
 			"goreadable --function package.Function ./...",
 			"goreadable --diff HEAD ./...",
 		} {
@@ -36,7 +36,7 @@ func TestExecute(t *testing.T) {
 		}
 	})
 
-	t.Run("when all functions are requested: reports every package function regardless of thresholds", func(t *testing.T) {
+	t.Run("when no filter is requested: reports every package function regardless of thresholds", func(t *testing.T) {
 		// Arrange
 		root := t.TempDir()
 		path := filepath.Join(root, "sample.go")
@@ -50,7 +50,7 @@ func Small() {}
 		var stdout, stderr bytes.Buffer
 
 		// Act
-		err := execute([]string{"--format", "json", "--all-functions", "--max-function-lines", "100", root}, &stdout, &stderr)
+		err := execute([]string{"--format", "json", "--max-function-lines", "100", root}, &stdout, &stderr)
 
 		// Assert
 		require.NoError(t, err, stderr.String())
@@ -66,6 +66,65 @@ func Small() {}
 		assert.Equal(t, "Small", result.Candidates[0].Name)
 		assert.Equal(t, map[string]int{"function_lines": 1, "nesting_depth": 0, "cyclomatic_complexity": 1, "function_arguments": 0, "local_variables": 0, "control_blocks": 0, "return_points": 0, "boolean_operators": 0, "max_condition_terms": 0, "function_calls": 0, "literal_values": 0, "closure_count": 0, "comment_lines": 0, "statement_count": 0, "type_dependencies": 0, "exported_members": 0}, result.Candidates[0].Metrics)
 		assert.Equal(t, "Other", result.Candidates[1].Name)
+	})
+
+	t.Run("when threshold filtering is requested: reports only declarations exceeding thresholds", func(t *testing.T) {
+		// Arrange
+		root := t.TempDir()
+		require.NoError(t, os.WriteFile(filepath.Join(root, "sample.go"), []byte(`package alpha
+
+type Exported struct {
+	First  int
+	Second int
+}
+
+func Small() {}
+
+func Large() {
+	first := 1
+	second := 2
+	_ = first + second
+}
+`), 0o600))
+
+		var stdout, stderr bytes.Buffer
+
+		// Act
+		err := execute([]string{"--format", "json", "--thresholds-only", "--max-function-lines", "1", "--max-struct-fields", "1", root}, &stdout, &stderr)
+
+		// Assert
+		require.NoError(t, err, stderr.String())
+
+		var result struct {
+			Candidates []struct {
+				Kind    string   `json:"kind"`
+				Name    string   `json:"name"`
+				Reasons []string `json:"reasons"`
+			}
+		}
+		require.NoError(t, json.Unmarshal(stdout.Bytes(), &result))
+		require.Len(t, result.Candidates, 2)
+		assert.Equal(t, "type", result.Candidates[0].Kind)
+		assert.Equal(t, "Exported", result.Candidates[0].Name)
+		assert.NotEmpty(t, result.Candidates[0].Reasons)
+		assert.Equal(t, "function", result.Candidates[1].Kind)
+		assert.Equal(t, "Large", result.Candidates[1].Name)
+		assert.NotEmpty(t, result.Candidates[1].Reasons)
+	})
+
+	t.Run("when the removed all-functions option is requested: returns a recoverable error", func(t *testing.T) {
+		// Arrange
+		root := t.TempDir()
+		require.NoError(t, os.WriteFile(filepath.Join(root, "sample.go"), []byte("package alpha\n\nfunc Small() {}\n"), 0o600))
+
+		var stdout, stderr bytes.Buffer
+
+		// Act
+		err := execute([]string{"--format", "json", "--all-functions", root}, &stdout, &stderr)
+
+		// Assert
+		require.Error(t, err)
+		assert.Contains(t, err.Error(), "--all-functions")
 	})
 
 	t.Run("when a package-qualified function is requested: excludes same-named functions from another package", func(t *testing.T) {
@@ -123,7 +182,7 @@ func Small() {}
 		var stdout, stderr bytes.Buffer
 
 		// Act
-		err := execute([]string{"--all-functions", root}, &stdout, &stderr)
+		err := execute([]string{root}, &stdout, &stderr)
 
 		// Assert
 		require.NoError(t, err, stderr.String())
@@ -163,7 +222,7 @@ func Target() {
 		var stdout, stderr bytes.Buffer
 
 		// Act
-		err := execute([]string{"--format", "json", "--all-functions", "--max-local-variables", "2", "--max-control-blocks", "2", root}, &stdout, &stderr)
+		err := execute([]string{"--format", "json", "--max-local-variables", "2", "--max-control-blocks", "2", root}, &stdout, &stderr)
 
 		// Assert
 		require.NoError(t, err, stderr.String())

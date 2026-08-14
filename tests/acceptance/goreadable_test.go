@@ -36,7 +36,7 @@ func TestGoreadableCLI(t *testing.T) {
 		fixture := writeFixture(t)
 
 		// Act
-		output, errOutput, err := runGoreadable(binary, fixture, "--format", "json", "--max-function-lines", "3", "--max-struct-fields", "3", ".")
+		output, errOutput, err := runGoreadable(binary, fixture, "--format", "json", "--thresholds-only", "--max-function-lines", "3", "--max-struct-fields", "3", ".")
 
 		// Assert
 		require.NoError(t, err, errOutput)
@@ -51,7 +51,7 @@ func TestGoreadableCLI(t *testing.T) {
 		fixture := writeFixture(t)
 
 		// Act
-		output, errOutput, err := runGoreadable(binary, fixture, "--format", "json", "--max-function-lines", "3", ".")
+		output, errOutput, err := runGoreadable(binary, fixture, "--format", "json", "--thresholds-only", "--max-function-lines", "3", ".")
 
 		// Assert
 		require.NoError(t, err, errOutput)
@@ -72,7 +72,7 @@ func TestGoreadableCLI(t *testing.T) {
 		fixture := writeFixture(t)
 
 		// Act
-		output, errOutput, err := runGoreadable(binary, fixture, "--max-function-lines", "3", ".")
+		output, errOutput, err := runGoreadable(binary, fixture, "--thresholds-only", "--max-function-lines", "3", ".")
 
 		// Assert
 		require.NoError(t, err, errOutput)
@@ -88,8 +88,8 @@ func TestGoreadableCLI(t *testing.T) {
 		require.NoError(t, os.WriteFile(filepath.Join(fixture, "goreadable.json"), []byte(`{"thresholds":{"function_lines":3}}`), 0o600))
 
 		// Act
-		configuredOutput, configuredErrOutput, configuredErr := runGoreadable(binary, fixture, "--format", "json", ".")
-		flagOutput, flagErrOutput, flagErr := runGoreadable(binary, fixture, "--format", "json", "--max-function-lines", "100", ".")
+		configuredOutput, configuredErrOutput, configuredErr := runGoreadable(binary, fixture, "--format", "json", "--thresholds-only", ".")
+		flagOutput, flagErrOutput, flagErr := runGoreadable(binary, fixture, "--format", "json", "--thresholds-only", "--max-function-lines", "100", ".")
 
 		// Assert
 		require.NoError(t, configuredErr, configuredErrOutput)
@@ -108,7 +108,7 @@ func TestGoreadableCLI(t *testing.T) {
 		require.NoError(t, os.WriteFile(filepath.Join(fixture, "changed.go"), []byte("package fixture\n\nfunc Changed() int {\n\tvalue := 0\n\tvalue++\n\tvalue++\n\treturn value\n}\n"), 0o600))
 
 		// Act
-		output, errOutput, err := runGoreadable(binary, fixture, "--format", "json", "--diff", "HEAD", "--max-function-lines", "3", ".")
+		output, errOutput, err := runGoreadable(binary, fixture, "--format", "json", "--thresholds-only", "--diff", "HEAD", "--max-function-lines", "3", ".")
 
 		// Assert
 		require.NoError(t, err, errOutput)

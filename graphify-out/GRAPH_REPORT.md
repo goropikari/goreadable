@@ -2,33 +2,38 @@
 
 ## Corpus Check
 
-- 33 files · ~20,108 words
+- 33 files · ~20,316 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 
-- 141 nodes · 259 edges · 11 communities (9 shown, 2 thin omitted)
+- 142 nodes · 262 edges · 16 communities (12 shown, 4 thin omitted)
 - Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 22 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 
-- Built from commit: `5229c253`
+- Built from commit: `ddf9478a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 
-- AnalyzeWithOptions
+- analysis.go
 - risks
 - goreadable_test.go
 - Testing Guidelines
 - newCommand
 - README.md
 - Thresholds
-- Result
+- report.go
 - github.com/goropikari/goreadable
-- analysis.go
+- functionMetrics
+- inspectBody
+- Options
+- localVariables
+- commentLines
+- argumentCount
 
 ## God Nodes (most connected - your core abstractions)
 
@@ -41,7 +46,7 @@
 7. `risks` - 6 edges
 8. `localVariables()` - 6 edges
 9. `Result` - 6 edges
-10. `Testing Guidelines` - 6 edges
+10. `WriteText()` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
 
@@ -65,12 +70,12 @@
 - **Graphify Documentation Workflow** — _codex_skills_graphify_skill_graphify_workflow, _codex_skills_graphify_references_extraction_spec_graphify_extraction_spec, _codex_skills_graphify_references_query_graphify_query, _codex_skills_graphify_references_update_graphify_update [EXTRACTED 1.00]
 - **Repository Testing Contract** — agents_repository_guidance, testing_testing_guidelines, docs_testing_guidelines_testing_guidelines [EXTRACTED 1.00]
 
-## Communities (11 total, 2 thin omitted)
+## Communities (16 total, 4 thin omitted)
 
-### Community 0 - "AnalyzeWithOptions"
+### Community 0 - "analysis.go"
 
-Cohesion: 0.15
-Nodes (17): Options, CommentGroup, File, FuncDecl, AnalyzeWithOptions(), exportedFields(), exportedMethodCounts(), functionSelector() (+9 more)
+Cohesion: 0.27
+Nodes (14): CommentGroup, File, AnalyzeWithOptions(), candidate(), exportedFields(), exportedMethodCounts(), functionThresholds(), hasIgnoreDirective() (+6 more)
 
 ### Community 1 - "risks"
 
@@ -97,31 +102,46 @@ Nodes (10): execute(), flagOverrides(), Writer, inputFiles(), main(), newCommand
 Cohesion: 0.17
 Nodes (12): fileConfig, Thresholds, Analyze(), Files(), isGenerated(), T, TestAnalyze(), Defaults() (+4 more)
 
-### Community 7 - "Result"
+### Community 7 - "report.go"
 
-Cohesion: 0.43
-Nodes (7): candidate(), Writer, metricNames(), WriteJSON(), WriteText(), Candidate, Result
+Cohesion: 0.50
+Nodes (7): Writer, metricNames(), writeEmptyTextResult(), WriteJSON(), WriteText(), Candidate, Result
 
-### Community 10 - "analysis.go"
+### Community 10 - "functionMetrics"
 
-Cohesion: 0.17
-Nodes (29): AssignStmt, BlockStmt, Expr, FileSet, FuncType, Ident, argumentCount(), booleanOperators() (+21 more)
+Cohesion: 0.36
+Nodes (12): BlockStmt, booleanOperators(), closureCount(), complexity(), controlBlocks(), countNodes(), functionCalls(), functionMetrics() (+4 more)
+
+### Community 11 - "inspectBody"
+
+Cohesion: 0.33
+Nodes (7): Expr, conditionTerms(), inspectBody(), maxConditionTerms(), typeDependencies(), typeExpression(), Node
+
+### Community 12 - "Options"
+
+Cohesion: 0.40
+Nodes (4): Options, FuncDecl, functionSelector(), NewOptions()
+
+### Community 13 - "localVariables"
+
+Cohesion: 0.33
+Nodes (6): AssignStmt, Ident, localVariables(), namedExpressions(), namedIdentifiers(), newLocalVariables()
 
 ## Knowledge Gaps
 
 - **23 isolated node(s):** `version`, `kind`, `build_command`, `consumer_command`, `external-artifact` (+18 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `newCommand()` connect `newCommand` to `AnalyzeWithOptions`, `goreadable_test.go`, `Thresholds`, `Result`?**
-  _High betweenness centrality (0.222) - this node is a cross-community bridge._
-- **Why does `AnalyzeWithOptions()` connect `AnalyzeWithOptions` to `analysis.go`, `newCommand`, `Thresholds`, `Result`?**
-  _High betweenness centrality (0.168) - this node is a cross-community bridge._
-- **Why does `functionMetrics()` connect `analysis.go` to `AnalyzeWithOptions`?**
+- **Why does `newCommand()` connect `newCommand` to `analysis.go`, `goreadable_test.go`, `Thresholds`, `report.go`, `Options`?**
+  _High betweenness centrality (0.224) - this node is a cross-community bridge._
+- **Why does `AnalyzeWithOptions()` connect `analysis.go` to `newCommand`, `Thresholds`, `report.go`, `functionMetrics`, `Options`?**
+  _High betweenness centrality (0.169) - this node is a cross-community bridge._
+- **Why does `functionMetrics()` connect `functionMetrics` to `analysis.go`, `inspectBody`, `Options`, `localVariables`, `commentLines`, `argumentCount`?**
   _High betweenness centrality (0.044) - this node is a cross-community bridge._
 - **Are the 7 inferred relationships involving `newCommand()` (e.g. with `AnalyzeWithOptions()` and `NewOptions()`) actually correct?**
   _`newCommand()` has 7 INFERRED edges - model-reasoned connections that need verification._

@@ -32,7 +32,7 @@ func execute(arguments []string, stdout, stderr io.Writer) error {
 func newCommand(stdout, stderr io.Writer) *cobra.Command {
 	var (
 		format, diffRef   string
-		allFunctions      bool
+		thresholdsOnly    bool
 		functionSelectors []string
 	)
 
@@ -41,7 +41,7 @@ func newCommand(stdout, stderr io.Writer) *cobra.Command {
 	command := &cobra.Command{
 		Use:   "goreadable [paths...]",
 		Short: "find Go declarations that deserve a readability review",
-		Long: `goreadable finds Go functions and types whose structural metrics exceed readability thresholds.
+		Long: `goreadable reports structural metrics for Go functions and can filter declarations whose metrics exceed readability thresholds.
 
 With no path, it analyzes the current directory. Use a path ending in /... to analyze that directory recursively. Review candidates prioritize human or AI review; they do not make the command fail.
 
@@ -53,8 +53,8 @@ Thresholds resolve in this order: CLI flags override goreadable.json, which over
   # Send an explainable JSON report to an AI or another tool.
   goreadable --format json ./...
 
-  # Report metrics for every function, including those below thresholds.
-  goreadable --all-functions ./...
+  # Review only declarations whose metrics exceed their thresholds.
+  goreadable --thresholds-only ./...
 
   # Report one function (or package.Type.Method).
   goreadable --function package.Function ./...
@@ -76,7 +76,11 @@ Thresholds resolve in this order: CLI flags override goreadable.json, which over
 				paths = []string{"."}
 			}
 
-			options, err := analysis.NewOptions(allFunctions, functionSelectors)
+			if len(functionSelectors) > 0 && thresholdsOnly {
+				return fmt.Errorf("--function cannot be used with --thresholds-only")
+			}
+
+			options, err := analysis.NewOptions(thresholdsOnly, functionSelectors)
 			if err != nil {
 				return err
 			}
@@ -120,7 +124,7 @@ Thresholds resolve in this order: CLI flags override goreadable.json, which over
 	command.SetErr(stderr)
 	command.Flags().StringVar(&format, "format", "text", "output format: text or json")
 	command.Flags().StringVar(&diffRef, "diff", "", "analyze declarations changed since this Git ref")
-	command.Flags().BoolVar(&allFunctions, "all-functions", false, "report metrics for every function in the selected packages")
+	command.Flags().BoolVar(&thresholdsOnly, "thresholds-only", false, "report only declarations whose metrics exceed thresholds")
 	command.Flags().StringArrayVar(&functionSelectors, "function", nil, "report metrics for package.Function or package.Type.Method (repeatable)")
 	command.Flags().Int("max-function-lines", thresholds.FunctionLines, "maximum function lines")
 	command.Flags().Int("max-nesting-depth", thresholds.NestingDepth, "maximum nesting depth")

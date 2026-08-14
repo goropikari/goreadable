@@ -17,14 +17,14 @@ import (
 )
 
 type Options struct {
-	IncludeAllFunctions bool
-	FunctionSelectors   map[string]struct{}
+	FilterByThresholds bool
+	FunctionSelectors  map[string]struct{}
 }
 
-func NewOptions(includeAllFunctions bool, functionSelectors []string) (Options, error) {
+func NewOptions(filterByThresholds bool, functionSelectors []string) (Options, error) {
 	options := Options{
-		IncludeAllFunctions: includeAllFunctions,
-		FunctionSelectors:   make(map[string]struct{}, len(functionSelectors)),
+		FilterByThresholds: filterByThresholds,
+		FunctionSelectors:  make(map[string]struct{}, len(functionSelectors)),
 	}
 
 	for _, selector := range functionSelectors {
@@ -40,11 +40,11 @@ func NewOptions(includeAllFunctions bool, functionSelectors []string) (Options, 
 }
 
 func (options Options) MetricsOnly() bool {
-	return options.IncludeAllFunctions || len(options.FunctionSelectors) > 0
+	return !options.FilterByThresholds
 }
 
 func (options Options) IncludesFunction(packageName string, declaration *ast.FuncDecl) bool {
-	if options.IncludeAllFunctions {
+	if len(options.FunctionSelectors) == 0 {
 		return true
 	}
 
@@ -100,7 +100,7 @@ func Files(root string, recursive bool) ([]string, error) {
 
 //nolint:cyclop,gocognit,wsl_v5 // This is the single declaration-to-candidate boundary.
 func Analyze(files []string, thresholds config.Thresholds, changed map[string][][2]int) (report.Result, error) {
-	return AnalyzeWithOptions(files, thresholds, changed, Options{})
+	return AnalyzeWithOptions(files, thresholds, changed, Options{FilterByThresholds: true})
 }
 
 //nolint:cyclop,gocognit,wsl_v5 // This is the single declaration-to-candidate boundary.
