@@ -100,7 +100,9 @@ func Files(root string, recursive bool) ([]string, error) {
 
 //nolint:cyclop,gocognit,wsl_v5 // This is the single declaration-to-candidate boundary.
 func Analyze(files []string, thresholds config.Thresholds, changed map[string][][2]int) (report.Result, error) {
-	return AnalyzeWithOptions(files, thresholds, changed, Options{FilterByThresholds: true})
+	return AnalyzeWithOptions(files, thresholds, changed, Options{
+		FilterByThresholds: true,
+	})
 }
 
 //nolint:cyclop,gocognit,wsl_v5 // This is the single declaration-to-candidate boundary.
