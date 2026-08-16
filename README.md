@@ -109,7 +109,7 @@ thresholds:
 
 ## 出力
 
-`--format text`（既定）は、関数名・ファイル位置・コード区分・全メトリックを人間向けに表示します。`--format json` は次の情報を含むバージョン付きレポートを出力します。
+`--format text`（既定）は、関数名・ファイル位置・コード区分・全メトリックを人間向けに表示します。`--format json` は次の情報を含むバージョン付きレポートを出力します。機械的な検証には、同じ契約を定義した [JSON Schema](schemas/goreadable-output.schema.json) を利用できます。
 
 - `kind`、`name`、`path`、`start_line`、`end_line`
 - `code_kind`（`production` または `test`）

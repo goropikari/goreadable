@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/goropikari/goreadable/blob/main/schemas/goreadable-output.schema.json",
+  "title": "goreadable JSON output",
+  "description": "The versioned report emitted by goreadable --format json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "candidates"
+  ],
+  "properties": {
+    "version": {
+      "const": 1,
+      "description": "The JSON report contract version."
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/candidate"
+      }
+    }
+  },
+  "$defs": {
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "metricMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/nonNegativeInteger"
+      }
+    },
+    "functionMetrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "function_lines",
+        "nesting_depth",
+        "cyclomatic_complexity",
+        "function_arguments",
+        "local_variables",
+        "control_blocks",
+        "return_points",
+        "boolean_operators",
+        "max_condition_terms",
+        "function_calls",
+        "literal_values",
+        "closure_count",
+        "comment_lines",
+        "statement_count",
+        "type_dependencies",
+        "exported_members"
+      ],
+      "properties": {
+        "function_lines": { "$ref": "#/$defs/nonNegativeInteger" },
+        "nesting_depth": { "$ref": "#/$defs/nonNegativeInteger" },
+        "cyclomatic_complexity": { "$ref": "#/$defs/nonNegativeInteger" },
+        "function_arguments": { "$ref": "#/$defs/nonNegativeInteger" },
+        "local_variables": { "$ref": "#/$defs/nonNegativeInteger" },
+        "control_blocks": { "$ref": "#/$defs/nonNegativeInteger" },
+        "return_points": { "$ref": "#/$defs/nonNegativeInteger" },
+        "boolean_operators": { "$ref": "#/$defs/nonNegativeInteger" },
+        "max_condition_terms": { "$ref": "#/$defs/nonNegativeInteger" },
+        "function_calls": { "$ref": "#/$defs/nonNegativeInteger" },
+        "literal_values": { "$ref": "#/$defs/nonNegativeInteger" },
+        "closure_count": { "$ref": "#/$defs/nonNegativeInteger" },
+        "comment_lines": { "$ref": "#/$defs/nonNegativeInteger" },
+        "statement_count": { "$ref": "#/$defs/nonNegativeInteger" },
+        "type_dependencies": { "$ref": "#/$defs/nonNegativeInteger" },
+        "exported_members": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "functionThresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "function_lines",
+        "nesting_depth",
+        "cyclomatic_complexity",
+        "function_arguments",
+        "local_variables",
+        "control_blocks",
+        "return_points",
+        "boolean_operators",
+        "max_condition_terms",
+        "function_calls",
+        "literal_values",
+        "closure_count",
+        "comment_lines",
+        "statement_count",
+        "type_dependencies",
+        "exported_members"
+      ],
+      "properties": {
+        "function_lines": { "$ref": "#/$defs/nonNegativeInteger" },
+        "nesting_depth": { "$ref": "#/$defs/nonNegativeInteger" },
+        "cyclomatic_complexity": { "$ref": "#/$defs/nonNegativeInteger" },
+        "function_arguments": { "$ref": "#/$defs/nonNegativeInteger" },
+        "local_variables": { "$ref": "#/$defs/nonNegativeInteger" },
+        "control_blocks": { "$ref": "#/$defs/nonNegativeInteger" },
+        "return_points": { "$ref": "#/$defs/nonNegativeInteger" },
+        "boolean_operators": { "$ref": "#/$defs/nonNegativeInteger" },
+        "max_condition_terms": { "$ref": "#/$defs/nonNegativeInteger" },
+        "function_calls": { "$ref": "#/$defs/nonNegativeInteger" },
+        "literal_values": { "$ref": "#/$defs/nonNegativeInteger" },
+        "closure_count": { "$ref": "#/$defs/nonNegativeInteger" },
+        "comment_lines": { "$ref": "#/$defs/nonNegativeInteger" },
+        "statement_count": { "$ref": "#/$defs/nonNegativeInteger" },
+        "type_dependencies": { "$ref": "#/$defs/nonNegativeInteger" },
+        "exported_members": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "typeMetrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["struct_fields", "type_methods", "exported_members"],
+      "properties": {
+        "struct_fields": { "$ref": "#/$defs/nonNegativeInteger" },
+        "type_methods": { "$ref": "#/$defs/nonNegativeInteger" },
+        "exported_members": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "typeThresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["struct_fields", "type_methods", "exported_members"],
+      "properties": {
+        "struct_fields": { "$ref": "#/$defs/nonNegativeInteger" },
+        "type_methods": { "$ref": "#/$defs/nonNegativeInteger" },
+        "exported_members": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "candidateCommon": {
+      "type": "object",
+      "required": [
+        "name",
+        "path",
+        "start_line",
+        "end_line",
+        "code_kind",
+        "reasons"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "start_line": { "type": "integer", "minimum": 1 },
+        "end_line": { "type": "integer", "minimum": 1 },
+        "code_kind": { "enum": ["production", "test"] },
+        "reasons": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "candidate": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/candidateCommon" },
+            {
+              "type": "object",
+              "required": ["kind", "metrics", "thresholds"],
+              "properties": {
+                "kind": { "const": "function" },
+                "metrics": { "$ref": "#/$defs/functionMetrics" },
+                "thresholds": { "$ref": "#/$defs/functionThresholds" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/candidateCommon" },
+            {
+              "type": "object",
+              "required": ["kind", "metrics", "thresholds"],
+              "properties": {
+                "kind": { "const": "type" },
+                "metrics": { "$ref": "#/$defs/typeMetrics" },
+                "thresholds": { "$ref": "#/$defs/typeThresholds" }
+              }
+            }
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

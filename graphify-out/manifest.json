@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1786864586.067933,
-    "ast_hash": "ca1741c6cc6bbab8482ef43761f984b2",
+    "mtime": 1786864955.4598217,
+    "ast_hash": "834ebceead8f1947a368f05d2c564ced",
     "semantic_hash": ""
   },
   "TESTING.md": {
@@ -172,6 +172,16 @@
   ".quality/README.md": {
     "mtime": 1786643418.6284761,
     "ast_hash": "177b8239d24d94cf0e65622587ff6ac5",
+    "semantic_hash": ""
+  },
+  "internal/report/report_test.go": {
+    "mtime": 1786864955.5798218,
+    "ast_hash": "4e23f4c8eb8f8091321be1dbb7e2204c",
+    "semantic_hash": ""
+  },
+  "schemas/goreadable-output.schema.json": {
+    "mtime": 1786864955.3398218,
+    "ast_hash": "dff245deb05a86f7f6686aefbed113e3",
     "semantic_hash": ""
   }
 }
