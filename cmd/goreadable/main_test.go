@@ -26,7 +26,7 @@ func TestExecute(t *testing.T) {
 			"With no path, it analyzes the current directory.",
 			"Use a path ending in /... to analyze that directory recursively.",
 			"Review candidates prioritize human or AI review; they do not make the command fail.",
-			"CLI flags override goreadable.json, which overrides defaults.",
+			"CLI flags override goreadable.yaml, which overrides defaults.",
 			"goreadable --format json ./...",
 			"goreadable --thresholds-only ./...",
 			"goreadable --function package.Function ./...",
@@ -217,7 +217,7 @@ func Target() {
 	}
 }
 `), 0o600))
-		require.NoError(t, os.WriteFile(filepath.Join(root, "goreadable.json"), []byte(`{"thresholds":{"local_variables":1,"control_blocks":1}}`), 0o600))
+		require.NoError(t, os.WriteFile(filepath.Join(root, "goreadable.yaml"), []byte("thresholds:\n  local_variables: 1\n  control_blocks: 1\n"), 0o600))
 
 		var stdout, stderr bytes.Buffer
 
@@ -251,5 +251,22 @@ func Target() {
 		// Assert
 		require.Error(t, err)
 		assert.Contains(t, err.Error(), "--function")
+	})
+
+	t.Run("when YAML and legacy JSON both configure a threshold: YAML takes precedence", func(t *testing.T) {
+		// Arrange
+		root := t.TempDir()
+		require.NoError(t, os.WriteFile(filepath.Join(root, "sample.go"), []byte("package alpha\n\nfunc Target() {\n}\n"), 0o600))
+		require.NoError(t, os.WriteFile(filepath.Join(root, "goreadable.yaml"), []byte("thresholds:\n  function_lines: 1\n"), 0o600))
+		require.NoError(t, os.WriteFile(filepath.Join(root, "goreadable.json"), []byte(`{"thresholds":{"function_lines":100}}`), 0o600))
+
+		var stdout, stderr bytes.Buffer
+
+		// Act
+		err := execute([]string{"--format", "json", "--thresholds-only", root}, &stdout, &stderr)
+
+		// Assert
+		require.NoError(t, err, stderr.String())
+		assert.Contains(t, stdout.String(), `"function_lines": 1`)
 	})
 }

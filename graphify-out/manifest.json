@@ -20,8 +20,8 @@
     "semantic_hash": "7d857f3dda7c1348355cf133c45d958c"
   },
   "cmd/goreadable/main.go": {
-    "mtime": 1786667062.073873,
-    "ast_hash": "fda41782a6ec88e27393f816fb93694c",
+    "mtime": 1786864645.0199158,
+    "ast_hash": "8195703498a8c8f7c4b66028984ce41f",
     "semantic_hash": ""
   },
   "dprint.json": {
@@ -30,9 +30,9 @@
     "semantic_hash": "bf7be1ad5332c5ec3273553a1917168e"
   },
   "go.mod": {
-    "mtime": 1786205474.0765226,
-    "ast_hash": "d1182ac305da0834d87fec38e45dff6f",
-    "semantic_hash": "d1182ac305da0834d87fec38e45dff6f"
+    "mtime": 1786864545.4999459,
+    "ast_hash": "c276a2333ca4430f1d08e6c6f03e0221",
+    "semantic_hash": ""
   },
   "internal/analysis/analysis.go": {
     "mtime": 1786667095.7218637,
@@ -45,8 +45,8 @@
     "semantic_hash": ""
   },
   "internal/config/config.go": {
-    "mtime": 1786667061.9738731,
-    "ast_hash": "2c4a65f25ce97a754ae5ace0206c271c",
+    "mtime": 1786864545.139946,
+    "ast_hash": "f8022965f95fcee478c2dc53e5df39b7",
     "semantic_hash": ""
   },
   "internal/diff/diff.go": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1786666181.4974666,
-    "ast_hash": "a63f8407e5609769353384649d98fe3b",
+    "mtime": 1786864586.067933,
+    "ast_hash": "ca1741c6cc6bbab8482ef43761f984b2",
     "semantic_hash": ""
   },
   "TESTING.md": {
@@ -145,8 +145,8 @@
     "semantic_hash": "85c2fb67a35f4ce37eb25a06818c0241"
   },
   "cmd/goreadable/main_test.go": {
-    "mtime": 1786666574.7460186,
-    "ast_hash": "5dd18aa80864c4a691df42d0a4084a91",
+    "mtime": 1786864687.1559026,
+    "ast_hash": "173c16c8d446a8fde177e5025d5673a2",
     "semantic_hash": ""
   },
   "samples/readme/main.go": {
@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "internal/config/config_test.go": {
-    "mtime": 1786666574.7620187,
-    "ast_hash": "233017a1eddcdc6b3bf9516ba94ea84a",
+    "mtime": 1786864687.0399027,
+    "ast_hash": "4e8678747d180c9e49d88511df22589e",
     "semantic_hash": ""
   },
   ".quality/baseline.json": {

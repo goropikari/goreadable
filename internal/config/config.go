@@ -1,30 +1,31 @@
 package config
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
+
+	"gopkg.in/yaml.v3"
 )
 
 type Thresholds struct {
-	FunctionLines        int `json:"function_lines"`
-	NestingDepth         int `json:"nesting_depth"`
-	CyclomaticComplexity int `json:"cyclomatic_complexity"`
-	FunctionArguments    int `json:"function_arguments"`
-	LocalVariables       int `json:"local_variables"`
-	ControlBlocks        int `json:"control_blocks"`
-	ReturnPoints         int `json:"return_points"`
-	BooleanOperators     int `json:"boolean_operators"`
-	MaxConditionTerms    int `json:"max_condition_terms"`
-	FunctionCalls        int `json:"function_calls"`
-	LiteralValues        int `json:"literal_values"`
-	ClosureCount         int `json:"closure_count"`
-	CommentLines         int `json:"comment_lines"`
-	StatementCount       int `json:"statement_count"`
-	TypeDependencies     int `json:"type_dependencies"`
-	StructFields         int `json:"struct_fields"`
-	TypeMethods          int `json:"type_methods"`
-	ExportedMembers      int `json:"exported_members"`
+	FunctionLines        int `yaml:"function_lines"`
+	NestingDepth         int `yaml:"nesting_depth"`
+	CyclomaticComplexity int `yaml:"cyclomatic_complexity"`
+	FunctionArguments    int `yaml:"function_arguments"`
+	LocalVariables       int `yaml:"local_variables"`
+	ControlBlocks        int `yaml:"control_blocks"`
+	ReturnPoints         int `yaml:"return_points"`
+	BooleanOperators     int `yaml:"boolean_operators"`
+	MaxConditionTerms    int `yaml:"max_condition_terms"`
+	FunctionCalls        int `yaml:"function_calls"`
+	LiteralValues        int `yaml:"literal_values"`
+	ClosureCount         int `yaml:"closure_count"`
+	CommentLines         int `yaml:"comment_lines"`
+	StatementCount       int `yaml:"statement_count"`
+	TypeDependencies     int `yaml:"type_dependencies"`
+	StructFields         int `yaml:"struct_fields"`
+	TypeMethods          int `yaml:"type_methods"`
+	ExportedMembers      int `yaml:"exported_members"`
 }
 
 func Defaults() Thresholds {
@@ -51,7 +52,7 @@ func Defaults() Thresholds {
 }
 
 type fileConfig struct {
-	Thresholds Thresholds `json:"thresholds"`
+	Thresholds Thresholds `yaml:"thresholds"`
 }
 
 func LoadFile(path string, defaults Thresholds) (Thresholds, error) {
@@ -65,7 +66,7 @@ func LoadFile(path string, defaults Thresholds) (Thresholds, error) {
 	}
 
 	var parsed fileConfig
-	if err := json.Unmarshal(data, &parsed); err != nil {
+	if err := yaml.Unmarshal(data, &parsed); err != nil {
 		return Thresholds{}, fmt.Errorf("parse %s: %w", path, err)
 	}
 

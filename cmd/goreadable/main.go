@@ -44,7 +44,7 @@ func newCommand(stdout, stderr io.Writer) *cobra.Command {
 
 With no path, it analyzes the current directory. Use a path ending in /... to analyze that directory recursively. Review candidates prioritize human or AI review; they do not make the command fail.
 
-Thresholds resolve in this order: CLI flags override goreadable.json, which overrides defaults. Use --format json when another tool or AI needs the metrics, thresholds, and selection reasons.`,
+Thresholds resolve in this order: CLI flags override goreadable.yaml, which overrides defaults. A legacy goreadable.json is read only when the YAML file is absent. Use --format json when another tool or AI needs the metrics, thresholds, and selection reasons.`,
 		Example: `  # Review the current directory or a directory tree.
   goreadable
   goreadable ./...
@@ -61,7 +61,9 @@ Thresholds resolve in this order: CLI flags override goreadable.json, which over
   # Review only declarations changed since a Git reference.
   goreadable --diff HEAD ./...
 
-  # Configure thresholds in goreadable.json at the analysis root.
+  # Configure thresholds in goreadable.yaml at the analysis root.
+  # CLI flags override goreadable.yaml, which overrides defaults.
+  # Legacy goreadable.json is read when goreadable.yaml is absent.
   # CLI flags override goreadable.json, which overrides defaults.`,
 		SilenceErrors: true,
 		SilenceUsage:  true,
@@ -144,7 +146,12 @@ func commandOptions(paths []string, format string, thresholdsOnly bool, function
 }
 
 func configuredThresholds(command *cobra.Command, paths []string, thresholds config.Thresholds) (config.Thresholds, error) {
-	resolved, err := config.LoadFile(filepath.Join(pathsRoot(paths), "goreadable.json"), thresholds)
+	path := filepath.Join(pathsRoot(paths), "goreadable.yaml")
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		path = filepath.Join(pathsRoot(paths), "goreadable.json")
+	}
+
+	resolved, err := config.LoadFile(path, thresholds)
 	if err != nil {
 		return config.Thresholds{}, err
 	}

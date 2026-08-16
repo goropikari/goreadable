@@ -83,31 +83,28 @@ goreadable --format json --thresholds-only --max-function-lines 5 --max-function
 
 ## 設定
 
-解析対象のルートに `goreadable.json` を置くと、閾値を設定できます。CLI フラグ、設定ファイル、既定値の順に優先されます。
+解析対象のルートに `goreadable.yaml` を置くと、閾値を設定できます。CLI フラグ、YAML 設定ファイル、既定値の順に優先されます。既存の `goreadable.json` は、YAML ファイルがない場合に限り後方互換のため読み込まれます。
 
-```json
-{
-  "thresholds": {
-    "function_lines": 60,
-    "nesting_depth": 3,
-    "cyclomatic_complexity": 8,
-    "function_arguments": 4,
-    "local_variables": 12,
-    "control_blocks": 6,
-    "return_points": 4,
-    "boolean_operators": 6,
-    "max_condition_terms": 3,
-    "function_calls": 12,
-    "literal_values": 8,
-    "closure_count": 2,
-    "comment_lines": 8,
-    "statement_count": 30,
-    "type_dependencies": 4,
-    "struct_fields": 6,
-    "type_methods": 8,
-    "exported_members": 8
-  }
-}
+```yaml
+thresholds:
+  function_lines: 60
+  nesting_depth: 3
+  cyclomatic_complexity: 8
+  function_arguments: 4
+  local_variables: 12
+  control_blocks: 6
+  return_points: 4
+  boolean_operators: 6
+  max_condition_terms: 3
+  function_calls: 12
+  literal_values: 8
+  closure_count: 2
+  comment_lines: 8
+  statement_count: 30
+  type_dependencies: 4
+  struct_fields: 6
+  type_methods: 8
+  exported_members: 8
 ```
 
 ## 出力
