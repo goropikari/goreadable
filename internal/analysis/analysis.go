@@ -19,12 +19,23 @@ import (
 type Options struct {
 	FilterByThresholds bool
 	FunctionSelectors  map[string]struct{}
+	Kind               string
+	CodeKind           string
 }
 
-func NewOptions(filterByThresholds bool, functionSelectors []string) (Options, error) {
+func NewOptions(filterByThresholds bool, functionSelectors []string, kind, codeKind string) (Options, error) {
 	options := Options{
 		FilterByThresholds: filterByThresholds,
 		FunctionSelectors:  make(map[string]struct{}, len(functionSelectors)),
+		Kind:               strings.TrimSpace(kind),
+		CodeKind:           strings.TrimSpace(codeKind),
+	}
+	if options.Kind != "" && options.Kind != "function" && options.Kind != "type" {
+		return Options{}, fmt.Errorf("--kind must be function or type")
+	}
+
+	if options.CodeKind != "" && options.CodeKind != "production" && options.CodeKind != "test" {
+		return Options{}, fmt.Errorf("--code-kind must be production or test")
 	}
 
 	for _, selector := range functionSelectors {
@@ -51,6 +62,14 @@ func (options Options) IncludesFunction(packageName string, declaration *ast.Fun
 	_, ok := options.FunctionSelectors[functionSelector(packageName, declaration)]
 
 	return ok
+}
+
+func (options Options) IncludesKind(kind string) bool {
+	return options.Kind == "" || options.Kind == kind
+}
+
+func (options Options) IncludesCodeKind(codeKind string) bool {
+	return options.CodeKind == "" || options.CodeKind == codeKind
 }
 
 func Files(root string, recursive bool) ([]string, error) {
@@ -175,6 +194,10 @@ func collectCandidates(result *report.Result, path string, thresholds config.Thr
 		codeKind = "test"
 	}
 
+	if !options.IncludesCodeKind(codeKind) {
+		return nil
+	}
+
 	ignoredTypes := ignoredTypeNames(file)
 	ast.Inspect(file, func(node ast.Node) bool {
 		switch declaration := node.(type) {
@@ -200,7 +223,7 @@ func parseFile(path string) (*ast.File, error) {
 }
 
 func collectFunctionCandidate(result *report.Result, declaration *ast.FuncDecl, file *ast.File, fset *token.FileSet, path, codeKind string, thresholds config.Thresholds, changed map[string][][2]int, options Options) {
-	if hasIgnoreDirective(declaration.Doc) {
+	if !options.IncludesKind("function") || hasIgnoreDirective(declaration.Doc) {
 		return
 	}
 
@@ -227,7 +250,7 @@ func collectFunctionCandidate(result *report.Result, declaration *ast.FuncDecl, 
 }
 
 func collectTypeCandidate(result *report.Result, declaration *ast.TypeSpec, fset *token.FileSet, path, codeKind string, thresholds config.Thresholds, changed map[string][][2]int, options Options, ignoredTypes map[string]bool, packageMethods, packageExportedMethods map[string]int) {
-	if options.MetricsOnly() || ignoredTypes[declaration.Name.Name] || hasIgnoreDirective(declaration.Doc) {
+	if !options.IncludesKind("type") || options.MetricsOnly() || ignoredTypes[declaration.Name.Name] || hasIgnoreDirective(declaration.Doc) {
 		return
 	}
 

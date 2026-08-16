@@ -111,14 +111,52 @@ thresholds:
 
 `--format text`（既定）は、関数名・ファイル位置・コード区分・全メトリックを人間向けに表示します。`--format json` は次の情報を含むバージョン付きレポートを出力します。機械的な検証には、同じ契約を定義した [JSON Schema](schemas/goreadable-output.schema.json) を利用できます。
 
-- `kind`、`name`、`path`、`start_line`、`end_line`
-- `code_kind`（`production` または `test`）
-- 計測値（`metrics`）と適用閾値（`thresholds`）
-- 候補理由（`reasons`）
+JSON の基本構造は次のとおりです。例の `metrics` と `thresholds` は説明のための抜粋で、実際の出力には対象の全メトリクスが含まれます。
+
+```json
+{
+  "version": 1,
+  "candidates": [
+    {
+      "kind": "function",
+      "name": "BuildReport",
+      "path": "samples/readme/main.go",
+      "start_line": 3,
+      "end_line": 11,
+      "code_kind": "production",
+      "metrics": {
+        "function_lines": 9,
+        "function_arguments": 6
+      },
+      "thresholds": {
+        "function_lines": 5,
+        "function_arguments": 4
+      },
+      "reasons": [
+        "function_arguments=6 exceeds threshold 4",
+        "function_lines=9 exceeds threshold 5"
+      ]
+    }
+  ]
+}
+```
+
+トップレベルの `version` は JSON 契約のバージョン、`candidates` は検出した宣言の配列です。各候補のフィールドは次の意味を持ちます。
+
+- `kind`: 宣言の種類。`function`（関数・メソッド）または `type`（構造体型）。
+- `name`: 宣言名。
+- `path`: 宣言を含む Go ファイルのパス。
+- `start_line` / `end_line`: 宣言の開始行・終了行（1 始まり）。
+- `code_kind`: コード区分。`production` は通常の Go ファイル、`test` は `_test.go` です。
+- `metrics`: 宣言から計測したメトリクス。関数候補には関数メトリクス、型候補には `struct_fields`、`type_methods`、`exported_members` が入ります。
+- `thresholds`: その候補に適用したメトリクスごとの閾値。
+- `reasons`: 閾値を超えた理由の配列。`--thresholds-only` なしで全関数を出力する場合、関数候補では空配列になることがあります。
+
+`kind` と `code_kind` は別の分類です。たとえば `{"kind":"function","code_kind":"test"}` は、テストファイル内の関数を表します。`--kind function|type` は宣言の種類、`--code-kind production|test` はコード区分で候補を絞り込みます。両方を指定すると、両方に一致する候補だけが出力されます。
 
 JSON は後続の AI レビュー工程へ渡すための軽量な入力として利用できます。goreadable 自身は外部 AI API を呼び出しません。
 
-既定では、閾値を超えているかどうかにかかわらず、対象パッケージ内の全関数を出力します。`--thresholds-only` を指定すると、従来どおり閾値を超えた関数・型だけをレビュー候補として出力します。`--function` は繰り返し指定でき、`パッケージ名.関数名`（メソッドは `パッケージ名.型名.メソッド名`）で特定の関数だけを出力します。全関数出力では、テキスト出力にも各関数のメトリックを表示します。
+既定では、閾値を超えているかどうかにかかわらず、対象パッケージ内の全関数を出力します。`--thresholds-only` を指定すると、従来どおり閾値を超えた関数・型だけをレビュー候補として出力します。`--function` は繰り返し指定でき、`パッケージ名.関数名`（メソッドは `パッケージ名.型名.メソッド名`）で特定の関数だけを出力します。`--kind function|type` は宣言の種類、`--code-kind production|test` は本番コードまたはテストコードで候補を絞り込みます。両方を指定した場合は、両方に一致する候補だけを出力します。全関数出力では、テキスト出力にも各関数のメトリックを表示します。
 
 ## 開発
 

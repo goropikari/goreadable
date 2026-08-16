@@ -30,6 +30,7 @@ func TestExecute(t *testing.T) {
 			"goreadable --format json ./...",
 			"goreadable --thresholds-only ./...",
 			"goreadable --function package.Function ./...",
+			"goreadable --kind function --code-kind production ./...",
 			"goreadable --diff HEAD ./...",
 		} {
 			assert.Contains(t, stdout.String(), expected)
@@ -110,6 +111,72 @@ func Large() {
 		assert.Equal(t, "function", result.Candidates[1].Kind)
 		assert.Equal(t, "Large", result.Candidates[1].Name)
 		assert.NotEmpty(t, result.Candidates[1].Reasons)
+	})
+
+	t.Run("when kind and code kind filters are requested for a function: reports only matching candidates", func(t *testing.T) {
+		// Arrange
+		root := t.TempDir()
+		require.NoError(t, os.WriteFile(filepath.Join(root, "sample.go"), []byte("package alpha\n\nfunc Production() {}\n"), 0o600))
+		require.NoError(t, os.WriteFile(filepath.Join(root, "sample_test.go"), []byte("package alpha\n\nfunc TestCandidate() {}\n"), 0o600))
+
+		var stdout, stderr bytes.Buffer
+
+		// Act
+		err := execute([]string{"--format", "json", "--thresholds-only", "--kind", "function", "--code-kind", "test", "--max-function-lines", "0", root}, &stdout, &stderr)
+
+		// Assert
+		require.NoError(t, err, stderr.String())
+
+		var result struct {
+			Candidates []struct {
+				Kind     string `json:"kind"`
+				Name     string `json:"name"`
+				CodeKind string `json:"code_kind"`
+			} `json:"candidates"`
+		}
+		require.NoError(t, json.Unmarshal(stdout.Bytes(), &result))
+		require.Len(t, result.Candidates, 1)
+		assert.Equal(t, "function", result.Candidates[0].Kind)
+		assert.Equal(t, "TestCandidate", result.Candidates[0].Name)
+		assert.Equal(t, "test", result.Candidates[0].CodeKind)
+	})
+
+	t.Run("when kind type is requested: reports only type candidates", func(t *testing.T) {
+		// Arrange
+		root := t.TempDir()
+		require.NoError(t, os.WriteFile(filepath.Join(root, "sample.go"), []byte("package alpha\n\ntype Candidate struct {\n\tField int\n}\n"), 0o600))
+
+		var stdout, stderr bytes.Buffer
+
+		// Act
+		err := execute([]string{"--format", "json", "--thresholds-only", "--kind", "type", "--code-kind", "production", "--max-struct-fields", "0", root}, &stdout, &stderr)
+
+		// Assert
+		require.NoError(t, err, stderr.String())
+
+		var result struct {
+			Candidates []struct {
+				Kind string `json:"kind"`
+			} `json:"candidates"`
+		}
+		require.NoError(t, json.Unmarshal(stdout.Bytes(), &result))
+		require.Len(t, result.Candidates, 1)
+		assert.Equal(t, "type", result.Candidates[0].Kind)
+	})
+
+	t.Run("when kind or code kind is invalid: returns a recoverable error", func(t *testing.T) {
+		// Arrange
+		var stdout, stderr bytes.Buffer
+
+		// Act
+		err := execute([]string{"--kind", "method", "."}, &stdout, &stderr)
+		codeKindErr := execute([]string{"--code-kind", "generated", "."}, &stdout, &stderr)
+
+		// Assert
+		require.Error(t, err)
+		assert.Contains(t, err.Error(), "--kind must be function or type")
+		require.Error(t, codeKindErr)
+		assert.Contains(t, codeKindErr.Error(), "--code-kind must be production or test")
 	})
 
 	t.Run("when the removed all-functions option is requested: returns a recoverable error", func(t *testing.T) {

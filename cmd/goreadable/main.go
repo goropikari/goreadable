@@ -30,9 +30,9 @@ func execute(arguments []string, stdout, stderr io.Writer) error {
 
 func newCommand(stdout, stderr io.Writer) *cobra.Command {
 	var (
-		format, diffRef   string
-		thresholdsOnly    bool
-		functionSelectors []string
+		format, diffRef, kind, codeKind string
+		thresholdsOnly                  bool
+		functionSelectors               []string
 	)
 
 	thresholds := config.Defaults()
@@ -44,7 +44,7 @@ func newCommand(stdout, stderr io.Writer) *cobra.Command {
 
 With no path, it analyzes the current directory. Use a path ending in /... to analyze that directory recursively. Review candidates prioritize human or AI review; they do not make the command fail.
 
-Thresholds resolve in this order: CLI flags override goreadable.yaml, which overrides defaults. A legacy goreadable.json is read only when the YAML file is absent. Use --format json when another tool or AI needs the metrics, thresholds, and selection reasons.`,
+Thresholds resolve in this order: CLI flags override goreadable.yaml, which overrides defaults. A legacy goreadable.json is read only when the YAML file is absent. Use --format json when another tool or AI needs the metrics, thresholds, and selection reasons. Use --kind and --code-kind to filter candidates by declaration and source kind.`,
 		Example: `  # Review the current directory or a directory tree.
   goreadable
   goreadable ./...
@@ -58,6 +58,9 @@ Thresholds resolve in this order: CLI flags override goreadable.yaml, which over
   # Report one function (or package.Type.Method).
   goreadable --function package.Function ./...
 
+  # Filter by declaration kind and source kind.
+  goreadable --kind function --code-kind production ./...
+
   # Review only declarations changed since a Git reference.
   goreadable --diff HEAD ./...
 
@@ -69,12 +72,14 @@ Thresholds resolve in this order: CLI flags override goreadable.yaml, which over
 		SilenceUsage:  true,
 		Args:          cobra.ArbitraryArgs,
 		RunE: func(command *cobra.Command, paths []string) error {
-			return runCommand(command, paths, format, diffRef, thresholdsOnly, functionSelectors, thresholds, stdout)
+			return runCommand(command, paths, format, diffRef, thresholdsOnly, functionSelectors, kind, codeKind, thresholds, stdout)
 		},
 	}
 	command.SetOut(stdout)
 	command.SetErr(stderr)
 	command.Flags().StringVar(&format, "format", "text", "output format: text or json")
+	command.Flags().StringVar(&kind, "kind", "", "filter candidates by kind: function or type")
+	command.Flags().StringVar(&codeKind, "code-kind", "", "filter candidates by code kind: production or test")
 	command.Flags().StringVar(&diffRef, "diff", "", "analyze declarations changed since this Git ref")
 	command.Flags().BoolVar(&thresholdsOnly, "thresholds-only", false, "report only declarations whose metrics exceed thresholds")
 	command.Flags().StringArrayVar(&functionSelectors, "function", nil, "report metrics for package.Function or package.Type.Method (repeatable)")
@@ -100,8 +105,8 @@ Thresholds resolve in this order: CLI flags override goreadable.yaml, which over
 	return command
 }
 
-func runCommand(command *cobra.Command, paths []string, format, diffRef string, thresholdsOnly bool, functionSelectors []string, thresholds config.Thresholds, stdout io.Writer) error {
-	paths, options, err := commandOptions(paths, format, thresholdsOnly, functionSelectors)
+func runCommand(command *cobra.Command, paths []string, format, diffRef string, thresholdsOnly bool, functionSelectors []string, kind, codeKind string, thresholds config.Thresholds, stdout io.Writer) error {
+	paths, options, err := commandOptions(paths, format, thresholdsOnly, functionSelectors, kind, codeKind)
 	if err != nil {
 		return err
 	}
@@ -124,7 +129,7 @@ func runCommand(command *cobra.Command, paths []string, format, diffRef string, 
 	return writeResult(stdout, format, files, resolved, changed, options)
 }
 
-func commandOptions(paths []string, format string, thresholdsOnly bool, functionSelectors []string) ([]string, analysis.Options, error) {
+func commandOptions(paths []string, format string, thresholdsOnly bool, functionSelectors []string, kind, codeKind string) ([]string, analysis.Options, error) {
 	if format != "text" && format != "json" {
 		return nil, analysis.Options{}, fmt.Errorf("invalid format %q: use text or json", format)
 	}
@@ -137,7 +142,7 @@ func commandOptions(paths []string, format string, thresholdsOnly bool, function
 		return nil, analysis.Options{}, fmt.Errorf("--function cannot be used with --thresholds-only")
 	}
 
-	options, err := analysis.NewOptions(thresholdsOnly, functionSelectors)
+	options, err := analysis.NewOptions(thresholdsOnly, functionSelectors, kind, codeKind)
 	if err != nil {
 		return nil, analysis.Options{}, err
 	}
